@@ -182,7 +182,10 @@ datasources. Private runs: `kaggle kernels push -p kaggle_kernel_tso`, then
   periodic transfer (sunspots +20 → −26, airline −43 → −161).
   Dynamics-heavy pretraining teaches nonlinear regime structure at
   the expense of smooth-periodic geometry. Checkpoints/metrics/figures:
-  `output/kaggle_kernel_v13/`.
+  `output/kaggle_kernel_v13/`. Published on Hugging Face as
+  [`Sejibeji/tso-foundation-v13`](https://huggingface.co/Sejibeji/tso-foundation-v13)
+  (weights + self-contained `model.py`, verified to reproduce
+  `metrics.json` to the decimal).
 * **v14 (the plateau break — balanced corpus + forced Koopman
   linearity, CPU Kaggle)** — v11 capacity (lat 256 · hid 768, 25k
   iters) on the v13 battery re-balanced toward smooth/seasonal/trend/
@@ -195,8 +198,12 @@ datasources. Private runs: `kaggle kernels push -p kaggle_kernel_tso`, then
   rediscovery holds (128.0 mo vs known 132). The two negative levers
   (corpus balance + forced linearity) combine into a positive one —
   every single-lever experiment landed inside seed noise, this
-  two-lever combination lands outside it in every tracked metric.
-  Checkpoints/metrics/figures: `output/kaggle_kernel_v14/`.
+  two-lever combination lands outside it in  every tracked metric.
+  Checkpoints/metrics/figures: `output/kaggle_kernel_v14/`. Published on
+  Hugging Face as
+  [`Sejibeji/tso-foundation-v14`](https://huggingface.co/Sejibeji/tso-foundation-v14)
+  (weights + self-contained `model.py`, verified to reproduce
+  `metrics.json` to the decimal).
 
 GPU notes (Modal): `scripts/modal_v11.py` is the self-contained app —
 image bakes the merged kernel module + 40-series corpus, trains on T4 with
