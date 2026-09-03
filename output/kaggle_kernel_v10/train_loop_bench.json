@@ -1,0 +1,9 @@
+{
+  "label": "gpu-cpu",
+  "device": "cpu",
+  "amp": false,
+  "iters": 300,
+  "wall_s": 0.55,
+  "ms_per_iter": 1.82,
+  "final_loss": 1.0307471752166748
+}

@@ -1,0 +1,11 @@
+{
+  "latent_dim": 256,
+  "hidden": 768,
+  "iters": 25000,
+  "seed": 0,
+  "embed_dim": 5,
+  "corpus": "38 real series x8 + 192 synthetic dynamics (universal battery, seed 11)",
+  "version": "v14",
+  "device": "cpu",
+  "gpu": null
+}

@@ -1,0 +1,52 @@
+{
+  "label": "lorenz-x",
+  "n": 20001,
+  "tau": 59,
+  "dim": 3,
+  "edmd": {
+    "rmse": 1.016852273566618,
+    "persistence_rmse": 1.2916944290813153,
+    "skill_pct": 21.277645031741127
+  },
+  "dmd": {
+    "rmse": 1.0571109934875822,
+    "skill_pct": 18.160907898362197
+  },
+  "scale_space": {
+    "x1": [
+      0.9986,
+      0.9986,
+      0.9983
+    ],
+    "x2": [
+      0.9946,
+      0.9946,
+      0.9924
+    ],
+    "x4": [
+      0.9799,
+      0.9799,
+      0.9676
+    ],
+    "x8": [
+      0.9373,
+      0.9162,
+      0.8784
+    ]
+  },
+  "neural_field": {
+    "final_loss": 0.02191399224102497,
+    "short_horizon_corr": 0.788554056062933,
+    "shape_corr": -0.037365143882624824,
+    "steps": 2000
+  },
+  "files": [
+    "attractor_butterfly.png",
+    "forecast.png",
+    "koopman_spectrum.png",
+    "learned_vector_field.png",
+    "masterpiece.png",
+    "scale_space.png",
+    "takens_reconstruction.png"
+  ]
+}

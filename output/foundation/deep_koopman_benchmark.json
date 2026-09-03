@@ -1,0 +1,20 @@
+{
+  "label": "lorenz-deep-koopman",
+  "horizon": 5930,
+  "rff": {
+    "linearity_err": 0.03945,
+    "skill_pct": 54.38,
+    "lift_dim": 261
+  },
+  "deep": {
+    "linearity_err": 0.0765,
+    "skill_pct": 52.29,
+    "final_loss": 0.005242933053523302,
+    "lift_dim": 48
+  },
+  "comparison": {
+    "more_linear": "RFF",
+    "linearity_ratio": 1.94,
+    "skill_pts": -2.1
+  }
+}

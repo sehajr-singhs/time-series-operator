@@ -1,0 +1,52 @@
+{
+  "label": "mitbih-215-rr",
+  "n": 2500,
+  "tau": 1,
+  "dim": 6,
+  "edmd": {
+    "rmse": 1.0050889038083166,
+    "persistence_rmse": 1.0398415844984734,
+    "skill_pct": 3.3421129918475403
+  },
+  "dmd": {
+    "rmse": 1.0052999835669274,
+    "skill_pct": 3.3218137691815617
+  },
+  "scale_space": {
+    "x1": [
+      0.6921,
+      0.6921,
+      0.5939,
+      0.5939,
+      0.5622,
+      0.5622
+    ],
+    "x2": [
+      0.2795,
+      0.2795,
+      0.065,
+      0.0493
+    ],
+    "x4": [
+      0.1657,
+      0.1657
+    ],
+    "x8": [
+      0.2069,
+      0.1717
+    ]
+  },
+  "neural_field": {
+    "final_loss": 0.15241461992263794,
+    "short_horizon_corr": 0.7419255066409548,
+    "shape_corr": 0.016917875837411056,
+    "steps": 749
+  },
+  "files": [
+    "forecast.png",
+    "koopman_spectrum.png",
+    "learned_vector_field.png",
+    "masterpiece.png",
+    "scale_space.png"
+  ]
+}

@@ -1,0 +1,70 @@
+WARNING: Ignoring invalid distribution ~ransformers (C:\Users\sehaj\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages)
+Collecting uni2ts
+  Downloading uni2ts-2.0.0-py3-none-any.whl.metadata (29 kB)
+Collecting datasets~=2.17.1 (from uni2ts)
+  Downloading datasets-2.17.1-py3-none-any.whl.metadata (20 kB)
+Collecting einops==0.7.* (from uni2ts)
+  Downloading einops-0.7.0-py3-none-any.whl.metadata (13 kB)
+Collecting gluonts~=0.14.3 (from uni2ts)
+  Downloading gluonts-0.14.4-py3-none-any.whl.metadata (9.5 kB)
+Requirement already satisfied: huggingface-hub>=0.23.0 in C:\Users\sehaj\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (from uni2ts) (0.36.2)
+Collecting hydra-core==1.3 (from uni2ts)
+  Downloading hydra_core-1.3.0-py3-none-any.whl.metadata (4.8 kB)
+Requirement already satisfied: jax[cpu] in C:\Users\sehaj\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (from uni2ts) (0.9.0.1)
+Collecting jaxtyping~=0.2.24 (from uni2ts)
+  Downloading jaxtyping-0.2.38-py3-none-any.whl.metadata (6.6 kB)
+Requirement already satisfied: lightning>=2.0 in C:\Users\sehaj\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (from uni2ts) (2.6.1)
+Requirement already satisfied: multiprocess in C:\Users\sehaj\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (from uni2ts) (0.70.18)
+Collecting numpy~=1.26.0 (from uni2ts)
+  Using cached numpy-1.26.4-cp314-cp314-win_amd64.whl
+Requirement already satisfied: orjson in C:\Users\sehaj\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (from uni2ts) (3.11.7)
+Collecting python-dotenv==1.0.0 (from uni2ts)
+  Downloading python_dotenv-1.0.0-py3-none-any.whl.metadata (21 kB)
+Requirement already satisfied: safetensors in C:\Users\sehaj\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (from uni2ts) (0.7.0)
+Collecting scipy~=1.11.3 (from uni2ts)
+  Downloading scipy-1.11.4.tar.gz (56.3 MB)
+     ---------------------------------------- 56.3/56.3 MB 14.1 MB/s  0:00:04
+  Installing build dependencies: started
+  Installing build dependencies: still running...
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): still running...
+  Preparing metadata (pyproject.toml): finished with status 'error'
+  error: subprocess-exited-with-error
+  
+  × Preparing metadata (pyproject.toml) did not run successfully.
+  │ exit code: 1
+  ╰─> [16 lines of output]
+      + meson setup C:\Users\sehaj\AppData\Local\Temp\pip-install-ydm6vsef\scipy_c15e85a03ea348ee915c4e7da80d6637 C:\Users\sehaj\AppData\Local\Temp\pip-install-ydm6vsef\scipy_c15e85a03ea348ee915c4e7da80d6637\.mesonpy-jw1uvxkx -Dbuildtype=release -Db_ndebug=if-release -Db_vscrt=md --native-file=C:\Users\sehaj\AppData\Local\Temp\pip-install-ydm6vsef\scipy_c15e85a03ea348ee915c4e7da80d6637\.mesonpy-jw1uvxkx\meson-python-native-file.ini
+      The Meson build system
+      Version: 1.12.0
+      Source dir: C:\Users\sehaj\AppData\Local\Temp\pip-install-ydm6vsef\scipy_c15e85a03ea348ee915c4e7da80d6637
+      Build dir: C:\Users\sehaj\AppData\Local\Temp\pip-install-ydm6vsef\scipy_c15e85a03ea348ee915c4e7da80d6637\.mesonpy-jw1uvxkx
+      Build type: native build
+      Project name: SciPy
+      Project version: 1.11.4
+      C compiler for the host machine: cc (gcc 15.2.0 "cc (Rev8, Built by MSYS2 project) 15.2.0")
+      C linker for the host machine: cc ld.bfd 15.2.0
+      C++ compiler for the host machine: c++ (gcc 15.2.0 "c++ (Rev8, Built by MSYS2 project) 15.2.0")
+      C++ linker for the host machine: c++ ld.bfd 15.2.0
+      
+      ..\meson.build:1:0: ERROR: Compiler cython cannot compile programs.
+      
+      A full log can be found at C:\Users\sehaj\AppData\Local\Temp\pip-install-ydm6vsef\scipy_c15e85a03ea348ee915c4e7da80d6637\.mesonpy-jw1uvxkx\meson-logs\meson-log.txt
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+
+[notice] A new release of pip is available: 26.2 -> 26.2.1
+[notice] To update, run: C:\Users\sehaj\AppData\Local\Python\pythoncore-3.14-64\python.exe -m pip install --upgrade pip
+error: metadata-generation-failed
+
+× Encountered error while generating package metadata.
+╰─> scipy
+
+note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.

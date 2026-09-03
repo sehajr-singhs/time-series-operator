@@ -1,0 +1,58 @@
+{
+ "sunspots_0.25": {
+  "frozen_skill": 42.74425700499619,
+  "scratch_skill": -23.27850174269521,
+  "frozen_corr": 0.6251495255338654,
+  "train_frac": 0.25,
+  "name": "sunspots"
+ },
+ "sunspots_0.4": {
+  "frozen_skill": 66.53996253566024,
+  "scratch_skill": 40.51111024160913,
+  "frozen_corr": 0.8287087784566536,
+  "train_frac": 0.4,
+  "name": "sunspots"
+ },
+ "sunspots_0.55": {
+  "frozen_skill": 26.621163609759694,
+  "scratch_skill": 30.315809128863364,
+  "frozen_corr": 0.5282664290611111,
+  "train_frac": 0.55,
+  "name": "sunspots"
+ },
+ "sunspots_0.7": {
+  "frozen_skill": -2.0681876139823365,
+  "scratch_skill": 21.21062390882664,
+  "frozen_corr": -0.6931781356305592,
+  "train_frac": 0.7,
+  "name": "sunspots"
+ },
+ "covid-us_0.25": {
+  "frozen_skill": -2871853.3619772578,
+  "scratch_skill": -2476431.5573398587,
+  "frozen_corr": 0.12590916469455157,
+  "train_frac": 0.25,
+  "name": "covid-us"
+ },
+ "covid-us_0.4": {
+  "frozen_skill": -1791864.7727111652,
+  "scratch_skill": -1483230.9847110515,
+  "frozen_corr": 0.11447099249754675,
+  "train_frac": 0.4,
+  "name": "covid-us"
+ },
+ "covid-us_0.55": {
+  "frozen_skill": -24849.29209401023,
+  "scratch_skill": -5809.307568729537,
+  "frozen_corr": 0.2794842359856098,
+  "train_frac": 0.55,
+  "name": "covid-us"
+ },
+ "covid-us_0.7": {
+  "frozen_skill": -1244.1182798185812,
+  "scratch_skill": -114.17985222415676,
+  "frozen_corr": 0.2662357624714871,
+  "train_frac": 0.7,
+  "name": "covid-us"
+ }
+}

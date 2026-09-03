@@ -1,0 +1,55 @@
+  v9 ecg-215: -1.2
+  v9 ecg-233: -6.0
+  v9 grid-AEP: +5.4
+  v9 grid-COMED: +20.7
+  v9 grid-DAYTON: +6.8
+  v9 grid-DEOK: +41.7
+  v9 grid-DOM: +51.0
+  v9 grid-DUQ: +55.4
+  v9 grid-EKPC: +68.5
+  v9 grid-FE: -18.6
+  v9 weather-Temp3pm: +0.8
+  v9 weather-MinTemp: -17.2
+  v9 weather-Rainfall: +5.4
+  v9 weather-Humidity3pm: +16.8
+  v9 coin-Bitcoin: -176.9
+  v9 coin-Ethereum: -156.9
+  v9 coin-Dogecoin: -7678.5
+  v9 sunspots: +20.1
+  v9 airline: -42.6
+  v9 covid-india: -91617.5
+  v9 covid-brazil: -2.4
+  v9 covid-us: -2091.3
+  v9 lorenz-x: +81.1
+  v12 ecg-215: -1.3
+  v12 ecg-233: -6.1
+  v12 grid-AEP: -6.0
+  v12 grid-COMED: +15.5
+  v12 grid-DAYTON: +2.1
+  v12 grid-DEOK: +38.3
+  v12 grid-DOM: +41.4
+  v12 grid-DUQ: +53.1
+  v12 grid-EKPC: +69.7
+  v12 grid-FE: -17.6
+  v12 weather-Temp3pm: -0.9
+  v12 weather-MinTemp: -11.4
+  v12 weather-Rainfall: +4.6
+  v12 weather-Humidity3pm: +17.3
+  v12 coin-Bitcoin: -480.5
+  v12 coin-Ethereum: -336.2
+  v12 coin-Dogecoin: -1089.7
+  v12 sunspots: +5.4
+  v12 airline: -60.1
+  v12 covid-india: -66960.0
+  v12 covid-brazil: +13.7
+  v12 covid-us: -2234.7
+  v12 lorenz-x: +5.0
+{
+ "v9_wins": 16,
+ "v12_wins": 7,
+ "ties": 0,
+ "n_effective": 23,
+ "two_sided_binomial_p": 0.04656982421875,
+ "v9_median": 0.8495946349006807,
+ "v12_median": -0.929202240657752
+}

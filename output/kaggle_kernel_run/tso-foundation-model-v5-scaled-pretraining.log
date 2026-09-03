@@ -1,0 +1,56 @@
+[{"stream_name":"stdout","time":7.602740333,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":7.60280743,"data":"TSO foundation pretraining — Kaggle GPU (mixed precision)\n"}
+,{"stream_name":"stdout","time":7.602815719,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":7.60282055,"data":"  no CUDA available; running on CPU\n"}
+,{"stream_name":"stdout","time":7.602825713,"data":"2.10.0+cpu cuda: False \n"}
+,{"stream_name":"stdout","time":7.602830451,"data":"\n"}
+,{"stream_name":"stdout","time":7.602834892,"data":"[1/4] corpus from attached datasets\n"}
+,{"stream_name":"stdout","time":7.602839648,"data":"  /kaggle/input: ['datasets']\n"}
+,{"stream_name":"stdout","time":7.988229105,"data":"  corpus + ecg-hrv        [physiology  ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.11669143,"data":"  corpus + grid-energy    [energy-grid ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.662502607,"data":"  corpus + weather-aus    [meteorology ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.683466564,"data":"  corpus + bitcoin        [finance     ] len= 2991 held_out=False\n"}
+,{"stream_name":"stdout","time":8.696152402,"data":"  corpus + sunspots       [solar-physics] len= 3265 held_out=True\n"}
+,{"stream_name":"stdout","time":8.704784103,"data":"  corpus + airline        [economics   ] len=  144 held_out=False\n"}
+,{"stream_name":"stdout","time":8.803784285999999,"data":"  corpus + covid-us       [epidemiology] len=  187 held_out=True\n"}
+,{"stream_name":"stdout","time":8.803821505,"data":"  7 samples, held out: ['sunspots', 'covid-us']\n"}
+,{"stream_name":"stdout","time":8.803827709,"data":"\n"}
+,{"stream_name":"stdout","time":8.803841289,"data":"[2/4] AMP training-loop benchmark on GPU\n"}
+,{"stream_name":"stdout","time":15.58061263,"data":"  [bench] device=cpu amp=False 1.50 ms/iter over 300 iters\n"}
+,{"stream_name":"stdout","time":15.581709881,"data":"\n"}
+,{"stream_name":"stdout","time":15.584477956,"data":"[3/4] scaled pretraining (AMP + checkpointing)\n"}
+,{"stream_name":"stdout","time":15.814834633,"data":"  pretrain iter     0: loss=1.83235 (recon 0.7452 dyn 0.7597 scale 0.0303 arrow 0.6922 arrow-acc 0.50)\n"}
+,{"stream_name":"stdout","time":40.91046973,"data":"  pretrain iter  1000: loss=0.41055 (recon 0.1044 dyn 0.5634 scale 0.0290 arrow 0.0099 arrow-acc 1.00)\n"}
+,{"stream_name":"stdout","time":65.674338494,"data":"  pretrain iter  2000: loss=0.52256 (recon 0.0038 dyn 0.0229 scale 0.0107 arrow 0.5020 arrow-acc 0.81)\n"}
+,{"stream_name":"stdout","time":90.417905995,"data":"  pretrain iter  3000: loss=0.25411 (recon 0.0076 dyn 0.4654 scale 0.0259 arrow 0.0009 arrow-acc 1.00)\n"}
+,{"stream_name":"stdout","time":115.286970142,"data":"  pretrain iter  3999: loss=0.21504 (recon 0.0115 dyn 0.3873 scale 0.0195 arrow 0.0001 arrow-acc 1.00)\n"}
+,{"stream_name":"stdout","time":116.392686683,"data":"\n"}
+,{"stream_name":"stdout","time":116.392714967,"data":"[4/4] zero-shot transfer on held-out systems\n"}
+,{"stream_name":"stderr","time":116.434360771,"data":"/kaggle/src/script.py:1388: UserWarning: Casting complex values to real discards the imaginary part (Triggered internally at /pytorch/aten/src/ATen/native/Copy.cpp:308.)\n"}
+,{"stream_name":"stderr","time":116.434401271,"data":"  pred_emb = model.psi(torch.tensor(z_path, dtype=torch.float32,\n"}
+,{"stream_name":"stdout","time":121.058745419,"data":"  frozen   ecg-hrv       : skill=  +5.6%  corr=+0.42\n"}
+,{"stream_name":"stdout","time":125.628002036,"data":"  frozen   grid-energy   : skill= -24.6%  corr=+0.37\n"}
+,{"stream_name":"stdout","time":130.203912177,"data":"  frozen   weather-aus   : skill= +14.4%  corr=+0.17\n"}
+,{"stream_name":"stdout","time":130.892172492,"data":"  frozen   bitcoin       : skill=-248.1%  corr=-0.01\n"}
+,{"stream_name":"stdout","time":133.679675383,"data":"  frozen   sunspots      : skill=  -5.2%  corr=-0.52\n"}
+,{"stream_name":"stdout","time":133.68524074,"data":"  frozen   airline       : skill= -61.5%  corr=+0.32\n"}
+,{"stream_name":"stdout","time":133.69680418,"data":"  frozen   covid-us      : skill=-1565.1%  corr=+0.30\n"}
+,{"stream_name":"stdout","time":139.241541428,"data":"  scratch  sunspots      : skill= +24.1%  corr=+0.08\n"}
+,{"stream_name":"stdout","time":145.113069336,"data":"  scratch  covid-us      : skill= +16.4%  corr=+0.59\n"}
+,{"stream_name":"stdout","time":148.199124342,"data":"\n"}
+,{"stream_name":"stdout","time":148.199162105,"data":"  -\u003e outputs in /kaggle/working:\n"}
+,{"stream_name":"stdout","time":148.199169625,"data":"     foundation_model.pt\n"}
+,{"stream_name":"stdout","time":148.19917558,"data":"     latent_geometry.png\n"}
+,{"stream_name":"stdout","time":148.19918155,"data":"     metrics.json\n"}
+,{"stream_name":"stdout","time":148.19918703,"data":"     pretrain_curves.png\n"}
+,{"stream_name":"stdout","time":148.199192449,"data":"     train_loop_bench.json\n"}
+,{"stream_name":"stdout","time":148.199198014,"data":"     zero_shot_covid-us.png\n"}
+,{"stream_name":"stdout","time":148.199203323,"data":"     zero_shot_sunspots.png\n"}
+,{"stream_name":"stdout","time":148.199209099,"data":"DONE\n"}
+,{"stream_name":"stderr","time":152.047267999,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":152.047310856,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":152.398753806,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":152.398791164,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":153.229187262,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":155.392561978,"data":"[NbConvertApp] Writing 743687 bytes to __results__.html\n"}
+]

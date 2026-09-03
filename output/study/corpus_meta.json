@@ -1,0 +1,140 @@
+[
+ {
+  "name": "ecg-215",
+  "domain": "physiology",
+  "held_out": false,
+  "n": 3361
+ },
+ {
+  "name": "ecg-233",
+  "domain": "physiology",
+  "held_out": false,
+  "n": 3067
+ },
+ {
+  "name": "grid-AEP",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096
+ },
+ {
+  "name": "grid-COMED",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096
+ },
+ {
+  "name": "grid-DAYTON",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096
+ },
+ {
+  "name": "grid-DEOK",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096
+ },
+ {
+  "name": "grid-DOM",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096
+ },
+ {
+  "name": "grid-DUQ",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096
+ },
+ {
+  "name": "grid-EKPC",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096
+ },
+ {
+  "name": "grid-FE",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096
+ },
+ {
+  "name": "weather-Temp3pm",
+  "domain": "meteorology",
+  "held_out": false,
+  "n": 4096
+ },
+ {
+  "name": "weather-MinTemp",
+  "domain": "meteorology",
+  "held_out": false,
+  "n": 4096
+ },
+ {
+  "name": "weather-Rainfall",
+  "domain": "meteorology",
+  "held_out": false,
+  "n": 4096
+ },
+ {
+  "name": "weather-Humidity3pm",
+  "domain": "meteorology",
+  "held_out": false,
+  "n": 4096
+ },
+ {
+  "name": "coin-Bitcoin",
+  "domain": "finance",
+  "held_out": false,
+  "n": 2991
+ },
+ {
+  "name": "coin-Ethereum",
+  "domain": "finance",
+  "held_out": false,
+  "n": 2160
+ },
+ {
+  "name": "coin-Dogecoin",
+  "domain": "finance",
+  "held_out": false,
+  "n": 2760
+ },
+ {
+  "name": "sunspots",
+  "domain": "solar-physics",
+  "held_out": true,
+  "n": 3265
+ },
+ {
+  "name": "airline",
+  "domain": "economics",
+  "held_out": false,
+  "n": 144
+ },
+ {
+  "name": "covid-india",
+  "domain": "epidemiology",
+  "held_out": false,
+  "n": 187
+ },
+ {
+  "name": "covid-brazil",
+  "domain": "epidemiology",
+  "held_out": false,
+  "n": 187
+ },
+ {
+  "name": "covid-us",
+  "domain": "epidemiology",
+  "held_out": true,
+  "n": 187
+ },
+ {
+  "name": "lorenz-x",
+  "domain": "physics",
+  "held_out": false,
+  "n": 20001
+ }
+]

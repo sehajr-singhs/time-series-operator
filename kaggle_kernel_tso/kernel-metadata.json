@@ -1,0 +1,21 @@
+{
+  "id": "sehajrsingh/tso-foundation-model-v14",
+  "title": "TSO Foundation Model V14",
+  "code_file": "main.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "competition_sources": [],
+  "dataset_sources": [
+    "sumit042004/cardiac-arrhythmia-ecg-dataset-mit-bih",
+    "robikscube/hourly-energy-consumption",
+    "jsphyg/weather-dataset-rattle-package",
+    "sudalairajkumar/cryptocurrencypricehistory",
+    "robervalt/sunspots",
+    "rakannimer/air-passengers",
+    "imdevskp/corona-virus-report"
+  ],
+  "kernel_sources": []
+}

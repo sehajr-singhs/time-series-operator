@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Time-Series Operator — artwork</title>
+<style>
+  body { background:#0a0d16; color:#e8ecf4; font-family: system-ui, sans-serif; margin:0; padding:32px; }
+  h1 { color:#38f2c8; font-size:26px; }
+  h2 { color:#e8ecf4; font-size:16px; margin:28px 0 8px; font-weight:600; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap:18px; }
+  .card { background:#10141f; border:1px solid #222838; border-radius:10px; overflow:hidden; }
+  .card img { width:100%; display:block; }
+  .card p { padding:8px 12px; margin:0; font-size:12px; color:#8b93a7; }
+  .tag { display:inline-block; background:#12261f; color:#38f2c8; border:1px solid #1f4a3c; border-radius:20px; padding:2px 10px; font-size:11px; margin-left:8px; }
+</style>
+</head>
+<body>
+  <h1>🦋 Time-Series Operator — artwork <span class="tag">Lorenz demo</span></h1>
+  <p>Time as geometry: the attractor, the Takens reconstruction, the Koopman spectrum, the forecast, the learned vector field.</p>
+  <div class="grid">
+    <div class="card"><img src="lorenz/masterpiece.png"><p>Masterpiece — the full TSO story in one frame</p></div>
+    <div class="card"><img src="lorenz/attractor_butterfly.png"><p>The Lorenz butterfly (ground truth, phase space)</p></div>
+    <div class="card"><img src="lorenz/takens_reconstruction.png"><p>Takens: one channel rebuilds the shape</p></div>
+    <div class="card"><img src="lorenz/koopman_spectrum.png"><p>Koopman spectrum — chaos unwrapped</p></div>
+    <div class="card"><img src="lorenz/forecast.png"><p>Closed-form Koopman forecast vs reality</p></div>
+    <div class="card"><img src="lorenz/learned_vector_field.png"><p>Neural field rides the butterfly (learned flow)</p></div>
+    <div class="card"><img src="lorenz/scale_space.png"><p>Scale space — same physics at 1×/2×/4×/8× lenses</p></div>
+  </div>
+
+  <h2>⚡ Real data (Kaggle, MIT-BIH heart-rate variability) <span class="tag">legacy API → TSO</span></h2>
+  <div class="grid">
+    <div class="card"><img src="kaggle_ecg/masterpiece.png"><p>Masterpiece — HRV attractor, spectrum, forecast</p></div>
+    <div class="card"><img src="kaggle_ecg/koopman_spectrum.png"><p>Koopman spectrum of a real heart</p></div>
+    <div class="card"><img src="kaggle_ecg/forecast.png"><p>Forecast of the next beats' intervals</p></div>
+    <div class="card"><img src="kaggle_ecg/learned_vector_field.png"><p>Learned flow on the reconstructed HRV manifold</p></div>
+    <div class="card"><img src="kaggle_ecg/scale_space.png"><p>HRV scale space</p></div>
+  </div>
+
+  <h2>🌐 Foundation operator — 7-domain corpus → zero-shot transfer <span class="tag">legacy API → GPU kernel</span></h2>
+  <div class="grid">
+    <div class="card"><img src="foundation/pretrain_curves.png"><p>Four temporal pretexts converge (arrow-of-time accuracy 94.8%)</p></div>
+    <div class="card"><img src="foundation/latent_geometry.png"><p>All domains mapped into one shared Koopman latent space</p></div>
+    <div class="card"><img src="foundation/bifurcation.png"><p>Tipping detector: the attractor warps before the raw signal does</p></div>
+    <div class="card"><img src="foundation/deep_koopman_bench.png"><p>Learned Koopman lift vs fixed RFF lift on the butterfly</p></div>
+    <div class="card"><img src="foundation/zero_shot_sunspots.png"><p>Zero-shot forecast — sunspots (never seen during pretraining)</p></div>
+    <div class="card"><img src="foundation/zero_shot_covid-us.png"><p>Zero-shot forecast — US daily COVID cases (never seen)</p></div>
+  </div>
+
+  <h2>🚀 Scaled runs on Kaggle (private kernels v5 → v9) <span class="tag">ran on Kaggle infra</span></h2>
+  <div class="grid">
+    <div class="card"><img src="kaggle_kernel/pretrain_curves.png"><p>V7 pretraining (23-series corpus, 15k iters) — arrow-of-time ~97%</p></div>
+    <div class="card"><img src="kaggle_kernel/latent_geometry.png"><p>Shared Koopman latent across 8 domains (V7 model)</p></div>
+    <div class="card"><img src="kaggle_kernel/zero_shot_sunspots.png"><p>Zero-shot sunspots forecast (V7 model)</p></div>
+    <div class="card"><img src="kaggle_kernel/zero_shot_covid-us.png"><p>Zero-shot COVID forecast (V7 model)</p></div>
+  </div>
+  <p style="color:#8b93a7;font-size:12px;">Scaling effect (frozen zero-shot, skill over persistence): median −24.6% → <b style="color:#38f2c8;">+1.5%</b>, positive 2/7 → 13/23 series. Top: DOM +60.1%, DUQ +59.9%, EKPC +60.1%, DEOK +50.6% (electricity regions).</p>
+
+  <h2>🌞 V9: the largest model + solar-cycle rediscovery <span class="tag">ran on Kaggle infra</span></h2>
+  <div class="grid">
+    <div class="card"><img src="kaggle_kernel_v9/pretrain_curves.png"><p>V9 pretraining (40-series corpus, 25k iters, latent 128) — arrow-of-time 95.5%</p></div>
+    <div class="card"><img src="kaggle_kernel_v9/solar_cycle.png"><p>The frozen operator rediscovers the ~11-year solar cycle: 130.1 mo vs known 132 (1.4%)</p></div>
+    <div class="card"><img src="kaggle_kernel_v9/zero_shot_sunspots.png"><p>Zero-shot sunspots forecast (V9 model)</p></div>
+    <div class="card"><img src="kaggle_kernel_v9/zero_shot_covid-us.png"><p>Zero-shot COVID forecast (V9 model)</p></div>
+  </div>
+  <p style="color:#8b93a7;font-size:12px;">V9 in-kernel TSO vs GRU on identical hardware: <b style="color:#38f2c8;">28/40 wins, p=0.017, median +46.5 pts</b> (GRU median −60.6%). Zero-shot 20/40 series positive; 11/13 grid/weather. Held-out sunspots frozen +20.1% vs scratch +22.8%. <a href="study/figs_index.html" style="color:#38f2c8;">Manuscript figures + PDF →</a></p>
+
+  <h2>⏳ V10: the iteration-saturation result <span class="tag">ran on Kaggle infra</span></h2>
+  <div class="grid">
+    <div class="card"><img src="kaggle_kernel_v10/pretrain_curves.png"><p>V10 pretraining — 60k iters; pretext losses already saturated at 25k</p></div>
+    <div class="card"><img src="kaggle_kernel_v10/solar_cycle.png"><p>Solar cycle still discovered: 129.4 mo vs known 132</p></div>
+    <div class="card"><img src="kaggle_kernel_v10/zero_shot_sunspots.png"><p>Zero-shot sunspots (V10 model)</p></div>
+  </div>
+  <p style="color:#8b93a7;font-size:12px;">The honest negative: 60k iterations <b style="color:#f08c8c;">hurt</b> the frozen probe — v9 wins 28/40 (p=0.017), positives 20/40 → 16/40. Shared-corpus scaling curve: 8 → 9 → 13 → 12 → 10 (v5→local→v7→v9→v10). Corpus + width transfer; iteration count saturates.</p>
+
+  <h2>🚀 V11 GPU runs on Modal (T4, AMP, 3 seeds) <span class="tag">ran on Modal GPU</span></h2>
+  <div class="grid">
+    <div class="card"><img src="kaggle_kernel_v11/seed0/pretrain_curves.png"><p>V11 seed 0 pretraining — latent 256 / hidden 768, 25k iters on T4, AMP</p></div>
+    <div class="card"><img src="kaggle_kernel_v11/seed0/solar_cycle.png"><p>Solar cycle rediscovered on GPU: 127 mo vs known 132 (all seeds 127–128)</p></div>
+    <div class="card"><img src="kaggle_kernel_v11/seed0/zero_shot_sunspots.png"><p>Zero-shot sunspots (V11 seed 0)</p></div>
+    <div class="card"><img src="kaggle_kernel_v11/seed1/pretrain_curves.png"><p>V11 seed 1 pretraining</p></div>
+    <div class="card"><img src="kaggle_kernel_v11/seed2/pretrain_curves.png"><p>V11 seed 2 pretraining</p></div>
+  </div>
+  <p style="color:#8b93a7;font-size:12px;">Best single run observed: <b style="color:#7ee787;">29/40 wins vs GRU (p=0.002), 20/40 positive, median +60.9 pts over GRU</b> — but seeds land 29/21/28 wins (12/5/8 positive reprobed): seed variance dominates the width gain at this probe. Published on <b><a href="https://huggingface.co/Sejibeji/tso-foundation-v11" style="color:#7ee787;">Hugging Face — Sejibeji/tso-foundation-v11</a></b> (weights, self-contained model.py, metrics, figures).</p>
+
+  <h2>🧪 V12 joint probe/pretext training (CPU Kaggle, same 40-series protocol) <span class="tag">the plateau test</span></h2>
+  <div class="grid">
+    <div class="card"><img src="kaggle_kernel_v12/pretrain_curves.png"><p>V12 pretraining — probe roll-out term converges, spectral regularizer 1.6e-6 (spectrum inside unit circle)</p></div>
+    <div class="card"><img src="kaggle_kernel_v12/solar_cycle.png"><p>Solar cycle still discovered under joint-probe loss: 129.7 mo vs known 132</p></div>
+    <div class="card"><img src="kaggle_kernel_v12/zero_shot_sunspots.png"><p>Zero-shot sunspots (V12 model)</p></div>
+    <div class="card"><img src="kaggle_kernel_v12/latent_geometry.png"><p>Latent geometry (V12)</p></div>
+  </div>
+  <p style="color:#8b93a7;font-size:12px;">The direct test of the v10/v11 prescription. In-kernel: <b style="color:#7ee787;">28/40 wins vs GRU, 17/40 positive</b> — statistically identical to v9/v11. But on the shared 23-series reprobe v12 reads 11/23 and paired head-to-head <b style="color:#f08c8c;">v9 beats v12 16/23 (p=0.05)</b>: regularizing latent linearizability during pretraining mildly degrades a frozen closed-form probe. The wall is corpus breadth + the probe-evaluation interface, not latent geometry.</p>
+
+  <h2>🌌 V13 corpus breadth — 40 real + 176-series universal dynamics battery (CPU Kaggle) <span class="tag">the Chronos lesson</span></h2>
+  <div class="grid">
+    <div class="card"><img src="kaggle_kernel_v13/pretrain_curves.png"><p>V13 pretraining on real series tiled with Lorenz/Rössler sweeps, maps, ARFIMA, GARCH, regime-switching, Kuramoto</p></div>
+    <div class="card"><img src="kaggle_kernel_v13/solar_cycle.png"><p>Solar cycle rediscovered at 127.9 mo vs known 132</p></div>
+    <div class="card"><img src="kaggle_kernel_v13/zero_shot_sunspots.png"><p>Zero-shot sunspots (V13 model)</p></div>
+    <div class="card"><img src="kaggle_kernel_v13/latent_geometry.png"><p>Latent geometry (V13)</p></div>
+  </div>
+  <p style="color:#8b93a7;font-size:12px;">At v9's exact width but tripled corpus breadth with generated universal dynamics. In-kernel <b style="color:#7ee787;">25/40 wins vs GRU, 12/40 positive</b>, solar holds (127.9 mo). The honest result is a <b style="color:#7ee787;">regime trade-off, not a plateau break</b>: reprobed 6/23 (v9 15/23 paired, p=0.11) — yet v13 crushes v9 on explosive series (Dogecoin −7,678 → −883, covid-india −91,617 → −22,500, Bitcoin −177 → −92) while losing smooth periodic transfer (sunspots +20 → −26, airline −43 → −161). Dynamics-heavy pretraining buys nonlinear regime structure at the cost of smooth-periodic geometry.</p>
+
+  <h2>🏆 V14 — the plateau break (balanced corpus + forced Koopman linearity, CPU Kaggle) <span class="tag">best run of the project</span></h2>
+  <div class="grid">
+    <div class="card"><img src="kaggle_kernel_v14/pretrain_curves.png"><p>V14 pretraining — v11 capacity on the re-balanced battery, Koopman pretext at weight 2.5</p></div>
+    <div class="card"><img src="kaggle_kernel_v14/solar_cycle.png"><p>Solar cycle rediscovered at 128.0 mo vs known 132</p></div>
+    <div class="card"><img src="kaggle_kernel_v14/zero_shot_sunspots.png"><p>Zero-shot sunspots (V14 model)</p></div>
+    <div class="card"><img src="kaggle_kernel_v14/latent_geometry.png"><p>Latent geometry (V14)</p></div>
+  </div>
+  <p style="color:#8b93a7;font-size:12px;"><b style="color:#7ee787;">31/40 wins vs GRU (p<0.001), 24/40 positive, median skill +1.8 — the first positive median over persistence.</b> On the shared 23-series reprobe: <b style="color:#7ee787;">14/23</b>, the first run above the 12/23 plateau, and the first to win a paired head-to-head vs v9 (13/23, p=0.34). The lesson: every single-lever experiment (capacity, joint-probe, corpus breadth) landed inside seed noise — the two-lever combination of corpus balance + forced Koopman linearity lands outside it in every metric. Published on <b><a href="https://huggingface.co/Sejibeji/tso-foundation-v14" style="color:#7ee787;">Hugging Face — Sejibeji/tso-foundation-v14</a></b>.</p>
+</body>
+</html>

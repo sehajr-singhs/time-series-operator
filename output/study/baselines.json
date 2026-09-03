@@ -1,0 +1,217 @@
+{
+ "gru": {
+  "ecg-215": {
+   "skill_pct": -19.015233963959368,
+   "corr": 0.043817927170184574,
+   "horizon": 100
+  },
+  "ecg-233": {
+   "skill_pct": 0.05532456665914797,
+   "corr": 0.16446833940877503,
+   "horizon": 100
+  },
+  "grid-AEP": {
+   "skill_pct": -138.6919110622277,
+   "corr": -0.20168261015871478,
+   "horizon": 100
+  },
+  "grid-COMED": {
+   "skill_pct": -74.6361219545937,
+   "corr": -0.2840904593276296,
+   "horizon": 100
+  },
+  "grid-DAYTON": {
+   "skill_pct": -134.91202923687806,
+   "corr": -0.18771374315466202,
+   "horizon": 100
+  },
+  "grid-DEOK": {
+   "skill_pct": 9.66947886313386,
+   "corr": 0.4184182133273703,
+   "horizon": 100
+  },
+  "grid-DOM": {
+   "skill_pct": -54.58568274827309,
+   "corr": -0.37922313965623067,
+   "horizon": 100
+  },
+  "grid-DUQ": {
+   "skill_pct": -13.47636912929759,
+   "corr": -0.10600368083592464,
+   "horizon": 100
+  },
+  "grid-EKPC": {
+   "skill_pct": 39.04840459172293,
+   "corr": 0.5096794044507245,
+   "horizon": 100
+  },
+  "grid-FE": {
+   "skill_pct": -151.50559696315068,
+   "corr": -0.11690474533544336,
+   "horizon": 100
+  },
+  "weather-Temp3pm": {
+   "skill_pct": -52.812835303027256,
+   "corr": 0.05167665408782862,
+   "horizon": 100
+  },
+  "weather-MinTemp": {
+   "skill_pct": -228.30867168776254,
+   "corr": 0.0021562636328660914,
+   "horizon": 100
+  },
+  "weather-Rainfall": {
+   "skill_pct": 7.728638667214929,
+   "corr": 0.12356026448774517,
+   "horizon": 100
+  },
+  "weather-Humidity3pm": {
+   "skill_pct": -46.02788673548987,
+   "corr": -0.03965328602435177,
+   "horizon": 100
+  },
+  "coin-Bitcoin": {
+   "skill_pct": -97.67546102826537,
+   "corr": -0.5331834805447248,
+   "horizon": 100
+  },
+  "coin-Ethereum": {
+   "skill_pct": -337.02521370126425,
+   "corr": 0.6932765373754813,
+   "horizon": 100
+  },
+  "coin-Dogecoin": {
+   "skill_pct": -2058.312862830039,
+   "corr": -0.05614203953405647,
+   "horizon": 100
+  },
+  "sunspots": {
+   "skill_pct": -315.10633790860396,
+   "corr": -0.16882950675524935,
+   "horizon": 100
+  },
+  "airline": {
+   "skill_pct": -68.2738172212563,
+   "corr": 0.6164506332449315,
+   "horizon": 23
+  },
+  "covid-india": {
+   "skill_pct": -17540.805397271863,
+   "corr": -0.04585846438320596,
+   "horizon": 12
+  },
+  "covid-brazil": {
+   "skill_pct": 14.469331910209922,
+   "corr": 0.49519865462360985,
+   "horizon": 35
+  },
+  "covid-us": {
+   "skill_pct": -867.7304395624122,
+   "corr": -0.32943648288961597,
+   "horizon": 12
+  },
+  "lorenz-x": {
+   "skill_pct": -127.60545311999222,
+   "corr": -0.6848231687475097,
+   "horizon": 100
+  }
+ },
+ "scratch": {
+  "ecg-215": {
+   "skill_pct": -15.970466732002825,
+   "rmse": 1.6512093986776126,
+   "persistence_rmse": 1.4238188783816892,
+   "latent_linearity": 1.0563353300094604,
+   "corr": 0.2070638719803053,
+   "tau": 1,
+   "horizon": 100,
+   "lambda1": 0.03315691340106757,
+   "tipping_score": 0.5331083959718912,
+   "scratch_iters": 400
+  },
+  "grid-AEP": {
+   "skill_pct": -4.002677257674493,
+   "rmse": 1.0278988435404026,
+   "persistence_rmse": 0.9883388299646417,
+   "latent_linearity": 1.1256247758865356,
+   "corr": 0.34970674704031596,
+   "tau": 2,
+   "horizon": 100,
+   "lambda1": 0.02703245491148357,
+   "tipping_score": 0.5270061469181874,
+   "scratch_iters": 400
+  },
+  "grid-DOM": {
+   "skill_pct": 41.519034595908934,
+   "rmse": 0.993997971032183,
+   "persistence_rmse": 1.6996948736462676,
+   "latent_linearity": 1.0381700992584229,
+   "corr": 0.2982869935761376,
+   "tau": 2,
+   "horizon": 100,
+   "lambda1": 0.01818119242199741,
+   "tipping_score": 0.5181731834607035,
+   "scratch_iters": 400
+  },
+  "weather-Temp3pm": {
+   "skill_pct": 9.77856513649763,
+   "rmse": 0.9918622351614024,
+   "persistence_rmse": 1.0993642881672283,
+   "latent_linearity": 1.1405364274978638,
+   "corr": 0.033963908984784935,
+   "tau": 4,
+   "horizon": 100,
+   "lambda1": 0.008251993348681165,
+   "tipping_score": 0.5082512441999825,
+   "scratch_iters": 400
+  },
+  "coin-Bitcoin": {
+   "skill_pct": 21.162900136588362,
+   "rmse": 0.30350942998808644,
+   "persistence_rmse": 0.38498299723598206,
+   "latent_linearity": 0.6117040514945984,
+   "corr": 0.012399637876748056,
+   "tau": 150,
+   "horizon": 100,
+   "lambda1": 0.040251118521682776,
+   "tipping_score": 0.5401643927265068,
+   "scratch_iters": 400
+  },
+  "sunspots": {
+   "skill_pct": 22.8839085649781,
+   "rmse": 0.6896552105663785,
+   "persistence_rmse": 0.8943077867833624,
+   "latent_linearity": 0.5299084186553955,
+   "corr": -0.0248402633433506,
+   "tau": 62,
+   "horizon": 100,
+   "lambda1": 0.02465761097483667,
+   "tipping_score": 0.5246376413706946,
+   "scratch_iters": 400
+  },
+  "covid-india": {
+   "skill_pct": -17629.05587991823,
+   "rmse": 0.15872252019952257,
+   "persistence_rmse": 0.0008952677529732883,
+   "latent_linearity": 0.4958527982234955,
+   "corr": 0.44286475797130126,
+   "tau": 31,
+   "horizon": 12,
+   "lambda1": NaN,
+   "tipping_score": NaN,
+   "scratch_iters": 400
+  },
+  "covid-us": {
+   "skill_pct": -54.2915099490283,
+   "rmse": 0.07687182282947855,
+   "persistence_rmse": 0.04982245805674849,
+   "latent_linearity": 0.5306062698364258,
+   "corr": 0.5103760665141154,
+   "tau": 31,
+   "horizon": 12,
+   "lambda1": NaN,
+   "tipping_score": NaN,
+   "scratch_iters": 400
+  }
+ }
+}

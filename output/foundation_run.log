@@ -1,0 +1,64 @@
+C:\Users\sehaj\OneDrive\Desktop\time-series-operator\tso\foundation.py:333: UserWarning: Casting complex values to real discards the imaginary part (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\Copy.cpp:308.)
+  pred_emb = model.psi(torch.tensor(z_path, dtype=torch.float32,
+C:\Users\sehaj\OneDrive\Desktop\time-series-operator\tso\viz.py:318: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  fig.tight_layout()
+device = cpu
+======================================================================
+TSO scaled leg — multi-domain corpus -> foundation operator
+======================================================================
+
+[1/6] corpus (legacy Kaggle API)
+  corpus + ecg-hrv        [physiology  ] len= 4096  held_out=False
+  corpus + grid-energy    [energy-grid ] len= 4096  held_out=False
+  corpus + weather-aus    [meteorology ] len= 4096  held_out=False
+  corpus + bitcoin        [finance     ] len= 2991  held_out=False
+  corpus + sunspots       [solar-physics] len= 3265  held_out=True
+  corpus + airline        [economics   ] len=  144  held_out=False
+  corpus + covid-us       [epidemiology] len=  187  held_out=True
+  8 samples, 2 held out for zero-shot: ['sunspots', 'covid-us']
+
+[2/6] deep-Koopman eigenfunction learning vs the RFF lift
+
+[3/6] bifurcation detector (Lorenz rho sweep, one channel)
+  detected tipping at rho ~ 21.0 (theoretical chaos onset ~ 24.7)
+
+[4/6] production training loop (batched + AMP + checkpointing)
+  [bench] device=cpu amp=False 3.51 ms/iter over 250 iters
+
+[5/6] foundation pretraining across domains
+  pretrain iter     0: loss=2.26746 (recon 1.0249 dyn 1.0632 scale 0.0347 arrow 0.6936 arrow-acc 0.50)
+  pretrain iter   300: loss=0.51195 (recon 0.0295 dyn 0.4707 scale 0.0625 arrow 0.2158 arrow-acc 1.00)
+  pretrain iter   600: loss=0.74807 (recon 0.0075 dyn 0.0129 scale 0.0185 arrow 0.7248 arrow-acc 0.50)
+  pretrain iter   900: loss=0.31653 (recon 0.0135 dyn 0.4627 scale 0.0355 arrow 0.0539 arrow-acc 1.00)
+  pretrain iter  1200: loss=0.59254 (recon 0.0070 dyn 0.0153 scale 0.0112 arrow 0.5723 arrow-acc 0.69)
+  pretrain iter  1500: loss=0.07146 (recon 0.0041 dyn 0.1022 scale 0.0313 arrow 0.0006 arrow-acc 1.00)
+  pretrain iter  1800: loss=0.33990 (recon 0.0143 dyn 0.6042 scale 0.0404 arrow 0.0033 arrow-acc 1.00)
+  pretrain iter  2100: loss=0.61773 (recon 0.0143 dyn 0.0324 scale 0.0147 arrow 0.5798 arrow-acc 0.88)
+  pretrain iter  2399: loss=0.44935 (recon 0.0385 dyn 0.6230 scale 0.0356 arrow 0.0815 arrow-acc 1.00)
+
+[6/6] zero-shot transfer on never-seen systems
+  frozen   ecg-hrv       : skill= -11.0%  corr=+0.45  tau=2  lambda1=0.017
+  frozen   grid-energy   : skill= -63.6%  corr=+0.39  tau=2  lambda1=0.027
+  frozen   weather-aus   : skill= +12.4%  corr=-0.20  tau=4  lambda1=0.008
+  frozen   bitcoin       : skill=-1028.2%  corr=-0.46  tau=150  lambda1=0.040
+  frozen   sunspots      : skill= +16.2%  corr=-0.29  tau=62  lambda1=0.025
+  frozen   airline       : skill=-302.9%  corr=+0.17  tau=7  lambda1=nan
+  frozen   covid-us      : skill=-1032.1%  corr=+0.22  tau=31  lambda1=nan
+  frozen   lorenz-x      : skill= -51.5%  corr=-0.46  tau=59  lambda1=0.013
+  scratch  sunspots      : skill= +24.1%  corr=+0.08
+  few-shot sunspots      : skill= +14.7%  corr=-0.28  (200 iters from pretrained)
+  scratch  covid-us      : skill= +16.4%  corr=+0.59
+  few-shot covid-us      : skill=-816.7%  corr=+0.26  (200 iters from pretrained)
+
+  -> all outputs in C:\Users\sehaj\OneDrive\Desktop\time-series-operator\output\foundation/
+     bifurcation.json
+     bifurcation.png
+     deep_koopman_bench.png
+     deep_koopman_benchmark.json
+     foundation_model.pt
+     latent_geometry.png
+     metrics.json
+     pretrain_curves.png
+     train_loop_bench.json
+     zero_shot_covid-us.png
+     zero_shot_sunspots.png

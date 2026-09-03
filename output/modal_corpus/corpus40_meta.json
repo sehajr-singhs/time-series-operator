@@ -1,0 +1,282 @@
+[
+ {
+  "name": "ecg-215",
+  "domain": "physiology",
+  "held_out": false,
+  "n": 3361,
+  "tau_f": 1
+ },
+ {
+  "name": "ecg-233",
+  "domain": "physiology",
+  "held_out": false,
+  "n": 3067,
+  "tau_f": 1
+ },
+ {
+  "name": "ecg-209",
+  "domain": "physiology",
+  "held_out": false,
+  "n": 3004,
+  "tau_f": 3
+ },
+ {
+  "name": "AEP",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 2
+ },
+ {
+  "name": "COMED",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 4
+ },
+ {
+  "name": "DAYTON",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 2
+ },
+ {
+  "name": "DEOK",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 3
+ },
+ {
+  "name": "DOM",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 2
+ },
+ {
+  "name": "DUQ",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 2
+ },
+ {
+  "name": "EKPC",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 2
+ },
+ {
+  "name": "FE",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 3
+ },
+ {
+  "name": "NI",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 3
+ },
+ {
+  "name": "PJME",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 2
+ },
+ {
+  "name": "PJMW",
+  "domain": "energy-grid",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 3
+ },
+ {
+  "name": "weather-Temp3pm",
+  "domain": "meteorology",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 4
+ },
+ {
+  "name": "weather-MinTemp",
+  "domain": "meteorology",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 4
+ },
+ {
+  "name": "weather-MaxTemp",
+  "domain": "meteorology",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 4
+ },
+ {
+  "name": "weather-Temp9am",
+  "domain": "meteorology",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 4
+ },
+ {
+  "name": "weather-Humidity3pm",
+  "domain": "meteorology",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 4
+ },
+ {
+  "name": "weather-Humidity9am",
+  "domain": "meteorology",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 4
+ },
+ {
+  "name": "weather-Pressure3pm",
+  "domain": "meteorology",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 4
+ },
+ {
+  "name": "weather-Pressure9am",
+  "domain": "meteorology",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 5
+ },
+ {
+  "name": "weather-Rainfall",
+  "domain": "meteorology",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 3
+ },
+ {
+  "name": "Litecoin",
+  "domain": "finance",
+  "held_out": false,
+  "n": 2991,
+  "tau_f": 150
+ },
+ {
+  "name": "Bitcoin",
+  "domain": "finance",
+  "held_out": false,
+  "n": 2991,
+  "tau_f": 150
+ },
+ {
+  "name": "XRP",
+  "domain": "finance",
+  "held_out": false,
+  "n": 2893,
+  "tau_f": 97
+ },
+ {
+  "name": "Dogecoin",
+  "domain": "finance",
+  "held_out": false,
+  "n": 2760,
+  "tau_f": 150
+ },
+ {
+  "name": "Monero",
+  "domain": "finance",
+  "held_out": false,
+  "n": 2602,
+  "tau_f": 150
+ },
+ {
+  "name": "Stellar",
+  "domain": "finance",
+  "held_out": false,
+  "n": 2527,
+  "tau_f": 150
+ },
+ {
+  "name": "Tether",
+  "domain": "finance",
+  "held_out": false,
+  "n": 2318,
+  "tau_f": 1
+ },
+ {
+  "name": "NEM",
+  "domain": "finance",
+  "held_out": false,
+  "n": 2288,
+  "tau_f": 92
+ },
+ {
+  "name": "sunspots",
+  "domain": "solar-physics",
+  "held_out": true,
+  "n": 3265,
+  "tau_f": 62
+ },
+ {
+  "name": "airline",
+  "domain": "economics",
+  "held_out": false,
+  "n": 144,
+  "tau_f": 7
+ },
+ {
+  "name": "covid-india",
+  "domain": "epidemiology",
+  "held_out": false,
+  "n": 187,
+  "tau_f": 31
+ },
+ {
+  "name": "covid-brazil",
+  "domain": "epidemiology",
+  "held_out": false,
+  "n": 187,
+  "tau_f": 3
+ },
+ {
+  "name": "covid-germany",
+  "domain": "epidemiology",
+  "held_out": false,
+  "n": 187,
+  "tau_f": 3
+ },
+ {
+  "name": "covid-france",
+  "domain": "epidemiology",
+  "held_out": false,
+  "n": 2067,
+  "tau_f": 1
+ },
+ {
+  "name": "covid-us",
+  "domain": "epidemiology",
+  "held_out": true,
+  "n": 187,
+  "tau_f": 31
+ },
+ {
+  "name": "lorenz-x",
+  "domain": "physics",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 14
+ },
+ {
+  "name": "rossler-x",
+  "domain": "physics",
+  "held_out": false,
+  "n": 4096,
+  "tau_f": 34
+ }
+]

@@ -1,0 +1,283 @@
+{
+  "device": "cpu",
+  "deep_koopman": {
+    "label": "lorenz-deep-koopman",
+    "horizon": 5930,
+    "rff": {
+      "linearity_err": 0.03945,
+      "skill_pct": 54.38,
+      "lift_dim": 261
+    },
+    "deep": {
+      "linearity_err": 0.0765,
+      "skill_pct": 52.29,
+      "final_loss": 0.005242933053523302,
+      "lift_dim": 48
+    },
+    "comparison": {
+      "more_linear": "RFF",
+      "linearity_ratio": 1.94,
+      "skill_pts": -2.1
+    }
+  },
+  "bifurcation": {
+    "detected_rho": 21.0,
+    "theoretical_onset": 24.74,
+    "threshold": 0.05
+  },
+  "train_loop": {
+    "label": "lorenz-cpu",
+    "device": "cpu",
+    "amp": false,
+    "iters": 250,
+    "wall_s": 0.88,
+    "ms_per_iter": 3.507,
+    "final_loss": 0.00972521398216486
+  },
+  "pretrain": {
+    "iters": 2400,
+    "final_loss": 0.44935253262519836,
+    "pretext_losses": {
+      "recon": 0.013214955412549897,
+      "dyn": 0.307570814373903,
+      "scale": 0.030699734138324858,
+      "arrow": 0.12969101126145688,
+      "arrow_acc": 0.948125
+    }
+  },
+  "corpus": [
+    {
+      "name": "ecg-hrv",
+      "domain": "physiology",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 2,
+      "tau_c": 10
+    },
+    {
+      "name": "grid-energy",
+      "domain": "energy-grid",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 2,
+      "tau_c": 3
+    },
+    {
+      "name": "weather-aus",
+      "domain": "meteorology",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 4,
+      "tau_c": 2
+    },
+    {
+      "name": "bitcoin",
+      "domain": "finance",
+      "held_out": false,
+      "n": 2991,
+      "tau_f": 150,
+      "tau_c": 150
+    },
+    {
+      "name": "sunspots",
+      "domain": "solar-physics",
+      "held_out": true,
+      "n": 3265,
+      "tau_f": 62,
+      "tau_c": 30
+    },
+    {
+      "name": "airline",
+      "domain": "economics",
+      "held_out": false,
+      "n": 144,
+      "tau_f": 7,
+      "tau_c": 3
+    },
+    {
+      "name": "covid-us",
+      "domain": "epidemiology",
+      "held_out": true,
+      "n": 187,
+      "tau_f": 31,
+      "tau_c": 1
+    },
+    {
+      "name": "lorenz-x",
+      "domain": "physics",
+      "held_out": false,
+      "n": 20001,
+      "tau_f": 59,
+      "tau_c": 29
+    }
+  ],
+  "zero_shot": {
+    "ecg-hrv": {
+      "skill_pct": -10.975574870959756,
+      "rmse": 1.1848735763543086,
+      "persistence_rmse": 1.0676886132214738,
+      "latent_linearity": 1.458767056465149,
+      "corr": 0.4475186695932189,
+      "tau": 2,
+      "horizon": 100,
+      "lambda1": 0.01713390418710803,
+      "tipping_score": 0.5171272006534571
+    },
+    "grid-energy": {
+      "skill_pct": -63.62816662293242,
+      "rmse": 1.6172007074936847,
+      "persistence_rmse": 0.9883388299646417,
+      "latent_linearity": 2.0546884536743164,
+      "corr": 0.3866808532117935,
+      "tau": 2,
+      "horizon": 100,
+      "lambda1": 0.02703245491148357,
+      "tipping_score": 0.5270061469181874
+    },
+    "weather-aus": {
+      "skill_pct": 12.370508045443486,
+      "rmse": 0.9633673404507684,
+      "persistence_rmse": 1.0993642881672279,
+      "latent_linearity": 1.5128769874572754,
+      "corr": -0.1984922859860234,
+      "tau": 4,
+      "horizon": 100,
+      "lambda1": 0.008251993348681172,
+      "tipping_score": 0.5082512441999825
+    },
+    "bitcoin": {
+      "skill_pct": -1028.222869845007,
+      "rmse": 4.343466219831121,
+      "persistence_rmse": 0.38498299723598206,
+      "latent_linearity": 0.34224143624305725,
+      "corr": -0.4567094734624799,
+      "tau": 150,
+      "horizon": 100,
+      "lambda1": 0.040251118521682776,
+      "tipping_score": 0.5401643927265068
+    },
+    "sunspots": {
+      "skill_pct": 16.18023771757145,
+      "rmse": 0.7496066609550625,
+      "persistence_rmse": 0.8943077867833625,
+      "latent_linearity": 0.9220203161239624,
+      "corr": -0.2890888432681352,
+      "tau": 62,
+      "horizon": 100,
+      "lambda1": 0.02465761097483667,
+      "tipping_score": 0.5246376413706946
+    },
+    "airline": {
+      "skill_pct": -302.89467132005325,
+      "rmse": 2.1898976907653944,
+      "persistence_rmse": 0.5435409913936969,
+      "latent_linearity": 1.2841012477874756,
+      "corr": 0.16640214470991407,
+      "tau": 7,
+      "horizon": 23,
+      "lambda1": NaN,
+      "tipping_score": NaN
+    },
+    "covid-us": {
+      "skill_pct": -1032.0704175244334,
+      "rmse": 0.5640253089439683,
+      "persistence_rmse": 0.04982245805674849,
+      "latent_linearity": 0.5760790109634399,
+      "corr": 0.21586545588647849,
+      "tau": 31,
+      "horizon": 12,
+      "lambda1": NaN,
+      "tipping_score": NaN
+    },
+    "lorenz-x": {
+      "skill_pct": -51.46281616139592,
+      "rmse": 4.028693763622576,
+      "persistence_rmse": 2.659856633940885,
+      "latent_linearity": 0.19052428007125854,
+      "corr": -0.45908587063328143,
+      "tau": 59,
+      "horizon": 100,
+      "lambda1": 0.012694529048035669,
+      "tipping_score": 0.5126918021019397
+    }
+  },
+  "scratch_baseline": {
+    "sunspots": {
+      "skill_pct": 24.095506533679085,
+      "rmse": 0.6788197955877765,
+      "persistence_rmse": 0.8943077867833624,
+      "latent_linearity": 0.6426896452903748,
+      "corr": 0.08334850073012622,
+      "tau": 62,
+      "horizon": 100,
+      "lambda1": 0.02465761097483667,
+      "tipping_score": 0.5246376413706946,
+      "scratch_iters": 700
+    },
+    "covid-us": {
+      "skill_pct": 16.392384316229435,
+      "rmse": 0.04165536925629406,
+      "persistence_rmse": 0.04982245805674849,
+      "latent_linearity": 0.4802815616130829,
+      "corr": 0.593402461362221,
+      "tau": 31,
+      "horizon": 12,
+      "lambda1": NaN,
+      "tipping_score": NaN,
+      "scratch_iters": 700
+    }
+  },
+  "few_shot_baseline": {
+    "sunspots": {
+      "skill_pct": 14.6937380379998,
+      "rmse": 0.7629005433399814,
+      "persistence_rmse": 0.8943077867833624,
+      "latent_linearity": 0.4658333659172058,
+      "corr": -0.283803143133234,
+      "tau": 62,
+      "horizon": 100,
+      "lambda1": 0.02465761097483667,
+      "tipping_score": 0.5246376413706946,
+      "ft_iters": 200
+    },
+    "covid-us": {
+      "skill_pct": -816.7330799919431,
+      "rmse": 0.45673895427132444,
+      "persistence_rmse": 0.04982245805674849,
+      "latent_linearity": 0.5326753258705139,
+      "corr": 0.26260836212246486,
+      "tau": 31,
+      "horizon": 12,
+      "lambda1": NaN,
+      "tipping_score": NaN,
+      "ft_iters": 200
+    }
+  },
+  "transfer_summary": {
+    "sunspots": {
+      "frozen_skill": 16.18,
+      "fewshot_skill": 14.69,
+      "scratch_skill": 24.1,
+      "fewshot_vs_scratch_pts": -9.4
+    },
+    "covid-us": {
+      "frozen_skill": -1032.07,
+      "fewshot_skill": -816.73,
+      "scratch_skill": 16.39,
+      "fewshot_vs_scratch_pts": -833.13
+    }
+  },
+  "files": [
+    "bifurcation.json",
+    "bifurcation.png",
+    "deep_koopman_bench.png",
+    "deep_koopman_benchmark.json",
+    "foundation_model.pt",
+    "latent_geometry.png",
+    "metrics.json",
+    "pretrain_curves.png",
+    "train_loop_bench.json",
+    "zero_shot_covid-us.png",
+    "zero_shot_sunspots.png"
+  ]
+}

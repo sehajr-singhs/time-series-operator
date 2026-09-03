@@ -1,0 +1,78 @@
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+corpus: 40 series
+  chronos ecg-215               : skill=    -0.8%  corr=-0.01  (1/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos ecg-233               : skill=   +85.0%  corr=+0.96  (2/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos ecg-209               : skill=    +4.7%  corr=+0.05  (3/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos AEP                   : skill=   +55.1%  corr=+0.66  (4/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos COMED                 : skill=    -5.5%  corr=+0.64  (5/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos DAYTON                : skill=   +55.1%  corr=+0.71  (6/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos DEOK                  : skill=   +64.1%  corr=+0.62  (7/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos DOM                   : skill=   +38.3%  corr=+0.64  (8/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos DUQ                   : skill=   +44.1%  corr=+0.62  (9/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos EKPC                  : skill=   +25.3%  corr=+0.15  (10/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos FE                    : skill=   +42.2%  corr=-0.13  (11/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos NI                    : skill=    +1.1%  corr=+0.48  (12/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos PJME                  : skill=   +22.5%  corr=+0.18  (13/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos PJMW                  : skill=   +43.3%  corr=+0.74  (14/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos weather-Temp3pm       : skill=   -22.6%  corr=-0.21  (15/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos weather-MinTemp       : skill=   +39.7%  corr=+0.05  (16/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos weather-MaxTemp       : skill=   +55.1%  corr=+0.08  (17/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos weather-Temp9am       : skill=    +2.6%  corr=+0.04  (18/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos weather-Humidity3pm   : skill=    -5.4%  corr=-0.15  (19/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos weather-Humidity9am   : skill=    -6.9%  corr=+0.08  (20/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos weather-Pressure3pm   : skill=   +47.9%  corr=+0.08  (21/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos weather-Pressure9am   : skill=   +37.5%  corr=-0.13  (22/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos weather-Rainfall      : skill=    -2.0%  corr=+0.02  (23/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos Litecoin              : skill=   +13.8%  corr=+0.85  (24/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos Bitcoin               : skill=   +57.4%  corr=+0.88  (25/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos XRP                   : skill=   -12.7%  corr=-0.37  (26/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos Dogecoin              : skill=   +24.1%  corr=+0.57  (27/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos Monero                : skill=   +27.5%  corr=-0.01  (28/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos Stellar               : skill=    -8.4%  corr=+0.55  (29/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos Tether                : skill=   +50.3%  corr=+0.44  (30/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos NEM                   : skill=   -70.3%  corr=-0.70  (31/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos sunspots              : skill=   +31.3%  corr=+0.04  (32/40)
+  chronos airline               : skill=   +67.1%  corr=+0.97  (33/40)
+  chronos covid-india           : skill=   +29.7%  corr=+0.60  (34/40)
+  chronos covid-brazil          : skill=   +18.2%  corr=+0.05  (35/40)
+  chronos covid-germany         : skill=   -10.5%  corr=-0.20  (36/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos covid-france          : skill=   -73.9%  corr=-0.02  (37/40)
+  chronos covid-us              : skill=    +4.2%  corr=-0.72  (38/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos lorenz-x              : skill=    -2.4%  corr=+0.60  (39/40)
+We recommend keeping prediction length <= 64. The quality of longer predictions may degrade since the model is not optimized for it. 
+  chronos rossler-x             : skill=   +83.2%  corr=+0.97  (40/40)
+  chronos total 1508s
+saved C:\Users\sehaj\OneDrive\Desktop\time-series-operator\output\external_baselines.json

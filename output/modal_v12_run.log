@@ -1,0 +1,7 @@
+C:\Users\sehaj\AppData\Roaming\Python\Python314\site-packages\modal\_utils\async_utils.py:43: DeprecationWarning: 'asyncio.WindowsSelectorEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+C:\Users\sehaj\AppData\Roaming\Python\Python314\site-packages\modal\_utils\async_utils.py:43: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+┌─ Error ─────────────────────────────────────────────────────────────────────┐
+│ Workspace ac-ZGyACJFoA0O7kA9drKOyGn has exceeded its spend limit            │
+└─────────────────────────────────────────────────────────────────────────────┘

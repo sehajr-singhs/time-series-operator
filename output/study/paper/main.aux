@@ -1,0 +1,70 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{chronos2024}
+\citation{timesfm2024}
+\citation{takens1981}
+\citation{koopman1931}
+\citation{mezić2005}
+\citation{schmid2010}
+\citation{wolf1985}
+\citation{lorenz1963}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{2}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{2}{Introduction}{section.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Results}{2}{section.2}\protected@file@percent }
+\newlabel{sec:results}{{2}{2}{Results}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}The scale-space diagnostic separates physics from physiology}{2}{subsection.2.1}\protected@file@percent }
+\newlabel{sec:scale}{{2.1}{2}{The scale-space diagnostic separates physics from physiology}{subsection.2.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Core TSO pipeline. Skill = \% RMSE reduction over the persistence baseline on a held-out horizon. $\lambda _1$ = largest Lyapunov exponent.}}{3}{table.caption.1}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tab:core}{{1}{3}{Core TSO pipeline. Skill = \% RMSE reduction over the persistence baseline on a held-out horizon. $\lambda _1$ = largest Lyapunov exponent}{table.caption.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}The operator detects tipping points before they arrive}{3}{subsection.2.2}\protected@file@percent }
+\newlabel{sec:tipping}{{2.2}{3}{The operator detects tipping points before they arrive}{subsection.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Learned vs.\ fixed Koopman lifts}{3}{subsection.2.3}\protected@file@percent }
+\newlabel{sec:deep}{{2.3}{3}{Learned vs.\ fixed Koopman lifts}{subsection.2.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Foundation pretraining}{3}{subsection.2.4}\protected@file@percent }
+\newlabel{sec:foundation}{{2.4}{3}{Foundation pretraining}{subsection.2.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Zero-shot transfer vs.\ baselines}{3}{subsection.2.5}\protected@file@percent }
+\newlabel{sec:zs}{{2.5}{3}{Zero-shot transfer vs.\ baselines}{subsection.2.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Corpus: 23 series, 8 domains, all fetched through the Kaggle legacy API except the synthetic physics domain.}}{4}{table.caption.2}\protected@file@percent }
+\newlabel{tab:corpus}{{2}{4}{Corpus: 23 series, 8 domains, all fetched through the Kaggle legacy API except the synthetic physics domain}{table.caption.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Scaling: corpus and width help, iterations saturate}{4}{subsection.2.6}\protected@file@percent }
+\newlabel{sec:scaling}{{2.6}{4}{Scaling: corpus and width help, iterations saturate}{subsection.2.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Zero-shot frozen TSO (mean over 3 pretraining seeds) vs GRU and scratch per-series baselines, skill over persistence (\%). Held-out systems in bold.}}{5}{table.caption.3}\protected@file@percent }
+\newlabel{tab:series}{{3}{5}{Zero-shot frozen TSO (mean over 3 pretraining seeds) vs GRU and scratch per-series baselines, skill over persistence (\%). Held-out systems in bold}{table.caption.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7}The operator rediscovers the solar cycle}{6}{subsection.2.7}\protected@file@percent }
+\newlabel{sec:solar}{{2.7}{6}{The operator rediscovers the solar cycle}{subsection.2.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.8}Comparison with an external foundation model}{6}{subsection.2.8}\protected@file@percent }
+\newlabel{sec:external}{{2.8}{6}{Comparison with an external foundation model}{subsection.2.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.9}Ablations and the arrow of time}{6}{subsection.2.9}\protected@file@percent }
+\newlabel{sec:ablations}{{2.9}{6}{Ablations and the arrow of time}{subsection.2.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Discussion and limitations}{7}{section.3}\protected@file@percent }
+\newlabel{sec:disc}{{3}{7}{Discussion and limitations}{section.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Methods}{7}{section.4}\protected@file@percent }
+\newlabel{sec:methods}{{4}{7}{Methods}{section.4}{}}
+\bibcite{chronos2024}{1}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Frozen zero-shot TSO vs GRU tokens vs per-series scratch, 23 series.}}{8}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:comparison}{{1}{8}{Frozen zero-shot TSO vs GRU tokens vs per-series scratch, 23 series}{figure.caption.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Scaling the operator: fraction of series with frozen skill $>$ 0 on one shared 23-series corpus, same probe, eleven training budgets (v5 4k iters $\rightarrow $ local 1.4k $\rightarrow $ v7 15k $\rightarrow $ v9 25k $\rightarrow $ v10 60k, three v11 GPU seeds at latent 256/hidden 768, 25k, v12: the same capacity with the Koopman probe added to the pretraining loss, 25k, v13: latent 128/hidden 384 pretrained on 40 real series tiled with a 176-series dynamics battery, and v14: latent 256/hidden 768 on the re-balanced battery with the Koopman pretext at weight 2.5). Width and corpus raise transfer until the frozen-probe plateau; seed variance dominates thereafter, and neither joint-probe regularization (v12) nor dynamics-corpus breadth (v13) alone moves the curve --- v13 instead trades smooth-periodic transfer for robustness on explosive series --- while their combination (v14, balanced battery + forced Koopman linearity) breaks it: 14/23, the first run above the plateau.}}{8}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:scaling}{{2}{8}{Scaling the operator: fraction of series with frozen skill $>$ 0 on one shared 23-series corpus, same probe, eleven training budgets (v5 4k iters $\rightarrow $ local 1.4k $\rightarrow $ v7 15k $\rightarrow $ v9 25k $\rightarrow $ v10 60k, three v11 GPU seeds at latent 256/hidden 768, 25k, v12: the same capacity with the Koopman probe added to the pretraining loss, 25k, v13: latent 128/hidden 384 pretrained on 40 real series tiled with a 176-series dynamics battery, and v14: latent 256/hidden 768 on the re-balanced battery with the Koopman pretext at weight 2.5). Width and corpus raise transfer until the frozen-probe plateau; seed variance dominates thereafter, and neither joint-probe regularization (v12) nor dynamics-corpus breadth (v13) alone moves the curve --- v13 instead trades smooth-periodic transfer for robustness on explosive series --- while their combination (v14, balanced battery + forced Koopman linearity) breaks it: 14/23, the first run above the plateau}{figure.caption.5}{}}
+\bibcite{timesfm2024}{2}
+\bibcite{takens1981}{3}
+\bibcite{koopman1931}{4}
+\bibcite{mezić2005}{5}
+\bibcite{schmid2010}{6}
+\bibcite{wolf1985}{7}
+\bibcite{lorenz1963}{8}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Zero-shot transfer on the 40-series protocol: TSO (v14, frozen) vs Chronos-t5-small (frozen) vs per-series GRU. Bars are skill vs persistence per series; medians in the legend. Chronos's \textasciitilde 80k-series pretraining corpus transfers better on median; both foundation models beat the token baseline decisively.}}{9}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:external}{{3}{9}{Zero-shot transfer on the 40-series protocol: TSO (v14, frozen) vs Chronos-t5-small (frozen) vs per-series GRU. Bars are skill vs persistence per series; medians in the legend. Chronos's \textasciitilde 80k-series pretraining corpus transfers better on median; both foundation models beat the token baseline decisively}{figure.caption.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Pretext ablations at 1.4k iterations.}}{10}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:ablations}{{4}{10}{Pretext ablations at 1.4k iterations}{figure.caption.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Weiss third-order irreversibility: data vs frozen latent.}}{10}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:reversibility}{{5}{10}{Weiss third-order irreversibility: data vs frozen latent}{figure.caption.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Scale-covariant period discovery on the held-out sunspot series: the frozen operator's detected period $\times $ coarsening factor converges to the known $132$-month Schwabe cycle.}}{11}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:solar}{{6}{11}{Scale-covariant period discovery on the held-out sunspot series: the frozen operator's detected period $\times $ coarsening factor converges to the known $132$-month Schwabe cycle}{figure.caption.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Pretext losses during the v7 Kaggle kernel pretraining.}}{11}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:pretrain}{{7}{11}{Pretext losses during the v7 Kaggle kernel pretraining}{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces All 8 domains in one shared latent (v7 model, PCA).}}{12}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:latent}{{8}{12}{All 8 domains in one shared latent (v7 model, PCA)}{figure.caption.11}{}}
+\gdef \@abspage@last{12}

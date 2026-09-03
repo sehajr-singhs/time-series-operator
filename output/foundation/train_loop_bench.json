@@ -1,0 +1,9 @@
+{
+  "label": "lorenz-cpu",
+  "device": "cpu",
+  "amp": false,
+  "iters": 250,
+  "wall_s": 0.88,
+  "ms_per_iter": 3.507,
+  "final_loss": 0.00972521398216486
+}

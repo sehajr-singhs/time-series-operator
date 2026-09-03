@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+venv/
+
+# Local secrets / config (never commit)
+.kaggle/
+kaggle.json
+*.env
+.env*
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Local scratch
+nohup.out
+*.pid
