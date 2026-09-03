@@ -18,3 +18,7 @@ Thumbs.db
 # Local scratch
 nohup.out
 *.pid
+# generated corpora (reproducible via scripts/)
+output/v15_corpus/battery.npz
+output/v15_dataset/
+output/v15_corpus/core.py

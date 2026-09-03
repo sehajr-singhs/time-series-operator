@@ -1,0 +1,29 @@
+{
+  "n_series": 5988,
+  "n": 2600,
+  "seed": 11,
+  "families": {
+    "lorenz": 372,
+    "rossler": 372,
+    "duffing": 372,
+    "vanderpol": 372,
+    "logistic": 498,
+    "henon": 186,
+    "seasonal": 372,
+    "quasiper": 312,
+    "damped": 312,
+    "heartbeat": 312,
+    "saw": 126,
+    "square": 126,
+    "ar2osc": 126,
+    "arfima": 312,
+    "garch": 312,
+    "regime": 312,
+    "burst": 252,
+    "trendstep": 252,
+    "poisson": 186,
+    "ar1": 126,
+    "rw": 126,
+    "kuramoto": 252
+  }
+}
