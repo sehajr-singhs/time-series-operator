@@ -357,7 +357,20 @@ periodic series (sunspots $+20$ $\rightarrow$ $-26$, airline $-43$
 $\rightarrow$ $-161$). Dynamics-heavy pretraining teaches the latent
 about nonlinear regime structure at the expense of smooth-periodic
 geometry; the plateau therefore sits at the probe-evaluation interface
-and the corpus balance, not at latent capacity.
+and the corpus balance, not at latent capacity. Scaling the \emph{same}
+balanced recipe 25\texttimes{} (v17: 5{,}973-series battery, identical
+recipe otherwise) confirms the per-series-exposure constraint: at the
+fixed 25k-iteration budget each series is visited $\sim$4\texttimes{}
+(vs $\sim$104\texttimes{} for v14's 192-series battery), and the
+frozen transfer \emph{degrades} --- 11/23 on the shared subset, losing
+the in-kernel head-to-head to v14 12/28 ($p=0.017$), with the biggest
+regressions on the explosive series that need the most passes
+(covid-india $-65{,}313$ $\rightarrow$ $-73{,}786$ skill points,
+Dogecoin $-1{,}300$ $\rightarrow$ $-1{,}598$), while smooth periodic
+series mildly improve (sunspots $+4.8$ $\rightarrow$ $+19.9$). Corpus
+breadth and per-series fit trade against each other at fixed compute;
+the Chronos scale-up works because its breadth is bought with
+proportionally larger training budgets.
 The v9--v14 models extend zero-shot coverage to 40 series (20/40, 16/40,
 29/40, 28/40, 25/40 and 31/40 positive in-kernel; 11/13 across grid
 electricity regions). The pretext losses

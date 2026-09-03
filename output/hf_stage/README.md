@@ -13,7 +13,7 @@ datasets:
 pipeline_tag: time-series-forecasting
 ---
 
-# TSO Foundation Model — v14
+# TSO Foundation Model — v17
 
 **Time is geometry.** The Time-Series Operator (TSO) is a foundation model
 that learns the *shape* of dynamical systems instead of token-chunking
@@ -24,15 +24,15 @@ arrow of time — on 40 series across 8 domains
 solar physics, chaotic systems). Transfer to a never-seen series is a
 **closed-form Koopman fit on the frozen latent**: zero gradient steps.
 
-## Results (v14, latent 256 / hidden 768,
-25,000 iters, Kaggle CPU (8-core))
+## Results (v17, latent 256 / hidden 768,
+25,000 iters, CPU Kaggle (25k iters))
 
 | Metric | Value |
 |---|---|
-| Zero-shot wins vs per-series GRU (40 series, in-kernel) | 31/40 (77.5%) |
-| Median frozen skill vs persistence | +1.8% (GRU: -60.6%) |
-| Solar-cycle rediscovery (held-out sunspots) | 128 mo vs known 132 (10.7 yr) |
-| Arrow-of-time pretext accuracy | 90.0% |
+| Zero-shot wins vs per-series GRU (40 series, in-kernel) | 30/40 (75.0%) |
+| Median frozen skill vs persistence | +1.0% (GRU: -60.6%) |
+| Solar-cycle rediscovery (held-out sunspots) | 129 mo vs known 132 (10.7 yr) |
+| Arrow-of-time pretext accuracy | 82.8% |
 
 The frozen operator **rediscovers the ~11-year Schwabe solar cycle** from a
 scale-space scan of its fitted Koopman eigenvalues on the held-out sunspot
@@ -77,13 +77,13 @@ envelope projection that keeps the trajectory on the observed attractor.
 
 ## Reproduce
 
-Training protocol: merged kaggle_kernel_tso kernel: balanced 192-series dynamics battery + 40 real series, Koopman pretext dyn_w=2.5, 25k iters. Full study + manuscript:
+Training protocol: `scripts/modal_v11.py` (Modal, T4); corpus `scripts/build_corpus_modal.py`. Full study + manuscript:
 `output/study/paper/main.pdf` in the source repo.
 
 ## Citation
 
 ```bibtex
-@misc{tso-v14,
+@misc{tso-v17,
   title={Time is geometry: an operator foundation model that learns the shape of dynamical systems},
   author={{TSO} Project},
   year={2026}

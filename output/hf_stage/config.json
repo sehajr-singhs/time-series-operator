@@ -4,8 +4,8 @@
   "iters": 25000,
   "seed": 0,
   "embed_dim": 5,
-  "corpus": "38 real series x8 + 192 synthetic dynamics (universal battery, seed 11)",
-  "version": "v14",
+  "corpus": "38 real series x8 + 5973 synthetic dynamics (universal battery, seed 11)",
+  "version": "v17",
   "device": "cpu",
   "gpu": null
 }

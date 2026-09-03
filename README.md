@@ -212,6 +212,18 @@ datasources. Private runs: `kaggle kernels push -p kaggle_kernel_tso`, then
   [`Sejibeji/tso-foundation-v14`](https://huggingface.co/Sejibeji/tso-foundation-v14)
   (weights + self-contained `model.py`, verified to reproduce
   `metrics.json` to the decimal).
+* **v17 (corpus-scale: 25× the synthetic corpus at fixed budget, CPU
+  Kaggle)** — the exact v14 recipe but with the 5,973-series battery
+  (randomized parameter sweeps, z-scored emission — the v15 divergence
+  fix: v15's raw-scale ARFIMA/trend-step tails blew the MSE pretexts to
+  4.8e7 and collapsed transfer). v17 converges cleanly (loss 0.87,
+  solar 128.8 mo) at 30/40 wins, 21 positive, median +1.0 — inside the
+  v14 seed band, but it **significantly loses to v14 head-to-head
+  (12W/28L, p=0.017) and reprobes at 11/23**. The reason is the
+  fixed-budget trade: 5,973 series × ~4 passes each vs 192 × ~104.
+  Corpus breadth is only bought with proportionally larger training
+  budgets — which is exactly how Chronos's ~80k-series corpus wins.
+  Checkpoints/metrics/figures: `output/kaggle_kernel_v17/`.
 
 GPU notes (Modal): `scripts/modal_v11.py` is the self-contained app —
 image bakes the merged kernel module + 40-series corpus, trains on T4 with
@@ -271,7 +283,7 @@ Key numbers in one block:
 | claim | number |
 |---|---|
 | frozen TSO vs GRU, median skill advantage | +67.6 pts (local 3-seed, 16/23 wins, p=0.09) → **+46.5 pts (v9 in-kernel, 28/40 wins, p=0.017)** → **+60.9 pts (v11 best seed, 29/40 wins, p=0.002)** → +59.2 pts (v12 in-kernel, 28/40 wins) → +58.0 pts (v13 in-kernel, 25/40 wins) → **+57.2 pts (v14 in-kernel, 31/40 wins, p<0.001)** |
-| scaling positive-fraction (shared 23-series, same probe) | 8/23 (v5) → 9/23 (local) → 13/23 (v7) → 12/23 (v9) → 10/23 (v10) → 12/5/8 (v11 ×3 seeds) → 11/23 (v12, joint probe) → 6/23 (v13, dynamics corpus) → **14/23 (v14) — ×4 seeds: 14/23 · 13/23 · 13/23 · 13/23** |
+| scaling positive-fraction (shared 23-series, same probe) | 8/23 (v5) → 9/23 (local) → 13/23 (v7) → 12/23 (v9) → 10/23 (v10) → 12/5/8 (v11 ×3 seeds) → 11/23 (v12, joint probe) → 6/23 (v13, dynamics corpus) → **14/23 (v14) — ×4 seeds: 14/23 · 13/23 · 13/23 · 13/23** → 11/23 (v17, 25× corpus at fixed budget — per-series exposure is the binding constraint) |
 | iteration / capacity / probe saturation | pretexts converge by 25k; 60k hurts the frozen probe (v9 wins 28/40 vs v10, p=0.017); width×2 at fixed probe lands within seed noise (v11); joint-probe v12 is beaten head-to-head by v9 16/23, p=0.05; dynamics-corpus v13 shifts transfer smooth→explosive (v9 15/23, p=0.11); **v14 breaks the plateau — 14/23 reprobed, first positive median skill, wins v9 paired 13/23 (p=0.34)** |
 | external FSTM head-to-head (same 40-series protocol, both frozen) | TSO median +0.4% (20/40 positive) vs **Chronos-t5-small +24.7% (28/40)**; both crush GRU (−60.6%); Chronos's ~80k-series corpus is the difference |
 | arrow-of-time classification accuracy | 94--97% (all scales) |
