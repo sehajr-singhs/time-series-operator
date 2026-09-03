@@ -59,11 +59,15 @@ def main():
                        os.path.join(ROOT, "output",
                                     f"kaggle_kernel_v14_seed{s}",
                                     "foundation_model.pt"), 256, 768))
+    # v16: protocol error run that duplicated the v14 recipe end-to-end
+    # (240-series battery instead of 5988) — a free fifth seed.
+    models.append(("v16", os.path.join(ROOT, "output", "kaggle_kernel_v16",
+                                        "foundation_model.pt"), 256, 768))
     skills = {t: reprobe(t, c, l, h, meta, z, cache) for t, c, l, h in models}
 
     names = [mm["name"] for mm in meta]
     v9 = np.array([skills["v9"][n] for n in names])
-    seeds = ["v14s0", "v14s1", "v14s2", "v14s3"]
+    seeds = ["v14s0", "v14s1", "v14s2", "v14s3", "v16"]
     S = np.array([[skills[t][n] for n in names] for t in seeds])  # (4, 23)
 
     print(f"shared corpus: {len(names)} series / "

@@ -173,6 +173,12 @@ def reprobe_kernel_models():
             (f"v14s{s}", os.path.join(ROOT, "output",
                                       f"kaggle_kernel_v14_seed{s}",
                                       "foundation_model.pt"), 256, 768))
+    kernels.append(
+        ("v16", os.path.join(ROOT, "output", "kaggle_kernel_v16",
+                             "foundation_model.pt"), 256, 768))
+    kernels.append(
+        ("v17", os.path.join(ROOT, "output", "kaggle_kernel_v17",
+                             "foundation_model.pt"), 256, 768))
     todo = [(t, c, l, h) for t, c, l, h in kernels
             if t not in out and os.path.exists(c)]
     if not todo:

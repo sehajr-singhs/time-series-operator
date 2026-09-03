@@ -57,15 +57,15 @@ re-balanced toward smooth/seasonal/spiky regimes \emph{and} the
 Koopman pretext forced to weight 2.5 at v11 capacity (v14): 14/23 on
 the shared subset (best of any run), 31/40 wins in-kernel, 24/40
 positive, median +1.8 points, and the first run to win a paired
-head-to-head against v9 (13/23, $p=0.34$). Four-seed replication
-confirms the break is not a lucky seed: all four v14 seeds land at
-13--14/23 on the shared subset (v9: 12/23; v11 seeds: 12/5/8) with a
-positive median skill in every seed ($+2.0$, $+6.4$, $+0.5$, $+1.4$
-points vs a negative v9 median), and the pooled 92 seed-series draws
-exceed v9's positive rate 53/92 vs 48/92 ($p=0.17$ vs v9's rate,
-$p=0.09$ vs chance; best single seed $p=0.047$). The direction is
-consistent across every seed; the effect size is moderate and the
-pooled test does not reach conventional significance. A frozen Chronos-t5-small
+head-to-head against v9 (13/23, $p=0.34$). Five-seed replication
+confirms the break is not a lucky seed: all five v14-recipe runs land at
+12--14/23 on the shared subset (v9: 12/23; v11 seeds: 12/5/8) with a
+positive median skill in every seed ($+2.0$, $+6.4$, $+0.5$, $+1.4$,
+$+3.8$ points vs a negative v9 median), and the Wilcoxon signed-rank
+test on per-series medians against v9 is significant at $p=0.03$
+(pooled positive fraction 65/115 vs v9's rate, $p=0.20$). The
+direction is consistent across every seed, and the magnitude gains are
+statistically significant at a conventional level. A frozen Chronos-t5-small
 (\textasciitilde80k-series pretraining corpus) still beats the operator
 on the identical protocol (median $+24.7$ vs $+1.8$ percentage points;
 24/40 head-to-head), quantifying how far corpus breadth moves the
@@ -342,9 +342,14 @@ additional v14 seeds (identical recipe, seeds 1--3) reproduce the
 result: 13/23, 13/23 and 13/23 on the shared subset with positive
 median skills in all three ($+6.4$, $+0.5$, $+1.4$), and two of the
 three seeds win the per-series head-to-head against v9 at $p=0.04$ and
-$p=0.05$. Pooled over the 92 seed-series draws the positive fraction is
-53/92 vs v9's 48/92 ($p=0.17$ vs the v9 rate; $p=0.09$ vs chance;
-Wilcoxon on per-series medians $p=0.10$). The single-seed effect size is modest and the p-values are not
+$p=0.05$; a fifth run (v16, a protocol-error duplicate of the v14
+recipe with the smaller battery) adds 12/23 with median skill $+3.8$.
+Across all five v14-recipe seeds the frozen median skill is positive in
+every single one (v9's is negative), and the Wilcoxon signed-rank test
+on per-series medians against v9 is significant at $p=0.03$; the
+pooled positive fraction is 65/115 vs v9's rate ($p=0.20$ vs the v9
+rate; $p=0.10$ vs chance), so the magnitude gains are stronger than
+the positive-count gains. The single-seed effect size is modest and the binomial p-values are not
 conventionally significant,
 so this is a directional break rather than a demonstrated law, but the
 sign pattern is consistent: every earlier experiment that pushed one

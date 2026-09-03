@@ -20,7 +20,7 @@
   <p>NMI-style preprint: <a class="pdf" href="paper/main.pdf">download main.pdf</a></p>
   <div class="grid">
     <div class="card"><img src="figs/fig_comparison.png"><p>Frozen zero-shot TSO vs GRU tokens vs per-series scratch across 23 series / 8 domains</p></div>
-    <div class="card"><img src="figs/fig_scaling.png"><p>Scaling the operator (same probe, same corpus): 8/23 → 9/23 → 13/23 → 12/23 → 10/23 → 12/5/8 → 11/23 → 6/23 → <b>14/23</b> (v5→local→v7→v9→v10→v11×3 seeds→v12 joint probe→v13 dynamics corpus→v14 balanced + forced Koopman) — v14 is the first run above the 12/23 plateau: 31/40 in-kernel wins, first positive median skill (+1.8)</p></div>
+    <div class="card"><img src="figs/fig_scaling.png"><p>Scaling the operator (same probe, same corpus): 8/23 → 9/23 → 13/23 → 12/23 → 10/23 → 12/5/8 → 11/23 → 6/23 → <b>14/23</b> (v5→local→v7→v9→v10→ v11×3 seeds→v12 joint probe→v13 dynamics corpus→v14 balanced + forced Koopman → <b>v14 ×4 seeds: 14/23 · 13/23 · 13/23 · 13/23</b>) — v14 is the first run above the 12/23 plateau: 31/40 in-kernel wins, first positive median skill (+1.8), replicated across all 4 seeds</p></div>
     <div class="card"><img src="figs/fig_external.png"><p>External foundation models on the identical protocol: Chronos-t5-small (frozen, ~80k-series corpus) beats the 40-series TSO on median transfer (+24.7 vs +0.4 pts, 27/40 head-to-head) — corpus scale is the gap</p></div>
     <div class="card"><img src="figs/fig_ablations.png"><p>Pretext ablations at 1.4k iterations: pretexts converge but only pay off with scale</p></div>
     <div class="card"><img src="figs/fig_reversibility.png"><p>Weiss third-order irreversibility — data vs frozen latent (arrow preserved only in part)</p></div>

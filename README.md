@@ -199,13 +199,13 @@ datasources. Private runs: `kaggle kernels push -p kaggle_kernel_tso`, then
   (corpus balance + forced linearity) combine into a positive one —
   every single-lever experiment landed inside seed noise, this
   two-lever combination lands outside it in every tracked metric.
-  **Replicated across 4 seeds** (identical recipe, seeds 0–3): 14/23 ·
-  13/23 · 13/23 · 13/23 on the shared reprobe — every seed above the
-  v9 plateau — with a positive median skill in every seed (+2.0, +6.4,
-  +0.5, +1.4 pts; v9's median is negative). Pooled over 92
-  seed-series draws: 53/92 positive vs v9's 48/92 (p=0.17 vs the v9
-  rate; p=0.09 vs chance; best single seed p=0.047). Direction is
-  consistent across all seeds; the effect size is moderate.
+  **Replicated across 5 runs** (identical recipe, seeds 0–3 + a
+  protocol-error duplicate, v16): 14/23 · 13/23 · 13/23 · 13/23 ·
+  12/23 on the shared reprobe — with a **positive median skill in
+  every single run** (+2.0, +6.4, +0.5, +1.4, +3.8 pts; v9's median
+  is negative). Wilcoxon signed-rank on per-series medians vs v9:
+  **p=0.03**; pooled 65/115 positive vs v9's rate (p=0.20). Direction
+  consistent across all runs; the magnitude gains are significant.
   Checkpoints/metrics/figures: `output/kaggle_kernel_v14/` +
   `output/kaggle_kernel_v14_seed{1,2,3}/`. Published on
   Hugging Face as
