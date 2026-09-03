@@ -2624,7 +2624,7 @@ def main():
     samples, meta, held_flags = build_corpus()
     held = [m["name"] for m in meta if m["held_out"]]
     print(f"  {len(samples)} real series, held out: {held}")
-    _big = int(os.environ.get("V15_TARGET", 0))
+    _big = int(os.environ.get("V15_TARGET", 5988))
     if _big > 0:
         battery = gen_v15_battery(target=_big)
         print(f"  + {len(battery)} synthetic dynamics series "
@@ -2835,6 +2835,15 @@ def gen(seed, target, n):
         x = np.asarray(x, dtype=float)
         if x is None or not np.all(np.isfinite(x)):
             return False
+        # z-score every synthetic series: prepare_pair embeds raw values and
+        # the pretext loss is raw MSE, so unbounded families (arfima H->0.9,
+        # trendstep, garch tails) would dwarf the whole corpus (v15 lesson:
+        # loss 621, transfer collapse). Real series are z-scored upstream by
+        # prepare_series; this restores that invariant for the battery.
+        sd = float(np.std(x))
+        if sd < 1e-9 or not np.isfinite(sd):
+            return False
+        x = (x - float(np.mean(x))) / sd
         if noisy:
             r = np.random.default_rng(hash((family, cfg)) & 0xffffffff)
             x = x + 0.05 * float(np.std(x)) * r.normal(size=len(x))

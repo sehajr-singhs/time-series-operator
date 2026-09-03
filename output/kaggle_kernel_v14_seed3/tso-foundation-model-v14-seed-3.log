@@ -1,0 +1,124 @@
+[{"stream_name":"stdout","time":6.840732032,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":6.840819526,"data":"TSO foundation pretraining V14 — balanced corpus, forced Koopman linearity\n"}
+,{"stream_name":"stdout","time":6.84082613,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":6.840829029,"data":"  no CUDA available; running on CPU\n"}
+,{"stream_name":"stdout","time":6.840831556,"data":"2.10.0+cpu cuda: False \n"}
+,{"stream_name":"stdout","time":6.840833977,"data":"\n"}
+,{"stream_name":"stdout","time":6.840836403,"data":"[1/5] corpus from attached datasets\n"}
+,{"stream_name":"stdout","time":6.840838764,"data":"  /kaggle/input: ['datasets']\n"}
+,{"stream_name":"stdout","time":7.251933305,"data":"  corpus + ecg-215            [physiology  ] len= 3361 held_out=False\n"}
+,{"stream_name":"stdout","time":7.253420882,"data":"  corpus + ecg-233            [physiology  ] len= 3067 held_out=False\n"}
+,{"stream_name":"stdout","time":7.254729974,"data":"  corpus + ecg-209            [physiology  ] len= 3004 held_out=False\n"}
+,{"stream_name":"stdout","time":8.25849064,"data":"  corpus + AEP                [energy-grid ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.259658263,"data":"  corpus + COMED              [energy-grid ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.260843231,"data":"  corpus + DAYTON             [energy-grid ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.262236208000001,"data":"  corpus + DEOK               [energy-grid ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.263454444,"data":"  corpus + DOM                [energy-grid ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.264881705,"data":"  corpus + DUQ                [energy-grid ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.266040368,"data":"  corpus + EKPC               [energy-grid ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.267179524,"data":"  corpus + FE                 [energy-grid ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.268281421,"data":"  corpus + NI                 [energy-grid ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.269458567,"data":"  corpus + PJME               [energy-grid ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.270594106,"data":"  corpus + PJMW               [energy-grid ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.735755136,"data":"  corpus + weather-Temp3pm    [meteorology ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.736808618,"data":"  corpus + weather-MinTemp    [meteorology ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.738012761,"data":"  corpus + weather-MaxTemp    [meteorology ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.739224616,"data":"  corpus + weather-Temp9am    [meteorology ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.740379696,"data":"  corpus + weather-Humidity3pm [meteorology ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.741545815,"data":"  corpus + weather-Humidity9am [meteorology ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.74274462,"data":"  corpus + weather-Pressure3pm [meteorology ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.743945113,"data":"  corpus + weather-Pressure9am [meteorology ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":8.745158005,"data":"  corpus + weather-Rainfall   [meteorology ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":9.035133982,"data":"  corpus + Litecoin           [finance     ] len= 2991 held_out=False\n"}
+,{"stream_name":"stdout","time":9.036155558,"data":"  corpus + Bitcoin            [finance     ] len= 2991 held_out=False\n"}
+,{"stream_name":"stdout","time":9.037239209,"data":"  corpus + XRP                [finance     ] len= 2893 held_out=False\n"}
+,{"stream_name":"stdout","time":9.038254597,"data":"  corpus + Dogecoin           [finance     ] len= 2760 held_out=False\n"}
+,{"stream_name":"stdout","time":9.039287048,"data":"  corpus + Monero             [finance     ] len= 2602 held_out=False\n"}
+,{"stream_name":"stdout","time":9.040350692,"data":"  corpus + Stellar            [finance     ] len= 2527 held_out=False\n"}
+,{"stream_name":"stdout","time":9.041331664,"data":"  corpus + Tether             [finance     ] len= 2318 held_out=False\n"}
+,{"stream_name":"stdout","time":9.042324259,"data":"  corpus + NEM                [finance     ] len= 2288 held_out=False\n"}
+,{"stream_name":"stdout","time":9.052967444,"data":"  corpus + sunspots           [solar-physics] len= 3265 held_out=True\n"}
+,{"stream_name":"stdout","time":9.081858923,"data":"  corpus + airline            [economics   ] len=  144 held_out=False\n"}
+,{"stream_name":"stdout","time":9.190862024,"data":"  corpus + covid-india        [epidemiology] len=  187 held_out=False\n"}
+,{"stream_name":"stdout","time":9.19115045,"data":"  corpus + covid-brazil       [epidemiology] len=  187 held_out=False\n"}
+,{"stream_name":"stdout","time":9.191601711,"data":"  corpus + covid-germany      [epidemiology] len=  187 held_out=False\n"}
+,{"stream_name":"stdout","time":9.19264514,"data":"  corpus + covid-france       [epidemiology] len= 2067 held_out=False\n"}
+,{"stream_name":"stdout","time":9.193019393,"data":"  corpus + covid-us           [epidemiology] len=  187 held_out=True\n"}
+,{"stream_name":"stdout","time":10.176994017,"data":"  corpus + lorenz-x           [physics     ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":10.178131451,"data":"  corpus + rossler-x          [physics     ] len= 4096 held_out=False\n"}
+,{"stream_name":"stdout","time":10.178160484,"data":"  40 real series, held out: ['sunspots', 'covid-us']\n"}
+,{"stream_name":"stdout","time":18.204411728,"data":"  + 192 synthetic dynamics series (attractor sweeps, maps, stochastic regimes)\n"}
+,{"stream_name":"stdout","time":18.204458411,"data":"\n"}
+,{"stream_name":"stdout","time":18.204464499,"data":"[2/5] AMP training-loop benchmark\n"}
+,{"stream_name":"stdout","time":24.347084322,"data":"  [bench] device=cpu amp=False 1.30 ms/iter over 300 iters\n"}
+,{"stream_name":"stdout","time":24.537456214,"data":"\n"}
+,{"stream_name":"stdout","time":24.537494247,"data":"[3/5] pretraining (latent 256 / hidden 768, 25000 iters, dyn_w=2.5, seed=3, device=cpu, corpus=496 entries = 38 real x8 + 192 synthetic)\n"}
+,{"stream_name":"stdout","time":24.998147813,"data":"  pretrain iter     0: loss=4.10898 (recon 0.9586 dyn 0.9776 scale 0.0247 arrow 0.6940 arrow-acc 0.50)\n"}
+,{"stream_name":"stdout","time":1235.462259618,"data":"  pretrain iter  5000: loss=1.49002 (recon 0.0983 dyn 0.5447 scale 0.0118 arrow 0.0240 arrow-acc 1.00)\n"}
+,{"stream_name":"stdout","time":2454.551250516,"data":"  pretrain iter 10000: loss=2.39129 (recon 0.1137 dyn 0.9013 scale 0.0370 arrow 0.0058 arrow-acc 1.00)\n"}
+,{"stream_name":"stdout","time":3673.428545196,"data":"  pretrain iter 15000: loss=4.47333 (recon 0.0324 dyn 1.7723 scale 0.0107 arrow 0.0048 arrow-acc 1.00)\n"}
+,{"stream_name":"stdout","time":4883.36833537,"data":"  pretrain iter 20000: loss=1.45287 (recon 0.0400 dyn 0.5578 scale 0.0177 arrow 0.0096 arrow-acc 1.00)\n"}
+,{"stream_name":"stdout","time":6094.328809405,"data":"  pretrain iter 24999: loss=1.66620 (recon 0.0612 dyn 0.6351 scale 0.0218 arrow 0.0063 arrow-acc 1.00)\n"}
+,{"stream_name":"stdout","time":6095.486184424,"data":"\n"}
+,{"stream_name":"stdout","time":6095.486223986,"data":"[4/5] zero-shot transfer + in-kernel baselines\n"}
+,{"stream_name":"stdout","time":6099.542889669,"data":"  frozen ecg-215               : skill=   +0.1%  corr=-0.05  gru=   -3.4%\n"}
+,{"stream_name":"stdout","time":6102.989396542,"data":"  frozen ecg-233               : skill=   -2.6%  corr=-0.08  gru=   +0.8%\n"}
+,{"stream_name":"stdout","time":6106.318568147,"data":"  frozen ecg-209               : skill=   -6.4%  corr=+0.01  gru= -203.5%\n"}
+,{"stream_name":"stdout","time":6110.288265893,"data":"  frozen AEP                   : skill=   +8.5%  corr=+0.34  gru= -133.7%\n"}
+,{"stream_name":"stdout","time":6113.358796988,"data":"  frozen COMED                 : skill=  +17.1%  corr=+0.18  gru=  -69.8%\n"}
+,{"stream_name":"stdout","time":6117.271965791,"data":"  frozen DAYTON                : skill=   +6.1%  corr=+0.33  gru= -130.5%\n"}
+,{"stream_name":"stdout","time":6120.342521864,"data":"  frozen DEOK                  : skill=  +44.9%  corr=+0.06  gru=   +6.1%\n"}
+,{"stream_name":"stdout","time":6123.38566505,"data":"  frozen DOM                   : skill=  +55.9%  corr=+0.54  gru=  -52.2%\n"}
+,{"stream_name":"stdout","time":6127.27387352,"data":"  frozen DUQ                   : skill=  +59.5%  corr=+0.57  gru=  -15.0%\n"}
+,{"stream_name":"stdout","time":6130.33973505,"data":"  frozen EKPC                  : skill=  +67.3%  corr=+0.50  gru=  +19.6%\n"}
+,{"stream_name":"stdout","time":6134.299775412,"data":"  frozen FE                    : skill=  -27.9%  corr=-0.01  gru= -157.6%\n"}
+,{"stream_name":"stdout","time":6137.319960259,"data":"  frozen NI                    : skill=  -11.7%  corr=+0.05  gru= -176.1%\n"}
+,{"stream_name":"stdout","time":6141.249010413,"data":"  frozen PJME                  : skill=  +24.0%  corr=+0.02  gru=  +25.7%\n"}
+,{"stream_name":"stdout","time":6145.187321636,"data":"  frozen PJMW                  : skill=   -2.5%  corr=-0.12  gru= -102.3%\n"}
+,{"stream_name":"stdout","time":6149.098836138,"data":"  frozen weather-Temp3pm       : skill=   +3.6%  corr=-0.04  gru=  -43.2%\n"}
+,{"stream_name":"stdout","time":6153.045133346,"data":"  frozen weather-MinTemp       : skill=   -4.2%  corr=+0.07  gru= -209.5%\n"}
+,{"stream_name":"stdout","time":6156.97532818,"data":"  frozen weather-MaxTemp       : skill=   +7.6%  corr=+0.18  gru=  -78.1%\n"}
+,{"stream_name":"stdout","time":6160.921847146,"data":"  frozen weather-Temp9am       : skill=  +34.5%  corr=+0.15  gru=  -48.7%\n"}
+,{"stream_name":"stdout","time":6164.861157324,"data":"  frozen weather-Humidity3pm   : skill=  +14.2%  corr=+0.08  gru=  -41.3%\n"}
+,{"stream_name":"stdout","time":6168.774918704,"data":"  frozen weather-Humidity9am   : skill=  +22.2%  corr=+0.14  gru=  +21.8%\n"}
+,{"stream_name":"stdout","time":6172.758958576,"data":"  frozen weather-Pressure3pm   : skill=  +17.1%  corr=+0.12  gru=  +17.3%\n"}
+,{"stream_name":"stdout","time":6176.692553007,"data":"  frozen weather-Pressure9am   : skill=  +33.9%  corr=+0.12  gru=  +33.8%\n"}
+,{"stream_name":"stdout","time":6181.604240905,"data":"  frozen weather-Rainfall      : skill=   +7.4%  corr=+0.03  gru=   +7.9%\n"}
+,{"stream_name":"stdout","time":6182.747580782,"data":"  frozen Litecoin              : skill=  -22.1%  corr=-0.14  gru=  -16.1%\n"}
+,{"stream_name":"stdout","time":6183.826408062,"data":"  frozen Bitcoin               : skill=  -34.1%  corr=-0.28  gru=  -64.4%\n"}
+,{"stream_name":"stdout","time":6184.908000395,"data":"  frozen XRP                   : skill=  +45.2%  corr=+0.91  gru= -590.2%\n"}
+,{"stream_name":"stdout","time":6185.90396879,"data":"  frozen Dogecoin              : skill=-2979.1%  corr=-0.03  gru=-1962.5%\n"}
+,{"stream_name":"stdout","time":6186.850956151,"data":"  frozen Monero                : skill=  -23.9%  corr=+0.52  gru= -147.5%\n"}
+,{"stream_name":"stdout","time":6187.773586594,"data":"  frozen Stellar               : skill=  -82.2%  corr=+0.78  gru=  -43.5%\n"}
+,{"stream_name":"stdout","time":6188.711698877,"data":"  frozen Tether                : skill=  -38.0%  corr=+0.47  gru=-1506.2%\n"}
+,{"stream_name":"stdout","time":6189.578110259,"data":"  frozen NEM                   : skill= -153.1%  corr=-0.88  gru=-1321.7%\n"}
+,{"stream_name":"stdout","time":6192.398921545,"data":"  frozen sunspots              : skill=  +22.6%  corr=+0.06  gru= -281.1%\n"}
+,{"stream_name":"stdout","time":6192.90382508,"data":"  frozen airline               : skill=  -17.7%  corr=-0.39  gru=  -67.6%\n"}
+,{"stream_name":"stdout","time":6193.369092756,"data":"  frozen covid-india           : skill=-51890.5%  corr=+0.40  gru=-24021.4%\n"}
+,{"stream_name":"stdout","time":6193.840768559,"data":"  frozen covid-brazil          : skill=  -30.2%  corr=-0.38  gru=  +17.5%\n"}
+,{"stream_name":"stdout","time":6194.294058987,"data":"  frozen covid-germany         : skill= -252.8%  corr=-0.06  gru=-1116.3%\n"}
+,{"stream_name":"stdout","time":6195.133054167,"data":"  frozen covid-france          : skill=   -0.1%  corr=-0.03  gru=   -0.0%\n"}
+,{"stream_name":"stdout","time":6195.590781472,"data":"  frozen covid-us              : skill=-1382.8%  corr=+0.24  gru= -850.5%\n"}
+,{"stream_name":"stdout","time":6197.756634161,"data":"  frozen lorenz-x              : skill=  -13.8%  corr=+0.30  gru=  +11.6%\n"}
+,{"stream_name":"stdout","time":6199.186986663,"data":"  frozen rossler-x             : skill=  -24.3%  corr=-0.49  gru=  -56.7%\n"}
+,{"stream_name":"stdout","time":6202.817704646,"data":"  scratch sunspots              : skill=  +22.8%  corr=-0.03\n"}
+,{"stream_name":"stdout","time":6204.647967136,"data":"  scratch covid-us              : skill=  -51.6%  corr=+0.50\n"}
+,{"stream_name":"stdout","time":6210.979508096,"data":"  SOLAR-CYCLE DISCOVERY: the frozen operator on the held-out sunspot series reads a dominant period of 131 months (10.9 years) at the coarsest scale — against the known Schwabe cycle of 132 months (~11 years).\n"}
+,{"stream_name":"stdout","time":6210.981250752,"data":"\n"}
+,{"stream_name":"stdout","time":6210.981278058,"data":"  -\u003e outputs in /kaggle/working:\n"}
+,{"stream_name":"stdout","time":6210.981285482,"data":"     foundation_model.pt\n"}
+,{"stream_name":"stdout","time":6210.981290477,"data":"     latent_geometry.png\n"}
+,{"stream_name":"stdout","time":6210.981295541,"data":"     metrics.json\n"}
+,{"stream_name":"stdout","time":6210.981300285,"data":"     pretrain_curves.png\n"}
+,{"stream_name":"stdout","time":6210.981305049,"data":"     solar_cycle.png\n"}
+,{"stream_name":"stdout","time":6210.981309629,"data":"     train_loop_bench.json\n"}
+,{"stream_name":"stdout","time":6210.981314057,"data":"     zero_shot_covid-us.png\n"}
+,{"stream_name":"stdout","time":6210.98131854,"data":"     zero_shot_sunspots.png\n"}
+,{"stream_name":"stdout","time":6210.981322627,"data":"DONE\n"}
+,{"stream_name":"stderr","time":6214.687657613,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":6214.687836008,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":6214.985485517,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":6214.985517955,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":6215.748914209,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":6217.899068539,"data":"[NbConvertApp] Writing 920322 bytes to __results__.html\n"}
+]

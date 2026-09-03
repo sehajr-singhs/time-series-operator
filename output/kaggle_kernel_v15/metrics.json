@@ -1,0 +1,1017 @@
+{
+  "version": "v15",
+  "device": "cpu",
+  "cuda": false,
+  "gpu": null,
+  "train_loop": {
+    "label": "gpu-cpu",
+    "device": "cpu",
+    "amp": false,
+    "iters": 300,
+    "wall_s": 0.32,
+    "ms_per_iter": 1.062,
+    "final_loss": 1.0316007137298584
+  },
+  "pretrain": {
+    "iters": 25000,
+    "latent_dim": 256,
+    "hidden": 768,
+    "dyn_w": 2.5,
+    "seed": 0,
+    "requested_iters": 25000,
+    "joint_probe": false,
+    "mode": "v15-corpus-scale",
+    "amp": false,
+    "final_loss": 621.5381469726562,
+    "pretext_losses": {
+      "recon": 47993588.58352961,
+      "dyn": 47903988.49534569,
+      "scale": 3.400110840536654,
+      "arrow": 0.6788936498761177,
+      "arrow_acc": 0.5571875,
+      "probe": 0.0,
+      "spec": 0.0
+    }
+  },
+  "corpus": [
+    {
+      "name": "ecg-215",
+      "domain": "physiology",
+      "held_out": false,
+      "n": 3361,
+      "tau_f": 1
+    },
+    {
+      "name": "ecg-233",
+      "domain": "physiology",
+      "held_out": false,
+      "n": 3067,
+      "tau_f": 1
+    },
+    {
+      "name": "ecg-209",
+      "domain": "physiology",
+      "held_out": false,
+      "n": 3004,
+      "tau_f": 3
+    },
+    {
+      "name": "AEP",
+      "domain": "energy-grid",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 2
+    },
+    {
+      "name": "COMED",
+      "domain": "energy-grid",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 4
+    },
+    {
+      "name": "DAYTON",
+      "domain": "energy-grid",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 2
+    },
+    {
+      "name": "DEOK",
+      "domain": "energy-grid",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 3
+    },
+    {
+      "name": "DOM",
+      "domain": "energy-grid",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 2
+    },
+    {
+      "name": "DUQ",
+      "domain": "energy-grid",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 2
+    },
+    {
+      "name": "EKPC",
+      "domain": "energy-grid",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 2
+    },
+    {
+      "name": "FE",
+      "domain": "energy-grid",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 3
+    },
+    {
+      "name": "NI",
+      "domain": "energy-grid",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 3
+    },
+    {
+      "name": "PJME",
+      "domain": "energy-grid",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 2
+    },
+    {
+      "name": "PJMW",
+      "domain": "energy-grid",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 3
+    },
+    {
+      "name": "weather-Temp3pm",
+      "domain": "meteorology",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 4
+    },
+    {
+      "name": "weather-MinTemp",
+      "domain": "meteorology",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 4
+    },
+    {
+      "name": "weather-MaxTemp",
+      "domain": "meteorology",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 4
+    },
+    {
+      "name": "weather-Temp9am",
+      "domain": "meteorology",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 4
+    },
+    {
+      "name": "weather-Humidity3pm",
+      "domain": "meteorology",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 4
+    },
+    {
+      "name": "weather-Humidity9am",
+      "domain": "meteorology",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 4
+    },
+    {
+      "name": "weather-Pressure3pm",
+      "domain": "meteorology",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 4
+    },
+    {
+      "name": "weather-Pressure9am",
+      "domain": "meteorology",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 5
+    },
+    {
+      "name": "weather-Rainfall",
+      "domain": "meteorology",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 3
+    },
+    {
+      "name": "Litecoin",
+      "domain": "finance",
+      "held_out": false,
+      "n": 2991,
+      "tau_f": 150
+    },
+    {
+      "name": "Bitcoin",
+      "domain": "finance",
+      "held_out": false,
+      "n": 2991,
+      "tau_f": 150
+    },
+    {
+      "name": "XRP",
+      "domain": "finance",
+      "held_out": false,
+      "n": 2893,
+      "tau_f": 97
+    },
+    {
+      "name": "Dogecoin",
+      "domain": "finance",
+      "held_out": false,
+      "n": 2760,
+      "tau_f": 150
+    },
+    {
+      "name": "Monero",
+      "domain": "finance",
+      "held_out": false,
+      "n": 2602,
+      "tau_f": 150
+    },
+    {
+      "name": "Stellar",
+      "domain": "finance",
+      "held_out": false,
+      "n": 2527,
+      "tau_f": 150
+    },
+    {
+      "name": "Tether",
+      "domain": "finance",
+      "held_out": false,
+      "n": 2318,
+      "tau_f": 1
+    },
+    {
+      "name": "NEM",
+      "domain": "finance",
+      "held_out": false,
+      "n": 2288,
+      "tau_f": 92
+    },
+    {
+      "name": "sunspots",
+      "domain": "solar-physics",
+      "held_out": true,
+      "n": 3265,
+      "tau_f": 62
+    },
+    {
+      "name": "airline",
+      "domain": "economics",
+      "held_out": false,
+      "n": 144,
+      "tau_f": 7
+    },
+    {
+      "name": "covid-india",
+      "domain": "epidemiology",
+      "held_out": false,
+      "n": 187,
+      "tau_f": 31
+    },
+    {
+      "name": "covid-brazil",
+      "domain": "epidemiology",
+      "held_out": false,
+      "n": 187,
+      "tau_f": 3
+    },
+    {
+      "name": "covid-germany",
+      "domain": "epidemiology",
+      "held_out": false,
+      "n": 187,
+      "tau_f": 3
+    },
+    {
+      "name": "covid-france",
+      "domain": "epidemiology",
+      "held_out": false,
+      "n": 2067,
+      "tau_f": 1
+    },
+    {
+      "name": "covid-us",
+      "domain": "epidemiology",
+      "held_out": true,
+      "n": 187,
+      "tau_f": 31
+    },
+    {
+      "name": "lorenz-x",
+      "domain": "physics",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 14
+    },
+    {
+      "name": "rossler-x",
+      "domain": "physics",
+      "held_out": false,
+      "n": 4096,
+      "tau_f": 34
+    }
+  ],
+  "corpus_note": "38 real series x8 + 5973 synthetic dynamics (universal battery, seed 11)",
+  "zero_shot": {
+    "ecg-215": {
+      "skill_pct": -241.63865083748783,
+      "skill_metric": "persistence",
+      "rmse": 4.864315606472653,
+      "persistence_rmse": 1.4238188783816887,
+      "window_flat": false,
+      "latent_linearity": 1.8834970967045983,
+      "corr": -0.06961594898710455,
+      "tau": 1,
+      "horizon": 100,
+      "cap_hits": 1,
+      "lambda1": 0.03315691340106757,
+      "tipping_score": 0.5331083959718912
+    },
+    "ecg-233": {
+      "skill_pct": -414.30625435315835,
+      "skill_metric": "persistence",
+      "rmse": 5.086150409858916,
+      "persistence_rmse": 0.9889341937433279,
+      "window_flat": false,
+      "latent_linearity": 1.4828265802563396,
+      "corr": -0.16309914626225333,
+      "tau": 1,
+      "horizon": 100,
+      "cap_hits": 2,
+      "lambda1": 0.039044929647026765,
+      "tipping_score": 0.5389657570929354
+    },
+    "ecg-209": {
+      "skill_pct": -1782.4843153124516,
+      "skill_metric": "persistence",
+      "rmse": 12.727904882908764,
+      "persistence_rmse": 0.6761227586003131,
+      "window_flat": false,
+      "latent_linearity": 1.3437929043124723,
+      "corr": 0.07093209516533532,
+      "tau": 3,
+      "horizon": 100,
+      "cap_hits": 3,
+      "lambda1": 0.01817531699025435,
+      "tipping_score": 0.518167315788243
+    },
+    "AEP": {
+      "skill_pct": -448.4139853872298,
+      "skill_metric": "persistence",
+      "rmse": 5.420188366538608,
+      "persistence_rmse": 0.9883388299646417,
+      "window_flat": false,
+      "latent_linearity": 0.8765892267130753,
+      "corr": -0.17346241880815658,
+      "tau": 2,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.01995360943926731,
+      "tipping_score": 0.5199430235689771
+    },
+    "COMED": {
+      "skill_pct": -251.66680506372418,
+      "skill_metric": "persistence",
+      "rmse": 5.400791346532022,
+      "persistence_rmse": 1.5357694467504162,
+      "window_flat": false,
+      "latent_linearity": 1.0433337755586396,
+      "corr": -0.2519301073437156,
+      "tau": 4,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.012528200732667881,
+      "tipping_score": 0.5125255795590009
+    },
+    "DAYTON": {
+      "skill_pct": -384.11331184265913,
+      "skill_metric": "persistence",
+      "rmse": 5.187891705057348,
+      "persistence_rmse": 1.0716275669658628,
+      "window_flat": false,
+      "latent_linearity": 0.8194556841694666,
+      "corr": -0.21063798184973134,
+      "tau": 2,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.018095402094227584,
+      "tipping_score": 0.518087505933493
+    },
+    "DEOK": {
+      "skill_pct": -368.9910733449327,
+      "skill_metric": "persistence",
+      "rmse": 8.008513677997103,
+      "persistence_rmse": 1.70760471428142,
+      "window_flat": false,
+      "latent_linearity": 1.3619663838984488,
+      "corr": -0.20579877055591062,
+      "tau": 3,
+      "horizon": 100,
+      "cap_hits": 1,
+      "lambda1": 0.0043249772627334095,
+      "tipping_score": 0.5043248693985587
+    },
+    "DOM": {
+      "skill_pct": -547.7590331230481,
+      "skill_metric": "persistence",
+      "rmse": 11.00992707957308,
+      "persistence_rmse": 1.699694873646268,
+      "window_flat": false,
+      "latent_linearity": 0.8214115224191513,
+      "corr": -0.07869636158744364,
+      "tau": 2,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.017240571170890815,
+      "tipping_score": 0.5172337416978616
+    },
+    "DUQ": {
+      "skill_pct": -167.23930940599485,
+      "skill_metric": "persistence",
+      "rmse": 5.432699785556115,
+      "persistence_rmse": 2.032896955777811,
+      "window_flat": false,
+      "latent_linearity": 0.8510367087637725,
+      "corr": -0.041599204262730956,
+      "tau": 2,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.014665192000777127,
+      "tipping_score": 0.5146609880988264
+    },
+    "EKPC": {
+      "skill_pct": -55.92842737968551,
+      "skill_metric": "persistence",
+      "rmse": 4.296826218143883,
+      "persistence_rmse": 2.755640065349416,
+      "window_flat": false,
+      "latent_linearity": 1.4312903166823023,
+      "corr": 0.4214601414810848,
+      "tau": 2,
+      "horizon": 100,
+      "cap_hits": 1,
+      "lambda1": 0.02790667447921208,
+      "tipping_score": 0.5278777329024883
+    },
+    "FE": {
+      "skill_pct": -236.23615488264159,
+      "skill_metric": "persistence",
+      "rmse": 4.575412306532373,
+      "persistence_rmse": 1.3607734445242377,
+      "window_flat": false,
+      "latent_linearity": 1.232892286125705,
+      "corr": 0.1231846937352506,
+      "tau": 3,
+      "horizon": 100,
+      "cap_hits": 1,
+      "lambda1": 0.004943545180152037,
+      "tipping_score": 0.5049433841017628
+    },
+    "NI": {
+      "skill_pct": -1263.0535021475562,
+      "skill_metric": "persistence",
+      "rmse": 8.857624490568691,
+      "persistence_rmse": 0.6498368902330744,
+      "window_flat": false,
+      "latent_linearity": 1.2775453377208694,
+      "corr": -0.20698264294509888,
+      "tau": 3,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.008491236468768051,
+      "tipping_score": 0.5084904202596442
+    },
+    "PJME": {
+      "skill_pct": -92.01785323191005,
+      "skill_metric": "persistence",
+      "rmse": 3.0259188786235764,
+      "persistence_rmse": 1.5758528843508188,
+      "window_flat": false,
+      "latent_linearity": 1.5057111808234782,
+      "corr": -0.009293399867963839,
+      "tau": 2,
+      "horizon": 100,
+      "cap_hits": 1,
+      "lambda1": 0.0118120621815239,
+      "tipping_score": 0.511809865237612
+    },
+    "PJMW": {
+      "skill_pct": -776.2357603838852,
+      "skill_metric": "persistence",
+      "rmse": 8.751758762556126,
+      "persistence_rmse": 0.998790412151396,
+      "window_flat": false,
+      "latent_linearity": 1.2700509807619187,
+      "corr": -0.22806554398590037,
+      "tau": 3,
+      "horizon": 100,
+      "cap_hits": 1,
+      "lambda1": 0.01227362801994387,
+      "tipping_score": 0.5122711633830607
+    },
+    "weather-Temp3pm": {
+      "skill_pct": -364.95764295360675,
+      "skill_metric": "persistence",
+      "rmse": 5.1115782817360405,
+      "persistence_rmse": 1.0993642881672279,
+      "window_flat": false,
+      "latent_linearity": 0.6545087311688677,
+      "corr": -0.14858764093134688,
+      "tau": 4,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.01460299447527254,
+      "tipping_score": 0.5145988438230527
+    },
+    "weather-MinTemp": {
+      "skill_pct": -410.4943191423418,
+      "skill_metric": "persistence",
+      "rmse": 4.3493878117276425,
+      "persistence_rmse": 0.8519953403271657,
+      "window_flat": false,
+      "latent_linearity": 0.7530931713994237,
+      "corr": 0.025424580325753815,
+      "tau": 4,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.008077371901646112,
+      "tipping_score": 0.5080766693089337
+    },
+    "weather-MaxTemp": {
+      "skill_pct": -552.8954808108069,
+      "skill_metric": "persistence",
+      "rmse": 7.436818009517704,
+      "persistence_rmse": 1.139051843379616,
+      "window_flat": false,
+      "latent_linearity": 0.6485492224144891,
+      "corr": 0.10172946513555359,
+      "tau": 4,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.0062714425491452765,
+      "tipping_score": 0.5062711136871011
+    },
+    "weather-Temp9am": {
+      "skill_pct": -159.22653673131384,
+      "skill_metric": "persistence",
+      "rmse": 3.8894423617450435,
+      "persistence_rmse": 1.5004028564314842,
+      "window_flat": false,
+      "latent_linearity": 0.6622404011841713,
+      "corr": -0.04984980686452998,
+      "tau": 4,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.015765293206973872,
+      "tipping_score": 0.5157600707818478
+    },
+    "weather-Humidity3pm": {
+      "skill_pct": -131.6955739980867,
+      "skill_metric": "persistence",
+      "rmse": 2.6007659481095833,
+      "persistence_rmse": 1.1224927188859724,
+      "window_flat": false,
+      "latent_linearity": 0.7837644297710558,
+      "corr": 0.112163509850991,
+      "tau": 4,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.00896403723572855,
+      "tipping_score": 0.5089630769646251
+    },
+    "weather-Humidity9am": {
+      "skill_pct": -204.76327712384884,
+      "skill_metric": "persistence",
+      "rmse": 3.7989240957127115,
+      "persistence_rmse": 1.2465163557645154,
+      "window_flat": false,
+      "latent_linearity": 0.8508813784516857,
+      "corr": 0.3514097300125811,
+      "tau": 4,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.01000759096423613,
+      "tipping_score": 0.5100062548063211
+    },
+    "weather-Pressure3pm": {
+      "skill_pct": -166.66336775782972,
+      "skill_metric": "persistence",
+      "rmse": 3.6282077239555504,
+      "persistence_rmse": 1.3605947282757287,
+      "window_flat": false,
+      "latent_linearity": 1.0279868810990616,
+      "corr": 0.14833466244337473,
+      "tau": 4,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.009104455167441112,
+      "tipping_score": 0.5091034490630906
+    },
+    "weather-Pressure9am": {
+      "skill_pct": -106.68681139616517,
+      "skill_metric": "persistence",
+      "rmse": 2.954934224779316,
+      "persistence_rmse": 1.4296675268338586,
+      "window_flat": false,
+      "latent_linearity": 1.0029317238910833,
+      "corr": 0.053171103621355735,
+      "tau": 5,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.003181551221873849,
+      "tipping_score": 0.5031815082832164
+    },
+    "weather-Rainfall": {
+      "skill_pct": -461.43251707661756,
+      "skill_metric": "persistence",
+      "rmse": 3.172256976345858,
+      "persistence_rmse": 0.5650290782699617,
+      "window_flat": false,
+      "latent_linearity": 0.9225876114723245,
+      "corr": 0.01839300873564535,
+      "tau": 3,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.044897709678332454,
+      "tipping_score": 0.5447774242879766
+    },
+    "Litecoin": {
+      "skill_pct": -321.4738030809682,
+      "skill_metric": "persistence",
+      "rmse": 9.001345403202835,
+      "persistence_rmse": 2.135683247073273,
+      "window_flat": false,
+      "latent_linearity": 0.30016062670354055,
+      "corr": -0.2621349228316612,
+      "tau": 150,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.03377869501874812,
+      "tipping_score": 0.5337273999955569
+    },
+    "Bitcoin": {
+      "skill_pct": -1904.5513900750507,
+      "skill_metric": "persistence",
+      "rmse": 7.717182022646472,
+      "persistence_rmse": 0.38498299723598206,
+      "window_flat": false,
+      "latent_linearity": 0.55994970950897,
+      "corr": 0.4688943161428847,
+      "tau": 150,
+      "horizon": 100,
+      "cap_hits": 61,
+      "lambda1": 0.040251118521682776,
+      "tipping_score": 0.5401643927265068
+    },
+    "XRP": {
+      "skill_pct": -2611.3569707134197,
+      "skill_metric": "persistence",
+      "rmse": 13.548615056769654,
+      "persistence_rmse": 0.4996986823614267,
+      "window_flat": false,
+      "latent_linearity": 0.2329052291952432,
+      "corr": 0.8679599521391127,
+      "tau": 97,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.030689912171728884,
+      "tipping_score": 0.5306514289255568
+    },
+    "Dogecoin": {
+      "skill_pct": -33333.82935712276,
+      "skill_metric": "persistence",
+      "rmse": 6.710831829792246,
+      "persistence_rmse": 0.02007198086139231,
+      "window_flat": false,
+      "latent_linearity": 0.8470948791118483,
+      "corr": 0.006240583972115724,
+      "tau": 150,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.03252485453880977,
+      "tipping_score": 0.5324790561308982
+    },
+    "Monero": {
+      "skill_pct": -1965.9342115222953,
+      "skill_metric": "persistence",
+      "rmse": 12.172938906390629,
+      "persistence_rmse": 0.5892220012863298,
+      "window_flat": false,
+      "latent_linearity": 0.26597263202559945,
+      "corr": 0.1777399387148459,
+      "tau": 150,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.036866918432143236,
+      "tipping_score": 0.5368002522088161
+    },
+    "Stellar": {
+      "skill_pct": -1838.980321228865,
+      "skill_metric": "persistence",
+      "rmse": 11.633515728350785,
+      "persistence_rmse": 0.5999811138350196,
+      "window_flat": false,
+      "latent_linearity": 0.27541234139249904,
+      "corr": 0.7292302573887817,
+      "tau": 150,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.021902274472078483,
+      "tipping_score": 0.5218882762402274
+    },
+    "Tether": {
+      "skill_pct": -3757.893119778413,
+      "skill_metric": "persistence",
+      "rmse": 8.503640153052771,
+      "persistence_rmse": 0.2204218698920616,
+      "window_flat": false,
+      "latent_linearity": 1.5306909867508052,
+      "corr": -0.3197658153508991,
+      "tau": 1,
+      "horizon": 100,
+      "cap_hits": 3,
+      "lambda1": -0.06282827474974209,
+      "tipping_score": 0.437500327128004
+    },
+    "NEM": {
+      "skill_pct": -3522.9905219386446,
+      "skill_metric": "persistence",
+      "rmse": 4.574253745734596,
+      "persistence_rmse": 0.12625629898934806,
+      "window_flat": false,
+      "latent_linearity": 0.21722983535964907,
+      "corr": 0.8278192668673025,
+      "tau": 92,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.049091636901328506,
+      "tipping_score": 0.5489344957459731
+    },
+    "sunspots": {
+      "skill_pct": -453.1803785460044,
+      "skill_metric": "persistence",
+      "rmse": 4.947135200294599,
+      "persistence_rmse": 0.8943077867833625,
+      "window_flat": false,
+      "latent_linearity": 0.408123102586579,
+      "corr": 0.32820579772099456,
+      "tau": 62,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.02465761097483667,
+      "tipping_score": 0.5246376413706946
+    },
+    "airline": {
+      "skill_pct": -2488.7923130498425,
+      "skill_metric": "persistence",
+      "rmse": 14.071147403474933,
+      "persistence_rmse": 0.5435409913936969,
+      "window_flat": false,
+      "latent_linearity": 0.4816253519689998,
+      "corr": -0.13655898510278655,
+      "tau": 7,
+      "horizon": 23,
+      "cap_hits": 0,
+      "lambda1": NaN,
+      "tipping_score": NaN
+    },
+    "covid-india": {
+      "skill_pct": -500307.54873760097,
+      "skill_metric": "persistence",
+      "rmse": 4.479987417291833,
+      "persistence_rmse": 0.0008952677529732883,
+      "window_flat": false,
+      "latent_linearity": 0.8465415506663904,
+      "corr": -0.3340082550662451,
+      "tau": 31,
+      "horizon": 12,
+      "cap_hits": 0,
+      "lambda1": NaN,
+      "tipping_score": NaN
+    },
+    "covid-brazil": {
+      "skill_pct": -1235.4206566373907,
+      "skill_metric": "persistence",
+      "rmse": 12.159005107759347,
+      "persistence_rmse": 0.9105000021772842,
+      "window_flat": false,
+      "latent_linearity": 0.7203381097991013,
+      "corr": -0.18695820462974405,
+      "tau": 3,
+      "horizon": 35,
+      "cap_hits": 35,
+      "lambda1": NaN,
+      "tipping_score": NaN
+    },
+    "covid-germany": {
+      "skill_pct": -2206.396895693948,
+      "skill_metric": "persistence",
+      "rmse": 3.7352339746772847,
+      "persistence_rmse": 0.16195104934675297,
+      "window_flat": false,
+      "latent_linearity": 0.5150175760952176,
+      "corr": -0.059988523649971065,
+      "tau": 3,
+      "horizon": 35,
+      "cap_hits": 0,
+      "lambda1": NaN,
+      "tipping_score": NaN
+    },
+    "covid-france": {
+      "skill_pct": -391.39137057387234,
+      "skill_metric": "persistence",
+      "rmse": 6.519420722624781,
+      "persistence_rmse": 1.3267267422728777,
+      "window_flat": false,
+      "latent_linearity": 2.705235789471537,
+      "corr": -0.004090348864617074,
+      "tau": 1,
+      "horizon": 100,
+      "cap_hits": 2,
+      "lambda1": 0.017708204266478723,
+      "tipping_score": 0.5177008040493337
+    },
+    "covid-us": {
+      "skill_pct": -8858.710842204151,
+      "skill_metric": "persistence",
+      "rmse": 4.463449951782542,
+      "persistence_rmse": 0.04982245805674849,
+      "window_flat": false,
+      "latent_linearity": 0.8689841756321899,
+      "corr": -0.23316727100142443,
+      "tau": 31,
+      "horizon": 12,
+      "cap_hits": 0,
+      "lambda1": NaN,
+      "tipping_score": NaN
+    },
+    "lorenz-x": {
+      "skill_pct": -1257.3774396672954,
+      "skill_metric": "persistence",
+      "rmse": 12.32931112675064,
+      "persistence_rmse": 0.9083185535905663,
+      "window_flat": false,
+      "latent_linearity": 0.3868575211158757,
+      "corr": 0.026522382863798315,
+      "tau": 14,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.002414456518018399,
+      "tipping_score": 0.502414437751105
+    },
+    "rossler-x": {
+      "skill_pct": -997.3184324521354,
+      "skill_metric": "persistence",
+      "rmse": 11.35866197296167,
+      "persistence_rmse": 1.0351290598098224,
+      "window_flat": false,
+      "latent_linearity": 0.5355105721594445,
+      "corr": 0.027393688197722185,
+      "tau": 34,
+      "horizon": 100,
+      "cap_hits": 9,
+      "lambda1": 0.012863604706326958,
+      "tipping_score": 0.5128607673634047
+    }
+  },
+  "gru_baseline": {
+    "ecg-215": -3.3528927743015817,
+    "ecg-233": 0.7871031954335289,
+    "ecg-209": -203.52618944860777,
+    "AEP": -133.72850476025346,
+    "COMED": -69.79464126284553,
+    "DAYTON": -130.51088753472817,
+    "DEOK": 6.062676371710209,
+    "DOM": -52.238081442423145,
+    "DUQ": -15.012237093198731,
+    "EKPC": 19.596433669816232,
+    "FE": -157.60293030647662,
+    "NI": -176.14056365525002,
+    "PJME": 25.7092662449188,
+    "PJMW": -102.33270698661154,
+    "weather-Temp3pm": -43.19312026962603,
+    "weather-MinTemp": -209.49086288356062,
+    "weather-MaxTemp": -78.11856997442896,
+    "weather-Temp9am": -48.745879455572734,
+    "weather-Humidity3pm": -41.286977841448326,
+    "weather-Humidity9am": 21.796001036032337,
+    "weather-Pressure3pm": 17.340342087223977,
+    "weather-Pressure9am": 33.81582598574615,
+    "weather-Rainfall": 7.90959253673399,
+    "Litecoin": -16.128685704841306,
+    "Bitcoin": -64.4213883550973,
+    "XRP": -590.2367724884331,
+    "Dogecoin": -1962.532929185985,
+    "Monero": -147.4549805172859,
+    "Stellar": -43.5474869583819,
+    "Tether": -1506.2028186190423,
+    "NEM": -1321.6691839830794,
+    "sunspots": -281.0797739284314,
+    "airline": -67.6365439118938,
+    "covid-india": -24021.345207799106,
+    "covid-brazil": 17.545115853707436,
+    "covid-germany": -1116.2851646593945,
+    "covid-france": -0.03802638647216684,
+    "covid-us": -850.4717002999255,
+    "lorenz-x": 11.573779796767456,
+    "rossler-x": -56.72814111539632
+  },
+  "scratch_baseline": {
+    "sunspots": {
+      "skill_pct": 22.830689333138253,
+      "skill_metric": "persistence",
+      "rmse": 0.6901311543007885,
+      "persistence_rmse": 0.8943077867833624,
+      "window_flat": false,
+      "latent_linearity": 0.5279558946073353,
+      "corr": -0.027456620563803633,
+      "tau": 62,
+      "horizon": 100,
+      "cap_hits": 0,
+      "lambda1": 0.02465761097483667,
+      "tipping_score": 0.5246376413706946,
+      "scratch_iters": 400
+    },
+    "covid-us": {
+      "skill_pct": -51.6093463102344,
+      "skill_metric": "persistence",
+      "rmse": 0.0755355029755271,
+      "persistence_rmse": 0.04982245805674849,
+      "window_flat": false,
+      "latent_linearity": 0.5297397329699927,
+      "corr": 0.4957685415057919,
+      "tau": 31,
+      "horizon": 12,
+      "cap_hits": 0,
+      "lambda1": NaN,
+      "tipping_score": NaN,
+      "scratch_iters": 400
+    }
+  },
+  "solar_cycle": {
+    "period_months": 128.86291401564105,
+    "period_years": 10.738576167970088,
+    "known_cycle_months": 132.0,
+    "rows": [
+      {
+        "coarsening": 1,
+        "period_at_scale": null,
+        "period_months": null,
+        "amp": null
+      },
+      {
+        "coarsening": 2,
+        "period_at_scale": 213.49838782987277,
+        "period_months": 426.99677565974554,
+        "amp": 0.9464442401843852
+      },
+      {
+        "coarsening": 4,
+        "period_at_scale": 76.12616468950456,
+        "period_months": 304.50465875801825,
+        "amp": 0.9270420784156622
+      },
+      {
+        "coarsening": 8,
+        "period_at_scale": 22.614202933768254,
+        "period_months": 180.91362347014604,
+        "amp": 0.8977843718844765
+      },
+      {
+        "coarsening": 16,
+        "period_at_scale": 8.878174565413367,
+        "period_months": 142.05079304661388,
+        "amp": 0.9028622952327345
+      },
+      {
+        "coarsening": 32,
+        "period_at_scale": 4.026966062988783,
+        "period_months": 128.86291401564105,
+        "amp": 0.8514971865634577
+      }
+    ]
+  },
+  "transfer_summary": {
+    "sunspots": {
+      "frozen_skill": -453.18,
+      "scratch_skill": 22.83
+    },
+    "covid-us": {
+      "frozen_skill": -8858.71,
+      "scratch_skill": -51.61
+    }
+  },
+  "files": [
+    "foundation_model.pt",
+    "latent_geometry.png",
+    "pretrain_curves.png",
+    "solar_cycle.png",
+    "train_loop_bench.json",
+    "zero_shot_covid-us.png",
+    "zero_shot_sunspots.png"
+  ]
+}

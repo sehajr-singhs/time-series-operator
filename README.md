@@ -198,8 +198,16 @@ datasources. Private runs: `kaggle kernels push -p kaggle_kernel_tso`, then
   rediscovery holds (128.0 mo vs known 132). The two negative levers
   (corpus balance + forced linearity) combine into a positive one —
   every single-lever experiment landed inside seed noise, this
-  two-lever combination lands outside it in  every tracked metric.
-  Checkpoints/metrics/figures: `output/kaggle_kernel_v14/`. Published on
+  two-lever combination lands outside it in every tracked metric.
+  **Replicated across 4 seeds** (identical recipe, seeds 0–3): 14/23 ·
+  13/23 · 13/23 · 13/23 on the shared reprobe — every seed above the
+  v9 plateau — with a positive median skill in every seed (+2.0, +6.4,
+  +0.5, +1.4 pts; v9's median is negative). Pooled over 92
+  seed-series draws: 53/92 positive vs v9's 48/92 (p=0.17 vs the v9
+  rate; p=0.09 vs chance; best single seed p=0.047). Direction is
+  consistent across all seeds; the effect size is moderate.
+  Checkpoints/metrics/figures: `output/kaggle_kernel_v14/` +
+  `output/kaggle_kernel_v14_seed{1,2,3}/`. Published on
   Hugging Face as
   [`Sejibeji/tso-foundation-v14`](https://huggingface.co/Sejibeji/tso-foundation-v14)
   (weights + self-contained `model.py`, verified to reproduce
@@ -263,7 +271,7 @@ Key numbers in one block:
 | claim | number |
 |---|---|
 | frozen TSO vs GRU, median skill advantage | +67.6 pts (local 3-seed, 16/23 wins, p=0.09) → **+46.5 pts (v9 in-kernel, 28/40 wins, p=0.017)** → **+60.9 pts (v11 best seed, 29/40 wins, p=0.002)** → +59.2 pts (v12 in-kernel, 28/40 wins) → +58.0 pts (v13 in-kernel, 25/40 wins) → **+57.2 pts (v14 in-kernel, 31/40 wins, p<0.001)** |
-| scaling positive-fraction (shared 23-series, same probe) | 8/23 (v5) → 9/23 (local) → 13/23 (v7) → 12/23 (v9) → 10/23 (v10) → 12/5/8 (v11 ×3 seeds) → 11/23 (v12, joint probe) → 6/23 (v13, dynamics corpus) → **14/23 (v14, balanced corpus + forced Koopman)** |
+| scaling positive-fraction (shared 23-series, same probe) | 8/23 (v5) → 9/23 (local) → 13/23 (v7) → 12/23 (v9) → 10/23 (v10) → 12/5/8 (v11 ×3 seeds) → 11/23 (v12, joint probe) → 6/23 (v13, dynamics corpus) → **14/23 (v14) — ×4 seeds: 14/23 · 13/23 · 13/23 · 13/23** |
 | iteration / capacity / probe saturation | pretexts converge by 25k; 60k hurts the frozen probe (v9 wins 28/40 vs v10, p=0.017); width×2 at fixed probe lands within seed noise (v11); joint-probe v12 is beaten head-to-head by v9 16/23, p=0.05; dynamics-corpus v13 shifts transfer smooth→explosive (v9 15/23, p=0.11); **v14 breaks the plateau — 14/23 reprobed, first positive median skill, wins v9 paired 13/23 (p=0.34)** |
 | external FSTM head-to-head (same 40-series protocol, both frozen) | TSO median +0.4% (20/40 positive) vs **Chronos-t5-small +24.7% (28/40)**; both crush GRU (−60.6%); Chronos's ~80k-series corpus is the difference |
 | arrow-of-time classification accuracy | 94--97% (all scales) |

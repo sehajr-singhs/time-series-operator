@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.11)  3 SEP 2026 14:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.11)  3 SEP 2026 17:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -452,7 +452,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-LaTeX Warning: Reference `fig:tipping' on page 2 undefined on input line 164.
+LaTeX Warning: Reference `fig:tipping' on page 2 undefined on input line 172.
 
 [2]
 
@@ -466,17 +466,17 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <../figs/fig_comparison.png, id=142, 1076.823pt x 426.393pt>
 File: ../figs/fig_comparison.png Graphic file (type png)
 <use ../figs/fig_comparison.png>
-Package pdftex.def Info: ../figs/fig_comparison.png  used on input line 482.
+Package pdftex.def Info: ../figs/fig_comparison.png  used on input line 497.
 (pdftex.def)             Requested size: 446.26582pt x 176.70906pt.
-<../figs/fig_scaling.png, id=144, 1286.85768pt x 397.485pt>
+<../figs/fig_scaling.png, id=144, 1329.768pt x 397.485pt>
 File: ../figs/fig_scaling.png Graphic file (type png)
 <use ../figs/fig_scaling.png>
-Package pdftex.def Info: ../figs/fig_scaling.png  used on input line 489.
-(pdftex.def)             Requested size: 422.77664pt x 130.5882pt.
+Package pdftex.def Info: ../figs/fig_scaling.png  used on input line 504.
+(pdftex.def)             Requested size: 422.77664pt x 126.37294pt.
 <../figs/fig_external.png, id=145, 860.013pt x 397.485pt>
 File: ../figs/fig_external.png Graphic file (type png)
 <use ../figs/fig_external.png>
-Package pdftex.def Info: ../figs/fig_external.png  used on input line 510.
+Package pdftex.def Info: ../figs/fig_external.png  used on input line 525.
 (pdftex.def)             Requested size: 422.77664pt x 195.40012pt.
 
 
@@ -485,7 +485,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <../figs/fig_ablations.png, id=146, 1076.823pt x 389.8063pt>
 File: ../figs/fig_ablations.png Graphic file (type png)
 <use ../figs/fig_ablations.png>
-Package pdftex.def Info: ../figs/fig_ablations.png  used on input line 521.
+Package pdftex.def Info: ../figs/fig_ablations.png  used on input line 536.
 (pdftex.def)             Requested size: 422.77664pt x 153.04094pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -493,7 +493,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <../figs/fig_reversibility.png, id=147, 780.96768pt x 426.393pt>
 File: ../figs/fig_reversibility.png Graphic file (type png)
 <use ../figs/fig_reversibility.png>
-Package pdftex.def Info: ../figs/fig_reversibility.png  used on input line 528.
+Package pdftex.def Info: ../figs/fig_reversibility.png  used on input line 543.
 
 (pdftex.def)             Requested size: 375.80544pt x 205.18681pt.
 
@@ -502,8 +502,8 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <../figs/fig_solar_discovery.png, id=148, 677.53125pt x 354.123pt>
 File: ../figs/fig_solar_discovery.png Graphic file (type png)
 <use ../figs/fig_solar_discovery.png>
-Package pdftex.def Info: ../figs/fig_solar_discovery.png  used on input line 53
-5.
+Package pdftex.def Info: ../figs/fig_solar_discovery.png  used on input line 55
+0.
 (pdftex.def)             Requested size: 399.29463pt x 208.7038pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -511,7 +511,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <../figs/pretrain_curves.png, id=149, 931.37962pt x 300.82387pt>
 File: ../figs/pretrain_curves.png Graphic file (type png)
 <use ../figs/pretrain_curves.png>
-Package pdftex.def Info: ../figs/pretrain_curves.png  used on input line 544.
+Package pdftex.def Info: ../figs/pretrain_curves.png  used on input line 559.
 (pdftex.def)             Requested size: 399.29463pt x 128.96616pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -520,13 +520,13 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 File: ../../kaggle_kernel/latent_geometry.png Graphic file (type png)
 <use ../../kaggle_kernel/latent_geometry.png>
 Package pdftex.def Info: ../../kaggle_kernel/latent_geometry.png  used on input
- line 551.
+ line 566.
 (pdftex.def)             Requested size: 375.80544pt x 291.5683pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [8 <../figs/fig_comparison.png> <../figs/fig_scaling.png>]
-Overfull \hbox (5.26447pt too wide) in paragraph at lines 578--584
+Overfull \hbox (5.26447pt too wide) in paragraph at lines 593--599
 \OT1/cmr/m/n/10.95 (\OT1/cmtt/m/n/10.95 scripts/pretrain[]foundation.py\OT1/cmr
 /m/n/10.95 , \OT1/cmtt/m/n/10.95 scripts/study[]experiments.py\OT1/cmr/m/n/10.9
 5 , \OT1/cmtt/m/n/10.95 scripts/study[]paper.py\OT1/cmr/m/n/10.95 )
@@ -549,7 +549,7 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  12179 strings out of 467871
  192306 string characters out of 5418376
- 627072 words of memory out of 5000000
+ 628072 words of memory out of 5000000
  40871 multiletter control sequences out of 15000+600000
  640188 words of font info for 87 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -570,7 +570,7 @@ fb><C:/Users/sehaj/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
 fonts/cm/cmti10.pfb><C:/Users/sehaj/AppData/Local/Programs/MiKTeX/fonts/type1/p
 ublic/amsfonts/cm/cmtt10.pfb>
 Output written on C:\Users\sehaj\OneDrive\Desktop\time-series-operator\output\s
-tudy\paper\main.pdf (12 pages, 1620092 bytes).
+tudy\paper\main.pdf (12 pages, 1633383 bytes).
 PDF statistics:
  252 PDF objects out of 1000 (max. 8388607)
  52 named destinations out of 1000 (max. 500000)

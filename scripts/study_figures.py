@@ -168,6 +168,11 @@ def reprobe_kernel_models():
     kernels.append(
         ("v14", os.path.join(ROOT, "output", "kaggle_kernel_v14",
                              "foundation_model.pt"), 256, 768))
+    for s in (1, 2, 3):
+        kernels.append(
+            (f"v14s{s}", os.path.join(ROOT, "output",
+                                      f"kaggle_kernel_v14_seed{s}",
+                                      "foundation_model.pt"), 256, 768))
     todo = [(t, c, l, h) for t, c, l, h in kernels
             if t not in out and os.path.exists(c)]
     if not todo:
@@ -220,15 +225,20 @@ def fig_scaling(data):
     v12_pos, v12_n = k.get("v12", (0, 23))
     v13_pos, v13_n = k.get("v13", (0, 23))
     v14_pos, v14_n = k.get("v14", (0, 23))
+    v14s = [k.get(f"v14s{s}", (0, 23)) for s in (1, 2, 3)]
     vals = [v5_pos / v5_n, local_pos / local_n, v7_pos / v7_n,
             v9_pos / v9_n, v10_pos / v10_n]
     vals += [p / n for p, n in v11s]
     vals += [v12_pos / v12_n, v13_pos / v13_n, v14_pos / v14_n]
+    vals += [p / n for p, n in v14s]
     labels += ["kernel v14\n(40 real + 192 balanced\ndynamics, 25k iters,\nlat 256 · hid 768,\ndyn-w 2.5) — reprobed"]
-    fig, ax = plt.subplots(figsize=(15.5, 5.6), dpi=160)
-    x = np.arange(11)
+    labels += [f"v14 seed {s}\n(same recipe, seed {s},\nreprobed)" for s in (1, 2, 3)]
+    nbars = len(vals)
+    fig, ax = plt.subplots(figsize=(18.5, 5.6), dpi=160)
+    x = np.arange(nbars)
     colors = ([BLUE, BLUE, ACCENT, MAGENTA, ORANGE] + [GOLD] * 3
-              + ["#7ee787", "#58c4f0", "#ffb86c"])
+              + ["#7ee787", "#58c4f0", "#ffb86c", "#ffb86c", "#ffb86c",
+                 "#ffb86c"])
     bars = ax.bar(x, vals, color=colors, alpha=0.9, width=0.62)
     for b, (lab, v) in enumerate(zip(labels, vals)):
         ax.text(b, v + 0.01, f"{v:.0%}", ha="center", color=FG, fontsize=9)
@@ -243,7 +253,8 @@ def fig_scaling(data):
             color="#7ee787", fontsize=8)
     ax.text(9, v13_pos / v13_n + 0.05, "corpus breadth", ha="center",
             color="#58c4f0", fontsize=8)
-    ax.text(10, v14_pos / v14_n + 0.05, "balanced corpus\n+ forced linearity",
+    ax.text(10.5, max(vals[10:]) + 0.11,
+            "v14 × 4 seeds: 14/23 · 13/23 · 13/23 · 13/23\n(all seeds above the v9 plateau;\npositive median in every seed)",
             ha="center", color="#ffb86c", fontsize=8)
     ax.set_xticks(x)
     ax.set_xticklabels(labels, fontsize=7.0)
