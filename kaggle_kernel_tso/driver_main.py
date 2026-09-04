@@ -17,8 +17,8 @@ import numpy as np
 import pandas as pd
 import torch
 
-INPUT = "/kaggle/input"
-OUT = "/kaggle/working"
+INPUT = os.environ.get("KAGGLE_INPUT", "/kaggle/input")
+OUT = os.environ.get("KAGGLE_OUT", "/kaggle/working")
 os.makedirs(OUT, exist_ok=True)
 
 MAXLEN = 4096
@@ -476,6 +476,292 @@ def build_corpus():
     return samples, meta, held_flags
 
 
+def run_matched_compute(samples, meta, battery, OUT, device="cpu"):
+    """v18: the matched-compute experiment (the paradigm-vs-scale test).
+
+    Fine-tunes chronos-t5-small on the EXACT v14 training corpus (same
+    series, same sampling distribution, same per-step batch of one series)
+    at matched parameter-steps: N_chronos = N_tso * P_tso / P_chronos, so
+    the token model gets the same optimizer-step x parameter budget as the
+    operator model. A second checkpoint continues to N_tso total steps
+    (the token model then receives P_chronos/P_tso ~ 4x the compute), to
+    test whether any gap is architecture or budget.
+
+    Evaluation: all models on the identical 40-series protocol (z-scored,
+    70/20 split, horizon capped at 100, skill vs persistence, 64 samples
+    for Chronos). TSO = the published Sejibeji/tso-foundation-v14
+    checkpoint, integrity-checked against its published metrics first.
+    """
+    import dataclasses
+    import importlib
+    import subprocess
+    import time
+
+    try:
+        __import__("huggingface_hub")
+    except ImportError:
+        subprocess.check_call([sys.executable, "-m", "pip", "install",
+                               "-q", "huggingface_hub"])
+    # The Kaggle image ships a *different* package named ``chronos``.
+    # Verify the amazon-chronos API actually exists before trusting it.
+    _ok = False
+    try:
+        _c = __import__("chronos")
+        _ok = hasattr(_c, "ChronosPipeline")
+    except Exception:
+        _ok = False
+    if not _ok:
+        # NOTE: the PyPI package is ``chronos-forecasting`` (import name
+        # ``chronos``); plain ``chronos`` is an unrelated ncurses timer.
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q",
+                               "--upgrade", "chronos-forecasting"])
+        for _m in ("chronos", "chronos.base", "chronos.utils"):
+            sys.modules.pop(_m, None)
+        importlib.invalidate_caches()
+    from huggingface_hub import hf_hub_download
+    from chronos import ChronosPipeline, ChronosModel
+
+    print("\n[v18] matched-compute: Chronos-t5-small fine-tuned on the v14 "
+          "corpus at equal parameter-steps")
+
+    # ---- 1. TSO v14 checkpoint (published artifact) + integrity check ----
+    ckpt = hf_hub_download("Sejibeji/tso-foundation-v14",
+                           "foundation_model.pt")
+    model = FoundationOperator(latent_dim=256, hidden=768)
+    sd = torch.load(ckpt, map_location="cpu", weights_only=True)
+    model.load_state_dict(sd)
+    model.eval()
+    p_tso = int(sum(v.numel() for v in sd.values()))
+    print(f"  TSO v14 checkpoint: {p_tso:,} params")
+    for chk_name, chk_skill in (("sunspots", 4.77), ("airline", -11.69)):
+        if chk_name not in dict(samples):
+            print(f"  integrity {chk_name}: not in corpus, skipped")
+            continue
+        sr = dict(samples)[chk_name]["series"]
+        r = zero_shot_forecast(model, sr, device="cpu")
+        ok = abs(r["skill_pct"] - chk_skill) < 2.0
+        print(f"  integrity {chk_name}: {r['skill_pct']:+.2f} "
+              f"(published {chk_skill:+.2f}) {'OK' if ok else 'FAIL'}")
+        if not ok:
+            raise SystemExit(f"v14 checkpoint failed integrity on {chk_name}")
+
+    # ---- 2. frozen Chronos + compute-matched step budget ----------------
+    pipe = ChronosPipeline.from_pretrained("amazon/chronos-t5-small")
+    cfg = pipe.model.config
+    inner = pipe.model.model
+    p_chronos = int(sum(p.numel() for p in inner.parameters()))
+    n_tso = int(os.environ.get("V18_TSO_ITERS", 25_000))
+    n_matched = max(int(os.environ.get("V18_MIN_MATCHED", 200)),
+                    int(round(n_tso * p_tso / p_chronos)))
+    n_total = int(os.environ.get("V18_TOTAL_ITERS", n_tso))
+    n_total = max(n_total, n_matched)
+    print(f"  chronos-t5-small: {p_chronos:,} params; matched budget = "
+          f"{n_matched} steps (ratio {p_chronos / p_tso:.1f}x params); "
+          f"generous total = {n_total} steps")
+
+    # ---- 3. training pool = the exact v14 corpus distribution -----------
+    pool = []
+    for (n, p), m in zip(samples, meta):
+        if not m["held_out"]:
+            pool += [p["series"]] * 8       # TSO tiled real series x8
+    pool += [s for _, s in battery]
+    pool = [np.asarray(s, dtype=float) for s in pool]
+    pool = [s for s in pool if np.isfinite(s).all() and len(s) >= 32]
+    rng = np.random.default_rng(0)
+    print(f"  pool: {len(pool)} entries "
+          f"({sum(1 for s in pool if len(s) > 500)} long)")
+
+    # ---- 4. tokenizer, faithful to MeanScaleUniformBins -----------------
+    n_tokens = int(cfg.n_tokens)
+    n_spec = int(cfg.n_special_tokens)
+    use_eos = bool(cfg.use_eos_token)
+    centers = torch.linspace(-20.0, 20.0, n_tokens - n_spec - 1)
+    boundaries = torch.cat([torch.tensor([-1e20]),
+                            (centers[1:] + centers[:-1]) / 2,
+                            torch.tensor([1e20])])
+
+    def tokenize(x, scale=None):
+        x = torch.as_tensor(x, dtype=torch.float32)
+        if scale is None:
+            scale = x.abs().mean()
+            if not (scale > 0):
+                scale = torch.tensor(1.0)
+        ids = torch.bucketize(x / scale, boundaries, right=True) + n_spec
+        return ids.clamp_(0, n_tokens - 1), scale
+
+    # ---- 5. fine-tune: next-token CE on the target span, teacher-forced --
+    ctx_len, pred_len = int(cfg.context_length), int(cfg.prediction_length)
+    lr, min_lr, warmup = 1e-3, 1e-4, 300
+    opt = torch.optim.Adam(inner.parameters(), lr=lr)
+    inner.train()
+
+    def lr_at(it):
+        if it < warmup:
+            return lr * (it + 1) / warmup
+        frac = (it - warmup) / max(1, n_total - warmup)
+        return min_lr + 0.5 * (lr - min_lr) * (1 + np.cos(np.pi * min(frac, 1.0)))
+
+    t0 = time.time()
+    matched_done = False
+    for it in range(n_total):
+        s = pool[int(rng.integers(0, len(pool)))]
+        lab_len = min(pred_len, len(s) // 2)
+        lab_start = int(rng.integers(lab_len, len(s)))
+        ctx = s[max(0, lab_start - ctx_len): lab_start]
+        lab = s[lab_start: lab_start + lab_len]
+        ctx_ids, scale = tokenize(ctx)
+        lab_ids, _ = tokenize(lab, scale)
+        if use_eos:
+            ctx_ids = torch.cat([ctx_ids, torch.tensor([int(cfg.eos_token_id)])])
+            lab_ids = torch.cat([lab_ids, torch.tensor([int(cfg.eos_token_id)])])
+        in_ids = ctx_ids.unsqueeze(0)
+        in_mask = torch.ones_like(in_ids)
+        lab_ids = lab_ids.unsqueeze(0)
+        loss = inner(input_ids=in_ids, attention_mask=in_mask,
+                     labels=lab_ids).loss
+        opt.zero_grad()
+        loss.backward()
+        for g in opt.param_groups:
+            g["lr"] = lr_at(it)
+        opt.step()
+        if it + 1 == n_matched:
+            torch.save({"state_dict": inner.state_dict(),
+                        "chronos_config": dataclasses.asdict(cfg),
+                        "step": it + 1, "pool_size": len(pool)},
+                       os.path.join(OUT, "chronos_finetuned_matched.pt"))
+            matched_done = True
+            print(f"  matched checkpoint @ {it + 1} steps saved "
+                  f"(loss {float(loss.detach()):.3f})")
+        if (it + 1) % 1000 == 0:
+            el = time.time() - t0
+            print(f"  step {it + 1}/{n_total} loss {float(loss):.4f} "
+                  f"({el / (it + 1):.2f}s/step, eta "
+                  f"{(n_total - it - 1) * el / (it + 1) / 60:.0f} min)",
+                  flush=True)
+    torch.save({"state_dict": inner.state_dict(),
+                "chronos_config": dataclasses.asdict(cfg),
+                "step": n_total, "pool_size": len(pool)},
+               os.path.join(OUT, "chronos_finetuned_generous.pt"))
+    print(f"  generous checkpoint @ {n_total} saved (loss {float(loss.detach()):.3f})")
+
+    # ---- 6. identical 40-series protocol for all four models -------------
+    def make_pipe(m):
+        m.eval()
+        return ChronosPipeline(tokenizer=pipe.tokenizer,
+                               model=ChronosModel(config=cfg, model=m))
+
+    p_matched = make_pipe(inner)
+
+    n_samples = int(os.environ.get("V18_EVAL_SAMPLES", 64))
+
+    def eval_chronos(p, series):
+        x = np.asarray(series, dtype=float)
+        x = (x - float(np.nanmean(x))) / (float(np.nanstd(x)) + 1e-8)
+        split = int(len(x) * 0.7)
+        horizon = min(int(len(x) * 0.2), len(x) - split - 1, 100)
+        if horizon < 1:
+            return None
+        ctx = torch.tensor(x[:split], dtype=torch.float32)
+        with torch.no_grad():
+            fc = p.predict(ctx, prediction_length=horizon,
+                           num_samples=n_samples)
+        pred = fc[0].median(dim=0).values.numpy()
+        true = x[split: split + horizon][: len(pred)]
+        e = float(np.mean((pred - true) ** 2) ** 0.5)
+        ep = float(np.mean((np.full(len(true), true[0]) - true) ** 2) ** 0.5)
+        return {"skill_pct": 100.0 * (ep - e) / max(ep, 1e-12),
+                "corr": float(np.corrcoef(pred, true)[0, 1])
+                if len(true) > 2 else float("nan"),
+                "horizon": int(len(pred))}
+
+    variants = {"tso_v14": None, "chronos_frozen": None,
+                "chronos_matched": p_matched}
+    per = {n: {} for n, _ in samples}
+    frozen_pipe = pipe
+    t2 = time.time()
+    for n, pair in samples:
+        per[n]["tso_v14"] = {k: v for k, v in
+                              zero_shot_forecast(model, pair["series"],
+                                                 device="cpu").items()
+                              if not isinstance(v, np.ndarray)}
+        per[n]["chronos_frozen"] = eval_chronos(frozen_pipe, pair["series"])
+        per[n]["chronos_matched"] = eval_chronos(p_matched, pair["series"])
+        print(f"  {n:22s} tso={per[n]['tso_v14']['skill_pct']:+7.1f}  "
+              f"frz={per[n]['chronos_frozen']['skill_pct']:+7.1f}  "
+              f"mat={per[n]['chronos_matched']['skill_pct']:+7.1f}  "
+              f"({time.time() - t2:.0f}s)", flush=True)
+    print(f"  eval total {time.time() - t2:.0f}s")
+
+    def summ(k):
+        vals = [per[n][k]["skill_pct"] for n, _ in samples
+                if per[n].get(k)]
+        return {"median": round(float(np.median(vals)), 2),
+                "positive": int(sum(1 for v in vals if v > 0)),
+                "n": len(vals)}
+
+    def h2h(a, b):
+        wa = sum(1 for n, _ in samples
+                 if per[n].get(a) and per[n].get(b)
+                 and per[n][a]["skill_pct"] > per[n][b]["skill_pct"])
+        tot = sum(1 for n, _ in samples
+                  if per[n].get(a) and per[n].get(b))
+        return {"a": wa, "b": tot - wa, "n": tot}
+
+    summary = {k: summ(k) for k in
+               ("tso_v14", "chronos_frozen", "chronos_matched")}
+    h2hs = {"tso_vs_frozen": h2h("tso_v14", "chronos_frozen"),
+            "tso_vs_matched": h2h("tso_v14", "chronos_matched"),
+            "matched_vs_frozen": h2h("chronos_matched", "chronos_frozen")}
+    print("\n  summary:", json.dumps(summary, indent=2))
+    print("  head-to-head:", json.dumps(h2hs, indent=2))
+
+    out = {"config": {"experiment": "v18-matched-compute",
+                       "tso_checkpoint": "Sejibeji/tso-foundation-v14",
+                       "n_tso_iters": n_tso, "p_tso": p_tso,
+                       "p_chronos": p_chronos, "n_matched": n_matched,
+                       "n_total": n_total, "lr": lr, "min_lr": min_lr,
+                       "warmup": warmup, "ctx_len": ctx_len,
+                       "pred_len": pred_len, "pool_entries": len(pool),
+                       "device": device},
+           "per_series": per, "summary": summary, "h2h": h2hs}
+    json.dump(out, open(os.path.join(OUT, "metrics.json"), "w"), indent=1)
+
+    # ---- 7. figures ------------------------------------------------------
+    try:
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+        names = [n for n, _ in samples]
+        x = np.arange(len(names))
+        cols = {"tso_v14": "#d4a017", "chronos_frozen": "#7aa2f7",
+                "chronos_matched": "#9ece6a"}
+        labels = {"tso_v14": "TSO v14 (operator)",
+                  "chronos_frozen": "Chronos frozen",
+                  "chronos_matched": "Chronos fine-tuned"}
+        fig, ax = plt.subplots(figsize=(13, 5.4), dpi=150)
+        for k, (lab, m) in enumerate(cols.items()):
+            vals = [per[n][k]["skill_pct"] for n in names
+                    if per[n].get(k)]
+            ax.bar(x + (k - 1) * 0.26, vals, width=0.24, color=m, alpha=0.88,
+                   label=f"{labels[k]} (med {np.median(vals):+.1f})")
+        ax.axhline(0, color="#1a1b26", lw=0.8)
+        ax.set_xticks(x)
+        ax.set_xticklabels([n[:11] for n in names], rotation=70, fontsize=6.5)
+        ax.set_ylabel("skill vs persistence (%)")
+        ax.set_title("Matched-compute test: TSO v14 vs Chronos-t5-small "
+                     "(frozen vs fine-tuned on the identical v14 corpus)")
+        ax.legend(fontsize=8)
+        ax.grid(axis="y", alpha=0.3)
+        fig.tight_layout()
+        fig.savefig(os.path.join(OUT, "v18_compare.png"),
+                    bbox_inches="tight")
+        plt.close(fig)
+        print("  wrote v18_compare.png")
+    except Exception as e:
+        print(f"  plot failed: {e}")
+    return out
+
+
 def main():
     print("=" * 70)
     print("TSO foundation pretraining V14 — balanced corpus, forced "
@@ -504,6 +790,12 @@ def main():
         battery = load_dynamics_battery(n_series=240)
         print(f"  + {len(battery)} synthetic dynamics series "
               f"(attractor sweeps, maps, stochastic regimes)")
+
+    if int(os.environ.get("V18_MATCH", 0)):
+        print("\n[v18] matched-compute mode: skipping TSO pretraining "
+              "(published v14 checkpoint is downloaded instead)")
+        run_matched_compute(samples, meta, battery, OUT, device="cpu")
+        return
 
     print("\n[2/5] AMP training-loop benchmark")
     try:

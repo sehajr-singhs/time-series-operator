@@ -22,3 +22,4 @@ nohup.out
 output/v15_corpus/battery.npz
 output/v15_dataset/
 output/v15_corpus/core.py
+output/v18_smoke/
