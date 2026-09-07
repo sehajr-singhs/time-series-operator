@@ -71,10 +71,11 @@ on the identical protocol (median $+24.7$ vs $+1.8$ percentage points;
 24/40 head-to-head), quantifying how far corpus breadth moves the
 curve. The matched-compute experiment settles the direction of that
 gap: fine-tuning Chronos on the operator's own corpus at equal
-parameter-steps leaves it unchanged (18W/22L vs frozen, $p=0.95$) and
-at $22\times$ the budget gains only marginally ($p=0.06$), so
+parameter-steps leaves it unchanged (21W/19L vs the true frozen
+baseline, $p=0.98$) and even at $22\times$ the budget gains only
+modestly, not significantly ($p=0.20$), so
 pretraining scale --- not tokenization --- currently decides the
-head-to-head (fine-tuned Chronos 27--29W/13--11L over the TSO,
+head-to-head (Chronos 24--29W/16--11L over the TSO,
 $p<0.01$). Ablations show
 the pretexts converge but only pay off with scale. The operator's
 scale-space spectrum distinguishes deterministic physics from stochastic
@@ -439,11 +440,17 @@ TSO's $2.08\text{M} \times 25{,}000$ --- and at a generous equal-step
 budget of 25{,}000 steps ($22\times$ the matched budget), using the
 publisher's own tokenizer and training objective. The prediction fails:
 fine-tuning at the matched budget does not improve Chronos at all
-(18W/22L vs frozen, $p=0.95$; median skill $+22.7$ vs $+35.2$), and even
-the $22\times$-budget fine-tune gains only marginally (26W/14L,
-$p=0.06$; median $+33.3$). Against the TSO, both fine-tuned checkpoints
-retain the frozen model's advantage (27W/13L, $p=0.006$ at the matched
-budget; 29W/11L at the generous budget). The
+(21W/19L vs the true frozen baseline, $p=0.98$, two-sided Wilcoxon;
+median skill $+22.7$ vs $+21.4$ on the identical protocol), and even the
+$22\times$-budget fine-tune gains only modestly, not significantly
+(22W/18L, $p=0.20$; median $+33.3$ vs $+21.4$). (One methodological
+note: the kernel's in-run ``frozen'' column was contaminated --- its
+frozen pipe shared the model object that fine-tuning mutated in place,
+correlating 0.986 with the generous column --- so the true frozen
+baseline above was re-measured post-hoc on the byte-identical protocol;
+this strengthens rather than weakens the null.) Against the TSO, all
+three Chronos variants retain the frozen model's advantage (24W/16L
+frozen, 27W/13L matched at $p=0.006$, 29W/11L generous). The
 corpus is simply too small to move a model already pretrained on
 \textasciitilde 80{,}000 series; Chronos's dominance is bought upstream,
 not on the training task. The experiment therefore does \emph{not}

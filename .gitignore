@@ -25,3 +25,6 @@ output/v15_corpus/core.py
 output/v18_smoke/
 output/kaggle_kernel_v18/chronos_finetuned_*.pt
 output/v18_matched_eval.err
+output/v19_fixtures/
+output/v19_smoke_out/
+output/tmp_out/

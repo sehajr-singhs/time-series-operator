@@ -230,10 +230,14 @@ datasources. Private runs: `kaggle kernels push -p kaggle_kernel_tso`, then
   publisher's own tokenizer/objective, at parameter-matched steps
   (1,127 = 2.08M×25k / 46.2M) and at a generous equal-step budget
   (25k, 22× matched). The scale prediction **fails**: at matched
-  compute fine-tuning gives Chronos nothing (18W/22L vs frozen,
-  p=0.95; median +22.7 vs +35.2), at 22× it is still marginal
-  (26W/14L, p=0.06), and both retain the frozen model's head-to-head
-  edge over the TSO (27W/13L, p=0.006 matched; 29W/11L generous).
+  compute fine-tuning leaves Chronos unchanged vs the true frozen
+  baseline (21W/19L, p=0.98; median +22.7 vs +21.4), and even at 22×
+  the gain is modest and not significant (22W/18L, p=0.20; median
+  +33.3 vs +21.4). (The kernel's in-run frozen column was contaminated
+  by in-place fine-tuning — corr 0.986 with its generous column — so
+  the true frozen baseline was re-measured post-hoc on the identical
+  protocol.) All three Chronos variants retain the head-to-head edge
+  over the TSO (24W/16L frozen, 27W/13L p=0.006 matched, 29W/11L generous).
   Honest conclusion: pretraining scale — not tokenization — decides
   the head-to-head; the corpus is too small to move a model already
   pretrained on ~80k series. Checkpoints/eval:
@@ -300,7 +304,7 @@ Key numbers in one block:
 | scaling positive-fraction (shared 23-series, same probe) | 8/23 (v5) → 9/23 (local) → 13/23 (v7) → 12/23 (v9) → 10/23 (v10) → 12/5/8 (v11 ×3 seeds) → 11/23 (v12, joint probe) → 6/23 (v13, dynamics corpus) → **14/23 (v14) — ×4 seeds: 14/23 · 13/23 · 13/23 · 13/23** → 11/23 (v17, 25× corpus at fixed budget — per-series exposure is the binding constraint) |
 | iteration / capacity / probe saturation | pretexts converge by 25k; 60k hurts the frozen probe (v9 wins 28/40 vs v10, p=0.017); width×2 at fixed probe lands within seed noise (v11); joint-probe v12 is beaten head-to-head by v9 16/23, p=0.05; dynamics-corpus v13 shifts transfer smooth→explosive (v9 15/23, p=0.11); **v14 breaks the plateau — 14/23 reprobed, first positive median skill, wins v9 paired 13/23 (p=0.34)** |
 | external FSTM head-to-head (same 40-series protocol, both frozen) | TSO median +0.4% (20/40 positive) vs **Chronos-t5-small +24.7% (28/40)**; both crush GRU (−60.6%); Chronos's ~80k-series corpus is the difference |
-| matched-compute experiment (v18, identical corpus + equal parameter-steps) | fine-tuned Chronos gains **nothing** at matched budget (18W/22L vs frozen, p=0.95) and little at 22× (26W/14L, p=0.06); frozen/fine-tuned Chronos still beats TSO (27W/13L, p=0.006) → **scale, not tokenization, decides the head-to-head** |
+| matched-compute experiment (v18, identical corpus + equal parameter-steps) | fine-tuned Chronos is **unchanged** at matched budget (21W/19L vs true frozen, p=0.98) and gains only modestly at 22× (22W/18L, p=0.20); all Chronos variants beat TSO (24–29W/16–11L) → **scale, not tokenization, decides the head-to-head** |
 | arrow-of-time classification accuracy | 94--97% (all scales) |
 | scale-covariance diagnostic | 0.999→0.937 (physics) vs 0.69→0.21 (heart) |
 | tipping onset detected / theoretical | ρ≈21 / ρ≈24.74 (early warning) |

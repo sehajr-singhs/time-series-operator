@@ -4,6 +4,7 @@
   "p_chronos": 46154240,
   "n_tso_iters": 25000,
   "n_matched": 1127,
+  "n_total": 25000,
   "tso_param_steps": 52016950000,
   "matched_param_steps": 52015828480,
   "generous_param_steps": 1153856000000,
@@ -21,12 +22,12 @@
   },
   "chronos_frozen": {
    "n": 40,
-   "wins_vs_persistence": 31,
-   "pos_median": 35.23109027743827,
-   "mean": 27.878927418498893,
-   "sd": 31.648299964531823,
-   "min": -58.0431164165505,
-   "max": 94.68902726573415
+   "wins_vs_persistence": 28,
+   "pos_median": 21.417770915043413,
+   "mean": 19.596307485338727,
+   "sd": 35.640065121705305,
+   "min": -79.9259514894736,
+   "max": 85.01071774236003
   },
   "chronos_matched_1127": {
    "n": 40,
@@ -49,9 +50,9 @@
  },
  "head_to_head": {
   "tso_vs_frozen": {
-   "tso_wins": 12,
-   "chronos_wins": 28,
-   "wilcoxon_chronos_gt_tso": 0.0003572009763956885
+   "tso_wins": 16,
+   "chronos_wins": 24,
+   "wilcoxon_chronos_gt_tso": 0.004311326349125011
   },
   "tso_vs_matched": {
    "tso_wins": 13,
@@ -59,20 +60,20 @@
    "wilcoxon_chronos_gt_tso": 0.006007960726492456
   },
   "matched_vs_frozen": {
-   "matched_wins": 18,
-   "frozen_wins": 22,
-   "wilcoxon_matched_gt_frozen": 0.9456004251151171
+   "matched_wins": 21,
+   "frozen_wins": 19,
+   "wilcoxon_matched_gt_frozen": 0.49204687935980473
   },
   "generous_vs_frozen": {
-   "generous_wins": 26,
-   "frozen_wins": 14,
-   "wilcoxon_generous_gt_frozen": 0.06235819194534997
+   "generous_wins": 22,
+   "frozen_wins": 18,
+   "wilcoxon_generous_gt_frozen": 0.09842727627710701
   }
  },
  "per_series": {
   "ecg-215": {
    "tso_v14": 0.189099580670108,
-   "chronos_frozen": -1.2113172008100892,
+   "chronos_frozen": -1.2760841991416219,
    "chronos_matched": 0.852154221672272,
    "chronos_generous": -1.5352594646008604,
    "matched_corr": 0.10833088336814986,
@@ -80,7 +81,7 @@
   },
   "ecg-233": {
    "tso_v14": 1.4421594329317409,
-   "chronos_frozen": 56.340147807555326,
+   "chronos_frozen": 85.01071774236003,
    "chronos_matched": 82.50808492311162,
    "chronos_generous": 59.80350770547304,
    "matched_corr": 0.9580859109760553,
@@ -88,7 +89,7 @@
   },
   "ecg-209": {
    "tso_v14": 1.5643640369454328,
-   "chronos_frozen": 5.248309531844982,
+   "chronos_frozen": 5.087968919680319,
    "chronos_matched": -0.06358464970451035,
    "chronos_generous": 4.604908793305912,
    "matched_corr": 0.07558287629491392,
@@ -96,7 +97,7 @@
   },
   "AEP": {
    "tso_v14": 7.924004935956327,
-   "chronos_frozen": 56.82336895283537,
+   "chronos_frozen": 54.54924260892098,
    "chronos_matched": 40.9783934170362,
    "chronos_generous": 55.80509003903709,
    "matched_corr": 0.06704811795745592,
@@ -104,7 +105,7 @@
   },
   "COMED": {
    "tso_v14": 20.883376760494894,
-   "chronos_frozen": -8.837538812909148,
+   "chronos_frozen": -5.3799610944943455,
    "chronos_matched": 2.7529412450760877,
    "chronos_generous": -8.564545212292185,
    "matched_corr": 0.7450130041372149,
@@ -112,7 +113,7 @@
   },
   "DAYTON": {
    "tso_v14": 8.039194470377833,
-   "chronos_frozen": 45.8319432056995,
+   "chronos_frozen": 55.26630686836767,
    "chronos_matched": 37.72400595121516,
    "chronos_generous": 46.62921396923107,
    "matched_corr": 0.021550954284073845,
@@ -120,7 +121,7 @@
   },
   "DEOK": {
    "tso_v14": 38.843244094741735,
-   "chronos_frozen": 80.46913733052364,
+   "chronos_frozen": 63.010507029665305,
    "chronos_matched": 59.60960608870303,
    "chronos_generous": 80.43936545113169,
    "matched_corr": 0.14869177223772026,
@@ -128,7 +129,7 @@
   },
   "DOM": {
    "tso_v14": 48.314738489893365,
-   "chronos_frozen": 50.45924989667537,
+   "chronos_frozen": 38.13719075385993,
    "chronos_matched": 35.38940709521469,
    "chronos_generous": 44.5214895565851,
    "matched_corr": 0.45906261089438555,
@@ -136,7 +137,7 @@
   },
   "DUQ": {
    "tso_v14": 54.504918207442266,
-   "chronos_frozen": 41.344732790595906,
+   "chronos_frozen": 43.361947432570005,
    "chronos_matched": 30.22567824945558,
    "chronos_generous": 45.91479517962983,
    "matched_corr": 0.03443185438132127,
@@ -144,7 +145,7 @@
   },
   "EKPC": {
    "tso_v14": 65.88234705395797,
-   "chronos_frozen": 30.191641778401504,
+   "chronos_frozen": 21.588570518308124,
    "chronos_matched": 32.66815375564494,
    "chronos_generous": 32.034761631803924,
    "matched_corr": 0.2530676518492011,
@@ -152,7 +153,7 @@
   },
   "FE": {
    "tso_v14": -19.205098851331297,
-   "chronos_frozen": 40.929985585297466,
+   "chronos_frozen": 42.777769698639915,
    "chronos_matched": 46.77683688858663,
    "chronos_generous": 41.64354264707992,
    "matched_corr": 0.027892767088147905,
@@ -160,7 +161,7 @@
   },
   "NI": {
    "tso_v14": 1.2002093599349328,
-   "chronos_frozen": 20.96739642139712,
+   "chronos_frozen": -3.962796722489787,
    "chronos_matched": 16.05038729378087,
    "chronos_generous": 21.49919913230409,
    "matched_corr": 0.5608024481609015,
@@ -168,7 +169,7 @@
   },
   "PJME": {
    "tso_v14": 20.80391008142971,
-   "chronos_frozen": 40.42447586357649,
+   "chronos_frozen": 21.2469713117787,
    "chronos_matched": 23.03655100179599,
    "chronos_generous": 40.876833216384426,
    "matched_corr": -0.10050728253635263,
@@ -176,7 +177,7 @@
   },
   "PJMW": {
    "tso_v14": -7.05188295581613,
-   "chronos_frozen": 42.60536594963749,
+   "chronos_frozen": 43.141987419084245,
    "chronos_matched": 18.152768582856787,
    "chronos_generous": 43.001105494328534,
    "matched_corr": 0.34116959608968367,
@@ -184,7 +185,7 @@
   },
   "weather-Temp3pm": {
    "tso_v14": -3.5587985443454335,
-   "chronos_frozen": -0.9227152069757237,
+   "chronos_frozen": -21.303727906076404,
    "chronos_matched": 4.122440646226309,
    "chronos_generous": -0.2963306145322257,
    "matched_corr": -0.32757689459275546,
@@ -192,7 +193,7 @@
   },
   "weather-MinTemp": {
    "tso_v14": -15.954511381697527,
-   "chronos_frozen": 37.19452214515422,
+   "chronos_frozen": 39.24875772205026,
    "chronos_matched": 33.20571548705232,
    "chronos_generous": 37.13482192324645,
    "matched_corr": 0.030723883431398796,
@@ -200,7 +201,7 @@
   },
   "weather-MaxTemp": {
    "tso_v14": 3.1503942488788246,
-   "chronos_frozen": 50.22982118492987,
+   "chronos_frozen": 55.43193347866398,
    "chronos_matched": 53.242397707759615,
    "chronos_generous": 50.23730471899658,
    "matched_corr": 0.0835426267229965,
@@ -208,7 +209,7 @@
   },
   "weather-Temp9am": {
    "tso_v14": 30.0977922508265,
-   "chronos_frozen": -9.455656159256533,
+   "chronos_frozen": 2.124184391687005,
    "chronos_matched": 3.112701890080392,
    "chronos_generous": -11.310504342044409,
    "matched_corr": 0.057412214100793585,
@@ -216,7 +217,7 @@
   },
   "weather-Humidity3pm": {
    "tso_v14": 17.260460117967416,
-   "chronos_frozen": -3.6856582522002705,
+   "chronos_frozen": -5.620503459440574,
    "chronos_matched": -43.170396582266044,
    "chronos_generous": -3.730894234604819,
    "matched_corr": 0.14714591261512008,
@@ -224,7 +225,7 @@
   },
   "weather-Humidity9am": {
    "tso_v14": 22.87986190977758,
-   "chronos_frozen": -17.866247440796617,
+   "chronos_frozen": -8.193605808736905,
    "chronos_matched": -1.3495476704388096,
    "chronos_generous": -15.602170796009862,
    "matched_corr": -0.018706718221088606,
@@ -232,7 +233,7 @@
   },
   "weather-Pressure3pm": {
    "tso_v14": 18.243222203897247,
-   "chronos_frozen": 36.219067437601424,
+   "chronos_frozen": 47.220739486565435,
    "chronos_matched": 48.17700296782575,
    "chronos_generous": 36.635216575484485,
    "matched_corr": -0.009205407767530751,
@@ -240,7 +241,7 @@
   },
   "weather-Pressure9am": {
    "tso_v14": 33.35945170810619,
-   "chronos_frozen": 36.03045692679066,
+   "chronos_frozen": 37.57431382656385,
    "chronos_matched": 41.8038205532827,
    "chronos_generous": 36.798340220456524,
    "matched_corr": 0.09351370050957666,
@@ -248,7 +249,7 @@
   },
   "weather-Rainfall": {
    "tso_v14": 2.0117957460379268,
-   "chronos_frozen": -1.6293784324899687,
+   "chronos_frozen": -1.6487569206895603,
    "chronos_matched": -1.763417963106374,
    "chronos_generous": -1.4876520772704185,
    "matched_corr": -0.01577157085419367,
@@ -256,7 +257,7 @@
   },
   "Litecoin": {
    "tso_v14": 43.717615584325046,
-   "chronos_frozen": 2.796218454361248,
+   "chronos_frozen": 12.119395504930834,
    "chronos_matched": 28.228923775701208,
    "chronos_generous": 7.307558909884996,
    "matched_corr": 0.9068699494055377,
@@ -264,7 +265,7 @@
   },
   "Bitcoin": {
    "tso_v14": -30.45367453953215,
-   "chronos_frozen": 48.564879688829606,
+   "chronos_frozen": 59.039108780717,
    "chronos_matched": 32.460585285510795,
    "chronos_generous": 42.421054291718505,
    "matched_corr": 0.4825131227041147,
@@ -272,7 +273,7 @@
   },
   "XRP": {
    "tso_v14": 31.029773208727807,
-   "chronos_frozen": -29.440241167333713,
+   "chronos_frozen": 3.7504464578742316,
    "chronos_matched": -11.678441336343248,
    "chronos_generous": -38.68779641818828,
    "matched_corr": 0.12076467071866329,
@@ -280,7 +281,7 @@
   },
   "Dogecoin": {
    "tso_v14": -1299.9291522721423,
-   "chronos_frozen": 43.90716100142662,
+   "chronos_frozen": 19.710348943887315,
    "chronos_matched": 29.973715194682303,
    "chronos_generous": 21.08388897802726,
    "matched_corr": 0.47228867391513163,
@@ -288,7 +289,7 @@
   },
   "Monero": {
    "tso_v14": -109.71850983626051,
-   "chronos_frozen": 25.16618452255438,
+   "chronos_frozen": 4.970853322755876,
    "chronos_matched": -321.06995519505404,
    "chronos_generous": 24.44842203957316,
    "matched_corr": -0.32142613615295007,
@@ -296,7 +297,7 @@
   },
   "Stellar": {
    "tso_v14": 12.250397242650413,
-   "chronos_frozen": 6.190096860127243,
+   "chronos_frozen": -38.66356129701611,
    "chronos_matched": -6.020031968063314,
    "chronos_generous": 23.753782802575827,
    "matched_corr": -0.07775686155793189,
@@ -304,7 +305,7 @@
   },
   "Tether": {
    "tso_v14": 17.247516799357843,
-   "chronos_frozen": 27.661382435287923,
+   "chronos_frozen": 49.0692732586732,
    "chronos_matched": 37.12870779457553,
    "chronos_generous": 27.81585793858224,
    "matched_corr": -0.4303104408935783,
@@ -312,7 +313,7 @@
   },
   "NEM": {
    "tso_v14": -54.88308575807,
-   "chronos_frozen": -58.0431164165505,
+   "chronos_frozen": -69.57659411830556,
    "chronos_matched": -33.593130983722936,
    "chronos_generous": -52.374621396615325,
    "matched_corr": -0.7171007067910427,
@@ -320,7 +321,7 @@
   },
   "sunspots": {
    "tso_v14": 4.774864102240441,
-   "chronos_frozen": 34.43172362808588,
+   "chronos_frozen": 28.575674094742425,
    "chronos_matched": 38.34576761674585,
    "chronos_generous": 34.650160102403056,
    "matched_corr": 0.3371040442707693,
@@ -328,7 +329,7 @@
   },
   "airline": {
    "tso_v14": -11.68530192063767,
-   "chronos_frozen": 68.64209174836868,
+   "chronos_frozen": 61.83923879422847,
    "chronos_matched": -4.054575694907512,
    "chronos_generous": 68.77675413157763,
    "matched_corr": -0.15896044900268924,
@@ -336,7 +337,7 @@
   },
   "covid-india": {
    "tso_v14": -65312.74940329514,
-   "chronos_frozen": 76.27604882716659,
+   "chronos_frozen": 23.172124395591364,
    "chronos_matched": 65.37590703742565,
    "chronos_generous": 77.85676565805659,
    "matched_corr": 0.9767419879984848,
@@ -344,7 +345,7 @@
   },
   "covid-brazil": {
    "tso_v14": -55.21077016692424,
-   "chronos_frozen": 54.86845892559764,
+   "chronos_frozen": 22.0884731127871,
    "chronos_matched": 28.882382276945613,
    "chronos_generous": 55.393188591309574,
    "matched_corr": -0.18797026085263197,
@@ -352,7 +353,7 @@
   },
   "covid-germany": {
    "tso_v14": -586.7800879027296,
-   "chronos_frozen": 11.315871067027159,
+   "chronos_frozen": -3.4368749494033306,
    "chronos_matched": 14.976852177679776,
    "chronos_generous": 13.819924574966446,
    "matched_corr": 0.10743923036146737,
@@ -360,7 +361,7 @@
   },
   "covid-france": {
    "tso_v14": -0.9379952585755644,
-   "chronos_frozen": 94.68902726573415,
+   "chronos_frozen": -79.9259514894736,
    "chronos_matched": -0.005922884754816839,
    "chronos_generous": 96.31208009762436,
    "matched_corr": -0.034998893852207516,
@@ -368,7 +369,7 @@
   },
   "covid-us": {
    "tso_v14": -1760.1346352235976,
-   "chronos_frozen": 9.289707550510014,
+   "chronos_frozen": 3.810018274268885,
    "chronos_matched": 20.626479851698093,
    "chronos_generous": 10.169142693248636,
    "matched_corr": 0.36668800507748617,
@@ -376,7 +377,7 @@
   },
   "lorenz-x": {
    "tso_v14": -64.85710083162049,
-   "chronos_frozen": 4.018981668565682,
+   "chronos_frozen": -4.9596583902539155,
    "chronos_matched": -24.921469826816356,
    "chronos_generous": 2.6490887686171,
    "matched_corr": -0.16255491655748686,
@@ -384,7 +385,7 @@
   },
   "rossler-x": {
    "tso_v14": -180.00153699927426,
-   "chronos_frozen": 67.12150937711927,
+   "chronos_frozen": 84.87631161984828,
    "chronos_matched": 22.369674178033737,
    "chronos_generous": 66.95494002305412,
    "matched_corr": 0.5208548861367467,

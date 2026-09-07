@@ -791,6 +791,14 @@ def main():
         print(f"  + {len(battery)} synthetic dynamics series "
               f"(attractor sweeps, maps, stochastic regimes)")
 
+    if int(os.environ.get("V19_MODE", 0)):
+        print("\n[v19] real-corpus rematch mode: real-only training corpus,"
+              " TSO pretrained from scratch, Chronos fine-tuned on the "
+              "identical corpus at matched parameter-steps")
+        v19_samples, v19_meta = build_v19_corpus()
+        run_real_rematch(v19_samples, v19_meta, OUT, device)
+        return
+
     if int(os.environ.get("V18_MATCH", 0)):
         print("\n[v18] matched-compute mode: skipping TSO pretraining "
               "(published v14 checkpoint is downloaded instead)")
@@ -1202,6 +1210,700 @@ def gen_v15_battery(target=5988, n=2600, seed=11):
     return [(k, v) for k, v in sorted(d.items())]
 
 
+
+
+# ==========================================================================
+# V19: the real-corpus rematch (paradigm vs scale, on REAL data)
+# --------------------------------------------------------------------------
+# v18's matched-compute experiment showed that fine-tuning Chronos on the
+# TSO's small corpus changes nothing — the token FSTM's edge is bought
+# upstream on ~80k series. v19 gives the operator a REAL-only corpus at
+# breadth (multi-site air quality, multi-station meteorology, power grids,
+# ETT transformer load, traffic, solar, ECG, finance, epidemiology) built
+# from Kaggle datasets, then reruns the identical matched-compute protocol:
+#   - TSO pretrained from scratch on the real corpus (25k iters, GPU AMP),
+#   - chronos-t5-small fine-tuned on the IDENTICAL corpus at matched
+#     parameter-steps (n_matched) and at equal steps (n_total),
+#   - all four models evaluated on a held-out real probe spanning every
+#     domain (series never in either training corpus).
+# ==========================================================================
+
+V19_JENA_COLS = [
+    "p (mbar)", "T (degC)", "Tpot (K)", "Tdew (degC)", "rh (%)",
+    "VPmax (mbar)", "VPact (mbar)", "VPdef (mbar)", "H2OC (mmol/mol)",
+    "rho (g/m3)", "wv (m/s)", "max. wv (m/s)", "wd (deg)", "rain (mm)",
+]
+
+
+def find_dataset_dir(substr):
+    """First /kaggle/input/<...> directory whose name contains substr."""
+    if not os.path.isdir(INPUT):
+        return None
+    for root, dirs, _ in os.walk(INPUT):
+        for d in dirs:
+            if substr.lower() in d.lower():
+                return os.path.join(root, d)
+    return None
+
+
+def find_csv_like(substr):
+    """First csv whose filename contains substr (case-insensitive)."""
+    if not os.path.isdir(INPUT):
+        return None
+    for root, _dirs, files in os.walk(INPUT):
+        for f in files:
+            if f.lower().endswith(".csv") and substr.lower() in f.lower():
+                return os.path.join(root, f)
+    return None
+
+
+def window_split(s, max_windows=4, min_len=1024):
+    """Deterministic contiguous windows of a long series; each window is an
+    independent corpus entry (v19 corpus breadth at fixed compute)."""
+    s = np.asarray(s, dtype=float)
+    if len(s) <= min_len:
+        return [s]
+    nw = min(max_windows, len(s) // min_len)
+    stride = (len(s) - min_len) // nw
+    return [s[i * stride: i * stride + min_len] for i in range(nw)]
+
+
+def _raw_cols(df, cols, name_fmt):
+    """Numeric columns as raw (finite-only) series."""
+    out = []
+    for c in cols:
+        if c not in df.columns:
+            continue
+        s = pd.to_numeric(df[c], errors="coerce").to_numpy()
+        s = s[np.isfinite(s)]
+        if len(s) >= 512:
+            out.append((name_fmt(c), s))
+    return out
+
+
+def v19_raw_jena(path):
+    df = pd.read_csv(path)
+    return _raw_cols(df, V19_JENA_COLS,
+                     lambda c: "jena-" + c.split(" ")[0].lower())
+
+
+def v19_raw_beijing(path):
+    d = os.path.dirname(path)
+    out = []
+    for f in sorted(os.listdir(d)):
+        if not (f.startswith("PRSA_Data") and f.endswith(".csv")):
+            continue
+        site = f.replace("PRSA_Data_", "").split("_")[0].lower()
+        try:
+            df = pd.read_csv(os.path.join(d, f))
+        except Exception:
+            continue
+        for col, tag in (("PM2.5", "pm25"), ("TEMP", "temp")):
+            if col not in df.columns:
+                continue
+            s = pd.to_numeric(df[col], errors="coerce").to_numpy()
+            s = s[np.isfinite(s)]
+            if len(s) >= 512:
+                out.append((f"bj-{site}-{tag}", s))
+    return out
+
+
+def v19_raw_traffic(path):
+    """Numeric columns of the first parseable csv in the traffic mount dir."""
+    d = os.path.dirname(path)
+    df = None
+    for f in sorted(os.listdir(d)):
+        if not f.endswith(".csv"):
+            continue
+        try:
+            df = pd.read_csv(os.path.join(d, f))
+            break
+        except Exception:
+            continue
+    if df is None:
+        return []
+    out = []
+    for c in df.columns:
+        if len(out) >= 24:
+            break
+        if pd.api.types.is_datetime64_any_dtype(df[c]) \
+                or "date" in c.lower() or "time" in c.lower():
+            continue
+        s = pd.to_numeric(df[c], errors="coerce").to_numpy()
+        s = s[np.isfinite(s)]
+        if len(s) >= 512:
+            out.append(("traf-" + c[:10].lower(), s))
+    return out
+
+
+def v19_raw_solar(path):
+    d = os.path.dirname(path)
+    out = []
+    for f in sorted(os.listdir(d)):
+        if "Generation_Data" not in f or not f.endswith(".csv"):
+            continue
+        plant = "p" + f.split("_")[1]
+        try:
+            df = pd.read_csv(os.path.join(d, f))
+        except Exception:
+            continue
+        for col, tag in (("AC_POWER", "ac"), ("DC_POWER", "dc")):
+            if col not in df.columns:
+                continue
+            s = pd.to_numeric(df[col], errors="coerce").to_numpy()
+            s = s[np.isfinite(s)]
+            if len(s) >= 512:
+                out.append((f"solar-{plant}-{tag}", s))
+    return out
+
+
+def v19_raw_ett(path):
+    d = os.path.dirname(path)
+    out = []
+    for f in sorted(os.listdir(d)):
+        if not (f.startswith("ETT") and f.endswith(".csv")):
+            continue
+        stem = f.replace(".csv", "").lower()
+        try:
+            df = pd.read_csv(os.path.join(d, f))
+        except Exception:
+            continue
+        for c in df.columns:
+            if c.lower() in ("date", "datetime"):
+                continue
+            s = pd.to_numeric(df[c], errors="coerce").to_numpy()
+            s = s[np.isfinite(s)]
+            if len(s) >= 512:
+                out.append((f"ett-{stem}-{c.lower()}", s))
+    return out
+
+
+def v19_raw_ecg(path, n=24):
+    df = pd.read_csv(path)
+    out = []
+    for rec in df.groupby("record").size().sort_values(
+            ascending=False).index[:n]:
+        s = pd.to_numeric(df[df["record"] == rec]["rr_prev"],
+                          errors="coerce").to_numpy()
+        s = s[np.isfinite(s)]
+        if len(s) >= 512:
+            out.append((f"ecg-{int(rec)}", s))
+    return out
+
+
+def v19_raw_aep(path):
+    d = os.path.dirname(path)
+    out = []
+    for f in sorted(os.listdir(d)):
+        if not f.endswith("_hourly.csv") or "Load" in f or "est" in f:
+            continue
+        col = f.replace("_hourly.csv", "") + "_MW"
+        try:
+            df = pd.read_csv(os.path.join(d, f))
+        except Exception:
+            continue
+        if col not in df.columns:
+            continue
+        s = pd.to_numeric(df[col], errors="coerce").to_numpy()
+        s = s[np.isfinite(s)]
+        if len(s) >= 512:
+            out.append(("aep-" + col.replace("_MW", "").lower(), s))
+    return out
+
+
+def v19_raw_weather(path, cols):
+    df = pd.read_csv(path)
+    return _raw_cols(df, cols, lambda c: "weather-" + c)
+
+
+def v19_raw_crypto(path, n=8):
+    d = os.path.dirname(path)
+    cands = []
+    for f in sorted(os.listdir(d)):
+        if not (f.startswith("coin_") and f.endswith(".csv")):
+            continue
+        try:
+            df = pd.read_csv(os.path.join(d, f), usecols=["Close"])
+        except Exception:
+            continue
+        s = df["Close"].dropna().to_numpy()
+        if len(s) >= 512:
+            cands.append((len(s), f))
+    cands.sort(reverse=True)
+    out = []
+    for _, f in cands[:n]:
+        df = pd.read_csv(os.path.join(d, f))
+        s = pd.to_numeric(df["Close"], errors="coerce").to_numpy()
+        s = s[np.isfinite(s)]
+        out.append(("coin-" + f.replace("coin_", "").replace(".csv", "")
+                    .lower(), s))
+    return out
+
+
+def v19_raw_sunspots(path):
+    df = pd.read_csv(path)
+    col = [c for c in df.columns if "sunspot" in c.lower()]
+    c = col[0] if col else df.columns[-1]
+    s = pd.to_numeric(df[c], errors="coerce").to_numpy()
+    return [("sunspots", s[np.isfinite(s)])]
+
+
+def v19_raw_airline(path):
+    df = pd.read_csv(path)
+    col = [c for c in df.columns if "passenger" in c.lower()]
+    c = col[0] if col else df.columns[-1]
+    s = pd.to_numeric(df[c], errors="coerce").to_numpy()
+    return [("airline", s[np.isfinite(s)])]
+
+
+def v19_raw_covid(path, train, held):
+    df = pd.read_csv(path)
+    out = []
+    for c in train + held:
+        sub = df[df["Country/Region"] == c] if "Country/Region" in df.columns \
+            else df
+        s = pd.to_numeric(sub["Confirmed"], errors="coerce").dropna()\
+            .to_numpy()
+        out.append((f"covid-{c.lower()}", np.diff(s)))
+    return out
+
+
+V19_HELD_RULES = [
+    lambda n: n == "sunspots",
+    lambda n: n in ("jena-t", "jena-p"),
+    lambda n: n.startswith("bj-") and n.split("-")[1] in
+              ("aotizhongxin", "changping", "dingling", "dongsi"),
+    lambda n: n.startswith("ett-etth2-"),
+    lambda n: n.startswith("ecg-") and int(n[4:]) % 4 == 0,
+    lambda n: n in ("aep-comed", "aep-duq"),
+    lambda n: n in ("weather-Humidity3pm", "weather-Pressure3pm"),
+    lambda n: n in ("coin-bitcoin", "coin-ethereum", "coin-litecoin"),
+    lambda n: n.startswith("covid-") and n != "covid-us",
+    lambda n: n.startswith("solar-p2-"),
+]
+
+
+def build_v19_corpus():
+    """Real-only corpus: every mounted dataset becomes series (channels /
+    sites / junctions / coins), long series are window-split into up to 4
+    contiguous training entries, and a deterministic held-out probe spans
+    every domain (never in training)."""
+    samples, meta = [], []
+
+    def add(name, raw, domain, held_out, windows):
+        for w, s in enumerate(window_split(raw, max_windows=windows
+                                           if not held_out else 1)):
+            prep = prepare_series(s, name)
+            if prep is None:
+                continue
+            nm = name if held_out else f"{name}-{w}"
+            try:
+                pair = prepare_pair(prep[1])
+            except Exception as e:
+                print(f"  !! {nm} failed to embed: {e}")
+                continue
+            samples.append((nm, pair))
+            meta.append({"name": nm, "domain": domain,
+                         "held_out": held_out, "n": int(len(prep[1])),
+                         "tau_f": pair["tau_f"], "window": w})
+            print(f"  corpus + {nm:24s} [{domain:13s}] len={len(prep[1]):5d} "
+                  f"held_out={held_out}")
+
+    def is_held(name):
+        return any(r(name) for r in V19_HELD_RULES)
+
+    traf_held = set()
+    p = find_csv("Cardiac_arrhythmia_dataset.csv")
+    if p:
+        for name, s in v19_raw_ecg(p, 24):
+            add(name, s, "physiology", is_held(name), windows=2)
+    p = find_csv("AEP_hourly.csv")
+    if p:
+        for name, s in v19_raw_aep(p):
+            add(name, s, "energy-grid", is_held(name), windows=3)
+    p = find_csv("weatherAUS.csv")
+    if p:
+        cols = ["Temp3pm", "MinTemp", "MaxTemp", "Temp9am",
+                "Humidity3pm", "Humidity9am", "Pressure3pm",
+                "Pressure9am", "Rainfall"]
+        for name, s in v19_raw_weather(p, cols):
+            add(name, s, "meteorology", is_held(name), windows=2)
+    p = find_csv("coin_Bitcoin.csv")
+    if p:
+        for name, s in v19_raw_crypto(p, 8):
+            add(name, s, "finance", is_held(name), windows=1)
+    p = find_csv("Sunspots.csv")
+    if p:
+        for name, s in v19_raw_sunspots(p):
+            add(name, s, "solar-physics", True, windows=1)
+    p = find_csv("AirPassengers.csv")
+    if p:
+        for name, s in v19_raw_airline(p):
+            add(name, s, "economics", False, windows=1)
+    p = find_csv("covid_19_clean_complete.csv")
+    if p:
+        for name, s in v19_raw_covid(
+                p, ["US"],
+                ["India", "Brazil", "Germany", "UK", "France"]):
+            add(name, s, "epidemiology", is_held(name), windows=1)
+    # ---- new real domains ----
+    p = find_csv_like("jena_climate")
+    if p:
+        for name, s in v19_raw_jena(p):
+            add(name, s, "meteorology", is_held(name), windows=4)
+    p = find_csv_like("PRSA_Data")
+    if p:
+        for name, s in v19_raw_beijing(p):
+            add(name, s, "air-quality", is_held(name), windows=3)
+    p = find_csv_like("Generation_Data")
+    if p:
+        for name, s in v19_raw_solar(p):
+            add(name, s, "solar-energy", is_held(name), windows=2)
+    p = find_csv_like("ETTh1")
+    if p:
+        for name, s in v19_raw_ett(p):
+            add(name, s, "power-grid", is_held(name), windows=2)
+    d = find_dataset_dir("traffic")
+    if d:
+        for name, s in v19_raw_traffic(os.path.join(d, "x.csv")):
+            add(name, s, "traffic", is_held(name), windows=2)
+    # last 4 traffic junctions are held out (deterministic, name-based)
+    traf_names = sorted(m["name"] for m in meta
+                        if m["name"].startswith("traf-"))
+    for n in traf_names[-4:]:
+        for m in meta:
+            if m["name"] == n:
+                m["held_out"] = True
+    held = [m["name"] for m in meta if m["held_out"]]
+    print(f"  v19 corpus: {len(samples)} entries "
+          f"({len(held)} held-out probe)")
+    print(f"  held-out: {held}")
+    return samples, meta
+
+
+def run_real_rematch(samples, meta, OUT, device):
+    """v19: TSO pretrained from scratch on the real corpus; chronos-t5-small
+    fine-tuned on the IDENTICAL corpus at matched parameter-steps and at
+    equal steps; all four models on the held-out real probe."""
+    import dataclasses
+    import importlib
+    import subprocess
+    import time
+
+    N_ITERS = int(os.environ.get("V19_ITERS", 25_000))
+    LATENT = int(os.environ.get("V19_LATENT", 256))
+    HIDDEN = int(os.environ.get("V19_HIDDEN", 768))
+    DYN_W = float(os.environ.get("V19_DYN_W", 2.5))
+    SEED = int(os.environ.get("V19_SEED", 0))
+    EVAL_SAMPLES = int(os.environ.get("V19_EVAL_SAMPLES", 32))
+
+    try:
+        __import__("huggingface_hub")
+    except ImportError:
+        subprocess.check_call([sys.executable, "-m", "pip", "install",
+                               "-q", "huggingface_hub"])
+    _ok = False
+    try:
+        _c = __import__("chronos")
+        _ok = hasattr(_c, "ChronosPipeline")
+    except Exception:
+        _ok = False
+    if not _ok:
+        subprocess.check_call([sys.executable, "-m", "pip", "install",
+                               "-q", "--upgrade", "chronos-forecasting"])
+        for _m in ("chronos", "chronos.base", "chronos.utils"):
+            sys.modules.pop(_m, None)
+        importlib.invalidate_caches()
+    from chronos import ChronosPipeline, ChronosModel
+
+    print("\n[v19] real-corpus rematch: TSO vs Chronos on REAL data at "
+          "matched compute")
+
+    # ---- 1. TSO pretrain from scratch on the real-only corpus -----------
+    train_pairs = [p for (n, p), m in zip(samples, meta)
+                   if not m["held_out"]]
+    print(f"  training corpus: {len(train_pairs)} real entries "
+          f"({sum(1 for m in meta if m['held_out'])} held-out probe)")
+    model, hist, parts_agg, parts = pretrain_foundation(
+        train_pairs, iters=N_ITERS, latent_dim=LATENT, hidden=HIDDEN,
+        seed=SEED, device=device, amp=(device == "cuda"),
+        print_every=5_000, dyn_w=DYN_W,
+        ckpt_path=os.path.join(OUT, "foundation_model.pt"),
+        joint_probe=False)
+    torch.save(model.state_dict(), os.path.join(OUT, "foundation_model.pt"))
+    plot_pretrain_curves(hist, parts, os.path.join(OUT, "pretrain_curves.png"))
+    p_tso = int(sum(v.numel() for v in model.state_dict().values()))
+    print(f"  TSO pretrained: {p_tso:,} params, loss {float(hist[-1]):.4f}")
+
+    # ---- 2. chronos fine-tune on the identical pool ----------------------
+    import copy
+    pipe = ChronosPipeline.from_pretrained("amazon/chronos-t5-small")
+    cfg = pipe.model.config
+    inner = pipe.model.model.to(device)
+    # SNAPSHOT the true frozen weights BEFORE any training (the v18 lesson:
+    # pipe.model.model is mutated in place by fine-tuning, so a pipe kept
+    # for "frozen" eval must not share that object).
+    frozen_snapshot = copy.deepcopy(inner)
+    p_chronos = int(sum(p.numel() for p in inner.parameters()))
+    n_matched = max(int(os.environ.get("V19_MIN_MATCHED", 200)),
+                    int(round(N_ITERS * p_tso / p_chronos)))
+    n_total = max(int(os.environ.get("V19_TOTAL_ITERS", N_ITERS)), n_matched)
+    print(f"  chronos-t5-small: {p_chronos:,} params; matched = "
+          f"{n_matched} steps; generous total = {n_total} steps "
+          f"({n_total / n_matched:.1f}x matched)")
+
+    pool = [np.asarray(p["series"], dtype=float) for p in train_pairs]
+    pool = [s for s in pool if np.isfinite(s).all() and len(s) >= 32]
+    rng = np.random.default_rng(0)
+
+    n_tokens = int(cfg.n_tokens)
+    n_spec = int(cfg.n_special_tokens)
+    use_eos = bool(cfg.use_eos_token)
+    centers = torch.linspace(-20.0, 20.0, n_tokens - n_spec - 1)
+    boundaries = torch.cat([torch.tensor([-1e20]),
+                            (centers[1:] + centers[:-1]) / 2,
+                            torch.tensor([1e20])])
+
+    def tokenize(x, scale=None):
+        x = torch.as_tensor(x, dtype=torch.float32)
+        if scale is None:
+            scale = x.abs().mean()
+            if not (scale > 0):
+                scale = torch.tensor(1.0)
+        ids = torch.bucketize(x / scale, boundaries, right=True) + n_spec
+        return ids.clamp_(0, n_tokens - 1), scale
+
+    ctx_len, pred_len = int(cfg.context_length), int(cfg.prediction_length)
+    lr, min_lr, warmup = 1e-3, 1e-4, 300
+    opt = torch.optim.Adam(inner.parameters(), lr=lr)
+    use_amp = device == "cuda"
+    scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
+    inner.train()
+
+    def lr_at(it):
+        if it < warmup:
+            return lr * (it + 1) / warmup
+        frac = (it - warmup) / max(1, n_total - warmup)
+        return min_lr + 0.5 * (lr - min_lr) * \
+            (1 + np.cos(np.pi * min(frac, 1.0)))
+
+    t0 = time.time()
+    for it in range(n_total):
+        s = pool[int(rng.integers(0, len(pool)))]
+        lab_len = min(pred_len, len(s) // 2)
+        lab_start = int(rng.integers(lab_len, len(s)))
+        ctx = s[max(0, lab_start - ctx_len): lab_start]
+        lab = s[lab_start: lab_start + lab_len]
+        ctx_ids, scale = tokenize(ctx)
+        lab_ids, _ = tokenize(lab, scale)
+        if use_eos:
+            ctx_ids = torch.cat([ctx_ids,
+                                 torch.tensor([int(cfg.eos_token_id)])])
+            lab_ids = torch.cat([lab_ids,
+                                 torch.tensor([int(cfg.eos_token_id)])])
+        in_ids = ctx_ids.unsqueeze(0).to(device)
+        in_mask = torch.ones_like(in_ids)
+        lab_ids = lab_ids.unsqueeze(0).to(device)
+        with torch.autocast(device_type=device, dtype=torch.float16,
+                            enabled=use_amp):
+            loss = inner(input_ids=in_ids, attention_mask=in_mask,
+                         labels=lab_ids).loss
+        opt.zero_grad()
+        scaler.scale(loss).backward()
+        scaler.step(opt)
+        scaler.update()
+        for g in opt.param_groups:
+            g["lr"] = lr_at(it)
+        if it + 1 == n_matched:
+            torch.save({"state_dict": inner.state_dict(),
+                        "chronos_config": dataclasses.asdict(cfg),
+                        "step": it + 1, "pool_size": len(pool)},
+                       os.path.join(OUT, "chronos_finetuned_matched.pt"))
+            print(f"  matched checkpoint @ {it + 1} saved "
+                  f"(loss {float(loss.detach()):.3f})")
+        if (it + 1) % 2000 == 0:
+            el = time.time() - t0
+            print(f"  step {it + 1}/{n_total} loss {float(loss):.4f} "
+                  f"({el / (it + 1):.2f}s/step, eta "
+                  f"{(n_total - it - 1) * el / (it + 1) / 60:.0f} min)",
+                  flush=True)
+    torch.save({"state_dict": inner.state_dict(),
+                "chronos_config": dataclasses.asdict(cfg),
+                "step": n_total, "pool_size": len(pool)},
+               os.path.join(OUT, "chronos_finetuned_generous.pt"))
+    print(f"  generous checkpoint @ {n_total} saved "
+          f"(loss {float(loss.detach()):.3f})")
+
+    # ---- 3. identical protocol for all four models -----------------------
+    def load_pipe(path, base):
+        """Fresh (deep-copied) model, weights from the saved checkpoint —
+        the v18 lesson: eval must load the actual checkpoint, not the live
+        final-step weights."""
+        m = copy.deepcopy(base)
+        ck = torch.load(path, map_location=device, weights_only=False)
+        m.model.load_state_dict(ck["state_dict"])
+        m.eval()
+        return ChronosPipeline(tokenizer=pipe.tokenizer, model=m)
+
+    # true frozen = snapshot taken BEFORE training; matched/generous = the
+    # saved checkpoints, loaded into fresh models (never the live `inner`)
+    p_frozen = ChronosPipeline(
+        tokenizer=pipe.tokenizer,
+        model=ChronosModel(config=cfg, model=copy.deepcopy(frozen_snapshot)))
+    _base = ChronosModel(config=cfg, model=copy.deepcopy(inner))
+    p_matched = load_pipe(os.path.join(OUT, "chronos_finetuned_matched.pt"),
+                          _base)
+    p_generous = load_pipe(os.path.join(OUT, "chronos_finetuned_generous.pt"),
+                           _base)
+
+    def eval_chronos(p, series):
+        x = np.asarray(series, dtype=float)
+        x = (x - float(np.nanmean(x))) / (float(np.nanstd(x)) + 1e-8)
+        split = int(len(x) * 0.7)
+        horizon = min(int(len(x) * 0.2), len(x) - split - 1, 100)
+        if horizon < 1:
+            return None
+        ctx = torch.tensor(x[:split], dtype=torch.float32).to(device)
+        with torch.no_grad():
+            fc = p.predict(ctx, prediction_length=horizon,
+                           num_samples=EVAL_SAMPLES)
+        pred = fc[0].median(dim=0).values.numpy()
+        true = x[split: split + horizon][: len(pred)]
+        e = float(np.mean((pred - true) ** 2) ** 0.5)
+        ep = float(np.mean((np.full(len(true), true[0]) - true) ** 2) ** 0.5)
+        return {"skill_pct": 100.0 * (ep - e) / max(ep, 1e-12),
+                "corr": float(np.corrcoef(pred, true)[0, 1])
+                if len(true) > 2 else float("nan"),
+                "horizon": int(len(pred))}
+
+    per = {n: {} for n, _ in samples}
+    t2 = time.time()
+    for n, pair in samples:
+        per[n]["tso"] = {k: v for k, v in zero_shot_forecast(
+            model, pair["series"], device=device).items()
+            if not isinstance(v, np.ndarray)}
+        per[n]["chronos_frozen"] = eval_chronos(p_frozen, pair["series"])
+        per[n]["chronos_matched"] = eval_chronos(p_matched, pair["series"])
+        per[n]["chronos_generous"] = eval_chronos(p_generous, pair["series"])
+        print(f"  {n:26s} tso={per[n]['tso']['skill_pct']:+7.1f}  "
+              f"frz={per[n]['chronos_frozen']['skill_pct']:+7.1f}  "
+              f"mat={per[n]['chronos_matched']['skill_pct']:+7.1f}  "
+              f"gen={per[n]['chronos_generous']['skill_pct']:+7.1f}  "
+              f"({time.time() - t2:.0f}s)", flush=True)
+    print(f"  eval total {time.time() - t2:.0f}s")
+
+    # ---- 4. summary -------------------------------------------------------
+    held_names = [m["name"] for m in meta if m["held_out"]]
+
+    def summ(key, subset):
+        vals = [per[n][key]["skill_pct"] for n in subset
+                if per[n].get(key)]
+        return {"median": round(float(np.median(vals)), 2),
+                "mean": round(float(np.mean(vals)), 2),
+                "positive": int(sum(1 for v in vals if v > 0)),
+                "n": len(vals)}
+
+    def h2h(a, b, subset):
+        wa = sum(1 for n in subset
+                 if per[n].get(a) and per[n].get(b)
+                 and per[n][a]["skill_pct"] > per[n][b]["skill_pct"])
+        tot = sum(1 for n in subset
+                  if per[n].get(a) and per[n].get(b))
+        return {"a_wins": wa, "b_wins": tot - wa, "n": tot}
+
+    models = ("tso", "chronos_frozen", "chronos_matched",
+              "chronos_generous")
+    aggregates = {"held": {k: summ(k, held_names) for k in models},
+                  "all": {k: summ(k, [n for n, _ in samples])
+                          for k in models}}
+    h2hs = {"held": {"tso_vs_frozen": h2h("tso", "chronos_frozen", held_names),
+                      "tso_vs_matched": h2h("tso", "chronos_matched", held_names),
+                      "tso_vs_generous": h2h("tso", "chronos_generous", held_names),
+                      "matched_vs_frozen": h2h("chronos_matched",
+                                                "chronos_frozen", held_names),
+                      "generous_vs_frozen": h2h("chronos_generous",
+                                                 "chronos_frozen", held_names)}}
+    print("\n  aggregates (held probe):", json.dumps(aggregates["held"], indent=1))
+    print("  h2h (held probe):", json.dumps(h2hs["held"], indent=1))
+
+    out = {"config": {"experiment": "v19-real-corpus-rematch",
+                       "n_tso_iters": N_ITERS, "p_tso": p_tso,
+                       "p_chronos": p_chronos, "n_matched": n_matched,
+                       "n_total": n_total, "lr": lr, "min_lr": min_lr,
+                       "warmup": warmup, "ctx_len": ctx_len,
+                       "pred_len": pred_len, "pool_entries": len(pool),
+                       "device": device, "eval_samples": EVAL_SAMPLES,
+                       "seed": SEED},
+           "per_series": per, "aggregates": aggregates, "h2h": h2hs,
+           "corpus": meta,
+           "pretrain": {"iters": len(hist), "latent_dim": LATENT,
+                         "hidden": HIDDEN, "dyn_w": DYN_W,
+                         "final_loss": float(hist[-1]),
+                         "pretext_losses": parts_agg}}
+    json.dump(out, open(os.path.join(OUT, "final_summary.json"), "w"),
+              indent=1)
+
+    # ---- 5. figures -------------------------------------------------------
+    try:
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+        names = held_names
+        x = np.arange(len(names))
+        cols = {"tso": "#d4a017", "chronos_frozen": "#7aa2f7",
+                "chronos_matched": "#9ece6a", "chronos_generous": "#bb9af7"}
+        labels = {"tso": "TSO (operator, pretrained on real corpus)",
+                  "chronos_frozen": "Chronos frozen",
+                  "chronos_matched": "Chronos fine-tuned (matched steps)",
+                  "chronos_generous": "Chronos fine-tuned (equal steps)"}
+        fig, ax = plt.subplots(figsize=(15, 5.6), dpi=150)
+        for k, (lab, m) in enumerate(cols.items()):
+            vals = [per[n][lab]["skill_pct"] for n in names
+                    if per[n].get(lab)]
+            ax.bar(x + (k - 1.5) * 0.2, vals, width=0.18, color=m,
+                   alpha=0.88,
+                   label=f"{labels[lab]} (med {np.median(vals):+.1f})")
+        ax.axhline(0, color="#1a1b26", lw=0.8)
+        ax.set_xticks(x)
+        ax.set_xticklabels([n[:12] for n in names], rotation=70, fontsize=6)
+        ax.set_ylabel("skill vs persistence (%)")
+        ax.set_title("v19 real-corpus rematch: TSO (real-corpus pretrain) vs "
+                     "Chronos-t5-small on held-out real series")
+        ax.legend(fontsize=7, ncol=2)
+        ax.grid(axis="y", alpha=0.3)
+        fig.tight_layout()
+        fig.savefig(os.path.join(OUT, "v19_compare.png"),
+                    bbox_inches="tight")
+        plt.close(fig)
+        print("  wrote v19_compare.png")
+    except Exception as e:
+        print(f"  figure failed: {e}")
+
+    # ---- 6. solar-cycle discovery (sunspots is held out) ------------------
+    sun = None
+    sunspot_series = dict(samples).get("sunspots")
+    if sunspot_series is not None:
+        try:
+            disc = solar_cycle_discovery(model, sunspot_series["series"],
+                                         device=device)
+            months = disc["period_months"]
+            plot_solar_discovery(disc["rows"],
+                                 os.path.join(OUT, "solar_cycle.png"),
+                                 known_months=disc["known_cycle_months"])
+            sun = {"period_months": float(months) if months else None,
+                   "known_cycle_months": disc["known_cycle_months"]}
+            print(f"  SOLAR-CYCLE: {months} mo vs known "
+                  f"{disc['known_cycle_months']} mo")
+        except Exception as e:
+            print(f"  solar discovery failed: {e}")
+    out["solar_cycle"] = sun
+    json.dump(out, open(os.path.join(OUT, "final_summary.json"), "w"),
+              indent=1)
+
+    print("\n  -> outputs in /kaggle/working:")
+    for f in sorted(os.listdir(OUT)):
+        print(f"     {f}")
+    print("DONE")
 
 
 if __name__ == "__main__":

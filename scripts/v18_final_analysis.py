@@ -58,8 +58,16 @@ def main():
     missing = [n for n in names if n not in matched]
     assert not missing, f"matched eval incomplete: {missing}"
 
+    # NOTE: the kernel's "chronos_frozen" column is contaminated — the
+    # frozen pipe shared the model object that fine-tuning mutated in
+    # place (corr 0.986 with the generous column). The TRUE frozen
+    # baseline was re-measured post-hoc on the identical protocol by
+    # scripts/eval_v18_frozen.py. The kernel's "chronos_matched" column
+    # was actually the final 25k model (= the true generous checkpoint).
+    frozen_true = json.load(open(os.path.join(
+        K, "chronos_frozen_true_per_series.json")))
     tso = {n: per[n]["tso_v14"]["skill_pct"] for n in names}
-    frozen = {n: per[n]["chronos_frozen"]["skill_pct"] for n in names}
+    frozen = {n: frozen_true[n]["skill_pct"] for n in names}
     generous = {n: per[n]["chronos_matched"]["skill_pct"] for n in names}
     matched_m = {n: matched[n]["skill_pct"] for n in names}
 

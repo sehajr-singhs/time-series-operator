@@ -1,11 +1,11 @@
 {
- "id": "sehajrsingh/tso-v18-matched-compute-chronos-fine-tune",
- "title": "TSO V18 \u2014 matched-compute Chronos fine-tune",
+ "id": "sehajrsingh/tso-v19-real-corpus-rematch",
+ "title": "TSO V19 real-corpus rematch",
  "code_file": "main.py",
  "language": "python",
  "kernel_type": "script",
  "is_private": true,
- "enable_gpu": false,
+ "enable_gpu": true,
  "enable_internet": true,
  "competition_sources": [],
  "dataset_sources": [
@@ -15,7 +15,12 @@
   "sudalairajkumar/cryptocurrencypricehistory",
   "robervalt/sunspots",
   "rakannimer/air-passengers",
-  "imdevskp/corona-virus-report"
+  "imdevskp/corona-virus-report",
+  "mnassrib/jena-climate",
+  "sid321axn/beijing-multisite-airquality-data-set",
+  "thanhnguyen2612/traffic-flow-data-in-ho-chi-minh-city-viet-nam",
+  "anikannal/solar-power-generation-data",
+  "alaaelmor/ettsmall"
  ],
  "kernel_sources": []
 }
