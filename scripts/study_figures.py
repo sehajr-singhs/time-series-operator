@@ -441,6 +441,66 @@ def fig_external():
     return out
 
 
+def fig_matched():
+    """v18: the paradigm-vs-scale experiment. TSO v14 (frozen operator,
+    ~2M params, 25k iters) vs chronos-t5-small (46M params) frozen and
+    fine-tuned on the exact v14 corpus -- at matched parameter-steps
+    (1,127 steps) and at generous equal steps (25k) -- all under one
+    identical 40-series protocol."""
+    src = os.path.join(ROOT, "output", "kaggle_kernel_v18", "final_summary.json")
+    if not os.path.exists(src):
+        print("  skip fig_matched: no v18 final_summary yet")
+        return None
+    s = json.load(open(src))
+    per, agg, h2h = s["per_series"], s["aggregates"], s["head_to_head"]
+    cfg = s["config"]
+    names = sorted(per)
+    # per-series uses short keys; aggregates use suffixed keys
+    long_key = {"tso_v14": "tso_v14", "chronos_frozen": "chronos_frozen",
+                "chronos_matched": "chronos_matched_1127",
+                "chronos_generous": "chronos_generous_25k"}
+    cols = {"tso_v14": GOLD, "chronos_frozen": BLUE,
+            "chronos_matched": ACCENT, "chronos_generous": ACCENT}
+    labs = {
+        "tso_v14": "TSO v14 (frozen operator, 2.1M params, 25k iters)",
+        "chronos_frozen": "Chronos-t5-small frozen",
+        "chronos_matched": ("Chronos-t5-small fine-tuned,\n"
+                            f"{cfg['n_matched']:,} steps "
+                            "(parameter-matched)"),
+        "chronos_generous": ("Chronos-t5-small fine-tuned,\n"
+                             f"{cfg['n_tso_iters']:,} steps "
+                             "(22x matched budget)"),
+    }
+    plot_keys = ["tso_v14", "chronos_frozen", "chronos_matched",
+                 "chronos_generous"]
+    fig, ax = plt.subplots(figsize=(15, 6), dpi=160)
+    x = np.arange(len(names))
+    w = 0.9 / len(plot_keys)
+    for k, key in enumerate(plot_keys):
+        vals = [per[n][key] for n in names]
+        med = agg[long_key[key]]["pos_median"]
+        ax.bar(x + (k - len(plot_keys) / 2 + 0.5) * w, vals, width=w * 0.92,
+               color=cols[key], alpha=0.85,
+               label=f"{labs[key]} (median {med:+.1f}%)")
+    ax.axhline(0, color=FG, lw=0.8, alpha=0.6)
+    ax.set_xticks(x)
+    ax.set_xticklabels([n.replace("weather-", "").replace("grid-", "").
+                        replace("coin-", "").replace("covid-", "")[:12]
+                        for n in names], rotation=70, fontsize=6.5)
+    ax.set_ylabel("skill vs persistence (%)")
+    ax.set_title("Paradigm vs scale, matched compute: TSO (2.1M params, operator "
+                 "latent) vs Chronos-t5-small (46M params, token FSTM) frozen and "
+                 "fine-tuned on the identical corpus", fontsize=11.5)
+    ax.legend(fontsize=7, ncol=2)
+    ax.grid(axis="y", alpha=0.3)
+    fig.tight_layout()
+    fig.savefig(os.path.join(FIGS, "fig_matched.png"), bbox_inches="tight")
+    plt.close(fig)
+    print("  matched summary:", json.dumps(agg, indent=1)[:700])
+    print("  matched h2h:", json.dumps(h2h, indent=1)[:700])
+    return {"aggregates": agg, "h2h": h2h}
+
+
 def fig_solar(kernel_dir="kaggle_kernel_v9"):
     """Scale-covariant solar-cycle discovery with the frozen v8 kernel latent."""
     import sys as _sys
@@ -489,6 +549,8 @@ def main():
         fig_solar()
     if not want or "external" in want:
         fig_external()
+    if not want or "matched" in want:
+        fig_matched()
     with open(os.path.join(STUDY, "paper_data.json"), "w") as fh:
         json.dump(data, fh, indent=1)
     print("figures + paper_data.json written to", STUDY)

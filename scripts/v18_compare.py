@@ -32,8 +32,9 @@ def main():
     print(f"  chronos-t5-small:   {cfg['p_chronos']:,} params")
     print(f"  matched budget:     {cfg['n_matched']:,} steps "
           f"(= {cfg['n_tso_iters']:,} x {cfg['p_tso'] / cfg['p_chronos']:.3f})")
-    print(f"  generous budget:    {cfg['n_total']:,} steps "
-          f"({cfg['n_total'] / cfg['n_matched']:.1f}x matched)")
+    print(f"  total trained:      {cfg['n_total']:,} steps "
+          f"({cfg['n_total'] / cfg['n_matched']:.1f}x matched; the "
+          f"kernel evaluates this FINAL checkpoint under 'chronos_matched')")
     print(f"  pool:               {cfg['pool_entries']} entries (v14 corpus "
           f"distribution)")
     print()

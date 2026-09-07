@@ -69,7 +69,13 @@ statistically significant at a conventional level. A frozen Chronos-t5-small
 (\textasciitilde80k-series pretraining corpus) still beats the operator
 on the identical protocol (median $+24.7$ vs $+1.8$ percentage points;
 24/40 head-to-head), quantifying how far corpus breadth moves the
-curve. Ablations show
+curve. The matched-compute experiment settles the direction of that
+gap: fine-tuning Chronos on the operator's own corpus at equal
+parameter-steps leaves it unchanged (18W/22L vs frozen, $p=0.95$) and
+at $22\times$ the budget gains only marginally ($p=0.06$), so
+pretraining scale --- not tokenization --- currently decides the
+head-to-head (fine-tuned Chronos 27--29W/13--11L over the TSO,
+$p<0.01$). Ablations show
 the pretexts converge but only pay off with scale. The operator's
 scale-space spectrum distinguishes deterministic physics from stochastic
 physiology without any labels, and its tipping detector flags the Lorenz
@@ -422,6 +428,32 @@ TSO wins: meteorology (median $+14.5$\% vs $+2.6$\%) and it is the only
 model of the three whose solar-cycle discovery is a built-in, spectral
 consequence of its latent rather than a fitted regression.
 
+\paragraph{The matched-compute experiment.}
+The scale explanation makes a falsifiable prediction: give Chronos the
+\emph{identical} TSO training corpus at \emph{equal} compute, and the gap
+should collapse if it is purely data. We tested this directly
+(Fig.~\ref{fig:matched}): chronos-t5-small (46.2M parameters) was
+fine-tuned on the exact v14 corpus (232 series, 496 pool entries) at the
+parameter-matched budget --- 1{,}127 steps, equal parameter-steps to the
+TSO's $2.08\text{M} \times 25{,}000$ --- and at a generous equal-step
+budget of 25{,}000 steps ($22\times$ the matched budget), using the
+publisher's own tokenizer and training objective. The prediction fails:
+fine-tuning at the matched budget does not improve Chronos at all
+(18W/22L vs frozen, $p=0.95$; median skill $+22.7$ vs $+35.2$), and even
+the $22\times$-budget fine-tune gains only marginally (26W/14L,
+$p=0.06$; median $+33.3$). Against the TSO, both fine-tuned checkpoints
+retain the frozen model's advantage (27W/13L, $p=0.006$ at the matched
+budget; 29W/11L at the generous budget). The
+corpus is simply too small to move a model already pretrained on
+\textasciitilde 80{,}000 series; Chronos's dominance is bought upstream,
+not on the training task. The experiment therefore does \emph{not}
+support a paradigm claim at matched compute --- the honest conclusion is
+that pretraining scale, not tokenization, currently decides the
+head-to-head --- and it delimits precisely what the TSO's architecture
+must earn: a corpus of comparable breadth, on which the operator
+machinery (linearizable latent, scale covariance, phase-space geometry)
+is untested against an incumbent fine-tuned on the same data.
+
 \subsection{Ablations and the arrow of time}
 \label{sec:ablations}
 Removing the scale-covariance pretext leaves performance essentially
@@ -547,6 +579,21 @@ skill vs persistence per series; medians in the legend. Chronos's
 \textasciitilde 80k-series pretraining corpus transfers better on median;
 both foundation models beat the token baseline decisively.}
 \label{fig:external}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\textwidth]{fig_matched.png}
+\caption{The matched-compute experiment (v18): TSO v14 (frozen, 2.1M
+params, 25k iterations) vs chronos-t5-small (46.2M params) frozen and
+fine-tuned on the \emph{identical} corpus at parameter-matched steps
+(1{,}127; equal parameter-steps to the TSO) and at generous equal steps
+(25k, $22\times$ the matched budget). Bars are skill vs persistence per
+series on the shared 40-series protocol; medians in the legend.
+Fine-tuning does not move Chronos at either budget, and both checkpoints
+retain the frozen model's advantage over the TSO: pretraining scale,
+not tokenization, currently decides the comparison.}
+\label{fig:matched}
 \end{figure}
 
 \begin{figure}[h]
