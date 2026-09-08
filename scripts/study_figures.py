@@ -501,6 +501,66 @@ def fig_matched():
     return {"aggregates": agg, "h2h": h2h}
 
 
+def fig_v19():
+    """v19: the real-corpus rematch. TSO pretrained from scratch on a
+    REAL-only multi-domain corpus (Jena, Beijing PM2.5, ETT, traffic, solar,
+    ECG, finance, epidemiology; ~1000 pool entries) vs chronos-t5-small on
+    the held-out real probe -- frozen, matched steps, equal steps."""
+    src = os.path.join(ROOT, "output", "kaggle_kernel_v19",
+                       "final_summary.json")
+    if not os.path.exists(src):
+        print("  skip fig_v19: no v19 final_summary yet")
+        return None
+    s = json.load(open(src))
+    per = s["per_series"]
+    agg = s["aggregates"]["held"]
+    h2h = s["h2h"]["held"]
+    cfg = s["config"]
+    held_names = [c["name"] for c in s["corpus"] if c.get("held_out")]
+    names = held_names or sorted(per)
+    models = ("tso", "chronos_frozen", "chronos_matched",
+              "chronos_generous")
+    cols = {"tso": GOLD, "chronos_frozen": BLUE,
+            "chronos_matched": ACCENT, "chronos_generous": "#bb9af7"}
+    labs = {
+        "tso": ("TSO (operator, real-corpus pretrain, "
+                 f"{cfg['p_tso'] // 10**6}.{cfg['p_tso'] % 10**6 // 10**5}M "
+                 f"params, {cfg['n_tso_iters']:,} iters)"),
+        "chronos_frozen": "Chronos-t5-small frozen",
+        "chronos_matched": ("Chronos fine-tuned,\n"
+                             f"{cfg['n_matched']:,} steps "
+                             "(parameter-matched)"),
+        "chronos_generous": ("Chronos fine-tuned,\n"
+                              f"{cfg['n_total']:,} steps "
+                              "(equal steps)"),
+    }
+    fig, ax = plt.subplots(figsize=(16, 6), dpi=160)
+    x = np.arange(len(names))
+    w = 0.9 / len(models)
+    for k, key in enumerate(models):
+        vals = [per[n][key]["skill_pct"] for n in names
+                if per[n].get(key)]
+        med = np.median(vals)
+        ax.bar(x + (k - len(models) / 2 + 0.5) * w, vals, width=w * 0.92,
+               color=cols[key], alpha=0.85,
+               label=f"{labs[key]} (median {med:+.1f}%)")
+    ax.axhline(0, color=FG, lw=0.8, alpha=0.6)
+    ax.set_xticks(x)
+    ax.set_xticklabels([n[:13] for n in names], rotation=70, fontsize=6)
+    ax.set_ylabel("skill vs persistence (%)")
+    ax.set_title("v19 real-corpus rematch: TSO (pretrained on REAL multi-domain "
+                 "corpus) vs Chronos-t5-small, held-out real probe "
+                 f"({len(names)} series)", fontsize=11.5)
+    ax.legend(fontsize=7, ncol=2)
+    ax.grid(axis="y", alpha=0.3)
+    fig.tight_layout()
+    fig.savefig(os.path.join(FIGS, "fig_v19.png"), bbox_inches="tight")
+    plt.close(fig)
+    print("  v19 aggregates:", json.dumps(agg, indent=1)[:900])
+    print("  v19 h2h:", json.dumps(h2h, indent=1)[:900])
+    return {"aggregates": agg, "h2h": h2h}
+
+
 def fig_solar(kernel_dir="kaggle_kernel_v9"):
     """Scale-covariant solar-cycle discovery with the frozen v8 kernel latent."""
     import sys as _sys
@@ -551,6 +611,8 @@ def main():
         fig_external()
     if not want or "matched" in want:
         fig_matched()
+    if not want or "v19" in want:
+        fig_v19()
     with open(os.path.join(STUDY, "paper_data.json"), "w") as fh:
         json.dump(data, fh, indent=1)
     print("figures + paper_data.json written to", STUDY)
