@@ -2138,6 +2138,7 @@ battery (attractor parameter sweeps, maps, stochastic regimes).
 Joint-probe loss is off (v12 negative result).
 """
 
+import importlib
 import json
 import os
 import sys
@@ -2149,15 +2150,6 @@ import torch
 INPUT = os.environ.get("KAGGLE_INPUT", "/kaggle/input")
 OUT = os.environ.get("KAGGLE_OUT", "/kaggle/working")
 os.makedirs(OUT, exist_ok=True)
-
-# baked for the v19 kernel: run the real-corpus rematch on GPU
-os.environ.setdefault("V19_MODE", "1")
-os.environ.setdefault("V19_ITERS", "25000")
-os.environ.setdefault("V19_LATENT", "256")
-os.environ.setdefault("V19_HIDDEN", "768")
-os.environ.setdefault("V19_DYN_W", "2.5")
-os.environ.setdefault("V19_TOTAL_ITERS", "25000")
-os.environ.setdefault("V19_EVAL_SAMPLES", "32")
 
 MAXLEN = 4096
 
@@ -2205,6 +2197,74 @@ def ensure_gpu_compatible():
                    "--index-url https://download.pytorch.org/whl/cu121")
     print(f"  pip install rc={rc}; restarting with the new torch")
     os.execv(sys.executable, [sys.executable] + sys.argv)
+
+
+def ensure_transformers_compatible():
+    """The sm_60 torch downgrade (2.4.1) leaves the image's newer
+    transformers with broken lazy imports (the v19 failure:
+    `Could not import module 'PreTrainedModel'`, caused by a torchvision
+    mismatch under the downgraded torch). If the probe fails, pin a
+    transformers version compatible with torch 2.4.1 using --no-deps so
+    the resolver can never touch torch again. Also make sure
+    sentencepiece (T5 tokenizer) exists."""
+    try:
+        import transformers as _t
+        from transformers import PreTrainedModel  # noqa: F401
+        print(f"  transformers OK ({_t.__version__})")
+    except Exception as e:
+        # The kernel's pip may use a lagging internal mirror (v6 lesson:
+        # transformers 4.44.2 installed fine, 4.57.6 did not), so force the
+        # public index and install each pin separately. Known-good combos
+        # (verified locally with chronos-forecasting), newest first:
+        #   A: transformers 4.57.6 + hub 0.36.2 + tokenizers 0.22.2
+        #   B: transformers 4.44.2 + hub 0.24.0 + tokenizers 0.19.1
+        print(f"  transformers probe failed ({e}); repairing the stack")
+        index = "--index-url https://pypi.org/simple"
+        attempts = [
+            ("transformers==4.57.6", "huggingface-hub==0.36.2",
+             "tokenizers==0.22.2"),
+            ("transformers==4.44.2", "huggingface-hub==0.24.0",
+             "tokenizers==0.19.1"),
+        ]
+        ok = False
+        for pins in attempts:
+            if ok:
+                break
+            rc = 0
+            for pk in pins:
+                cmd = (f"{sys.executable} -m pip install -q --no-deps "
+                       f"{index} {pk}")
+                r = os.system(cmd)
+                if r != 0:
+                    rc = 1
+                    print(f"    pip install {pk} failed (rc={r})")
+            if rc:
+                continue
+            for _m in list(sys.modules):
+                if _m in ("transformers", "tokenizers",
+                          "huggingface_hub") or \
+                        _m.startswith("transformers.") or \
+                        _m.startswith("tokenizers.") or \
+                        _m.startswith("huggingface_hub."):
+                    sys.modules.pop(_m, None)
+            importlib.invalidate_caches()
+            try:
+                import transformers as _t
+                from transformers import PreTrainedModel  # noqa: F401
+                print(f"  transformers now {_t.__version__} "
+                      f"(pins {pins[0]}, {pins[1]})")
+                ok = True
+            except Exception as _e2:
+                print(f"  combo {pins[0]} still failed: {_e2}")
+        if not ok:
+            raise RuntimeError(
+                "could not repair transformers for torch 2.4.1; "
+                "tried both known-good combos")
+    try:
+        import sentencepiece  # noqa: F401
+    except Exception:
+        print("  installing sentencepiece (T5 tokenizer)")
+        os.system(f"{sys.executable} -m pip install -q sentencepiece")
 
 
 def find_csv(fname):
@@ -2900,6 +2960,26 @@ def run_matched_compute(samples, meta, battery, OUT, device="cpu"):
     return out
 
 
+def v19_mode_requested():
+    """v19 mode when the real-corpus datasets are mounted (the v19 kernel
+    metadata is the only one that mounts them). Explicit V19_MODE env
+    overrides: '1' forces, '0' forbids."""
+    v = os.environ.get("V19_MODE")
+    if v is not None and v != "":
+        return int(v)
+    if os.path.isdir(INPUT):
+        try:
+            dirs = os.listdir(INPUT)
+        except OSError:
+            dirs = []
+        for d in dirs:
+            dl = d.lower()
+            if any(k in dl for k in ("jena", "beijing", "traffic-flow",
+                                     "solar-power", "ettsmall")):
+                return 1
+    return 0
+
+
 def main():
     print("=" * 70)
     print("TSO foundation pretraining V14 — balanced corpus, forced "
@@ -2929,7 +3009,11 @@ def main():
         print(f"  + {len(battery)} synthetic dynamics series "
               f"(attractor sweeps, maps, stochastic regimes)")
 
-    if int(os.environ.get("V19_MODE", 0)):
+    # V19 mode is auto-detected from the mounted datasets (the v19 kernel
+    # metadata mounts the 5 real-corpus datasets; the v18-v1/v2 lesson:
+    # flags baked into the merged main.py are wiped on rebuild, so the
+    # mode decision must live in this source file and self-detect).
+    if v19_mode_requested():
         print("\n[v19] real-corpus rematch mode: real-only training corpus,"
               " TSO pretrained from scratch, Chronos fine-tuned on the "
               "identical corpus at matched parameter-steps")
@@ -3734,6 +3818,10 @@ def run_real_rematch(samples, meta, OUT, device):
     DYN_W = float(os.environ.get("V19_DYN_W", 2.5))
     SEED = int(os.environ.get("V19_SEED", 0))
     EVAL_SAMPLES = int(os.environ.get("V19_EVAL_SAMPLES", 32))
+
+    # the sm_60 torch downgrade breaks the image's transformers (v19 v1
+    # died on `Could not import module 'PreTrainedModel'`); probe and pin
+    ensure_transformers_compatible()
 
     try:
         __import__("huggingface_hub")
