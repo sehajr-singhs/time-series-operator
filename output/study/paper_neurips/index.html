@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FMTS @ NeurIPS 2026 submission — Time is not text</title>
+<style>
+  body { margin:0; background:#0b0e14; color:#e6e9ef;
+         font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  header { padding:22px 28px 14px; border-bottom:1px solid #1d2330; }
+  h1 { margin:0 0 6px; font-size:20px; letter-spacing:.2px; }
+  .sub { color:#8b93a7; font-size:13px; }
+  .badges { margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; }
+  .badge { border:1px solid #1d2330; border-radius:999px; padding:4px 11px;
+           font-size:12px; color:#38f2c8; background:#0f1420; }
+  .wrap { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:0; height:calc(100vh - 132px); }
+  iframe { border:0; width:100%; height:100%; background:#2b2b2b; }
+  aside { border-left:1px solid #1d2330; padding:18px 20px; overflow:auto; }
+  aside h2 { font-size:13px; text-transform:uppercase; letter-spacing:.08em;
+             color:#8b93a7; margin:18px 0 6px; }
+  aside h2:first-child { margin-top:0; }
+  ul { margin:0; padding-left:18px; }
+  li { margin:4px 0; font-size:13.5px; }
+  code { background:#121826; padding:1px 5px; border-radius:4px; font-size:12.5px; }
+  .k { color:#7ee787; } .w { color:#f08c8c; }
+  a { color:#38f2c8; }
+  footer { padding:8px 28px; border-top:1px solid #1d2330; color:#8b93a7; font-size:12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Time is not text: a scale-covariant operator foundation model that learns the geometry of dynamical systems</h1>
+  <div class="sub">Submission package for the <b>FMTS @ NeurIPS 2026</b> workshop (Foundation Models for Temporal Systems, Sydney, Dec 11–12).
+    Official NeurIPS 2026 template, <code>dblblindworkshop</code> option, double-blind, <b>body = 4 pages</b>, references + appendices excluded.</div>
+  <div class="badges">
+    <span class="badge">7 pages total · body ends p4</span>
+    <span class="badge">2.08M-param operator</span>
+    <span class="badge">40-series zero-shot protocol</span>
+    <span class="badge">matched-compute test</span>
+    <span class="badge">solar-cycle rediscovery</span>
+  </div>
+</header>
+<div class="wrap">
+  <iframe src="main.pdf" title="paper PDF"></iframe>
+  <aside>
+    <h2>What the paper claims</h2>
+    <ul>
+      <li><span class="k">31/40</span> zero-shot series vs a per-series GRU token baseline (first positive median skill, <span class="k">+1.79</span> over persistence).</li>
+      <li>Geometry-first: Takens embedding → Koopman linearization → four temporal pretexts, no tokenizer anywhere.</li>
+      <li>Closed-form probe: rank-reduced least-squares Koopman fit in the frozen latent, <b>zero gradient steps</b>.</li>
+      <li><span class="k">128 months</span> solar-cycle period recovered from a held-out channel (132 known, 3.0% error), stable at 128–130 across every checkpoint.</li>
+      <li>Label-free physics-vs-physiology test: top Koopman eigenvalue 0.999→0.937 (Lorenz) vs 0.692→0.207 (heartbeat).</li>
+      <li>Tipping detector fires at ρ≈21, before the homoclinic explosion at 24.74.</li>
+    </ul>
+    <h2>What it does <em>not</em> claim</h2>
+    <ul>
+      <li><span class="w">Matched-compute negative</span>: fine-tuning chronos-t5-small on the operator's own corpus at equal parameter-steps (52.0B) does not move it (21W/19L, p=0.98); 22× budget gains little (22W/18L, p=0.20).</li>
+      <li>Chronos-frozen still wins the head-to-head <span class="w">24/40</span> (median +21.42 vs +1.79) — the gap is corpus breadth (80k vs 40 series).</li>
+      <li>So: at affordable compute, <b>pretraining scale, not tokenization, decides</b>. The operator must earn a comparable corpus before any paradigm claim.</li>
+    </ul>
+    <h2>Files</h2>
+    <ul>
+      <li><a href="main.pdf">main.pdf</a> — submission PDF</li>
+      <li><a href="main.tex">main.tex</a> — generated source</li>
+      <li><code>neurips_2026.sty</code> — official template style</li>
+      <li>Rebuild: <code>python scripts/study_paper_neurips.py</code></li>
+    </ul>
+    <h2>Provenance</h2>
+    <ul>
+      <li>Every number is read from stored artefacts: kernel <code>final_summary.json</code>, <code>study/reprobe.json</code>, <code>pair_v9_*.json</code>, <code>stats.json</code>, <code>lorenz/</code>+<code>kaggle_ecg/metrics.json</code>.</li>
+      <li>AI-assistant use is disclosed in Appendix C, per the workshop's policy.</li>
+    </ul>
+  </aside>
+</div>
+<footer>Body limit: 4 pages excluding references and appendices — satisfied (references begin on p5). Rebuild with <code>python scripts/study_paper_neurips.py</code>.</footer>
+</body>
+</html>

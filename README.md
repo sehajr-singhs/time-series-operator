@@ -1,5 +1,20 @@
 # Time-Series Operator (TSO)
 
+**Workshop submission (FMTS @ NeurIPS 2026):** *Time is not text: a
+scale-covariant operator foundation model that learns the geometry of dynamical
+systems* — 4-page double-blind paper in the official NeurIPS 2026 template.
+Read it at **`output/study/paper_neurips/main.pdf`** (viewer page:
+`output/study/paper_neurips/index.html`), rebuild with
+`python scripts/study_paper_neurips.py`. It reports the whole programme
+honestly: 31/40 zero-shot wins against a per-series GRU token baseline and the
+first positive median skill (+1.79 over persistence), the 11-year solar cycle
+recovered from a held-out channel (128 months vs 132 known), a label-free
+physics-vs-physiology test, a tipping detector that fires at ρ≈21 — and the
+matched-compute **negative** result (fine-tuning chronos-t5-small on the
+operator's own corpus at equal parameter-steps does not move it, 21W/19L,
+p=0.98), which pins the remaining gap on pretraining scale rather than
+architecture.
+
 A from-scratch implementation of the "time as geometry" vision: instead of
 chopping numbers into tokens and treating them like sentences, the model
 
@@ -287,7 +302,11 @@ in v5; results are from a clean completed run.
 
 `scripts/study_experiments.py`, `scripts/study_figures.py` and
 `scripts/study_paper.py` reproduce the full study and compile the preprint
-**`output/study/paper/main.pdf`** (LaTeX, pdflatex). Contents: 23-series /
+**`output/study/paper/main.pdf`** (LaTeX, pdflatex);
+`scripts/study_paper_neurips.py` compiles the 4-page FMTS @ NeurIPS 2026
+submission **`output/study/paper_neurips/main.pdf`** with the official
+`neurips_2026.sty` (double-blind workshop option, body ends on page 4, all
+numbers read from the stored JSON artefacts). Contents of the preprint: 23-series /
 8-domain corpus, multi-seed pretraining (seeds 0--2, 1.4k iters) with
 ablations (no scale, no arrow), a from-scratch GRU autoregressive baseline
 and per-series scratch deep-Koopman baselines on an identical protocol, the

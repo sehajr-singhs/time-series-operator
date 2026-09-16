@@ -1,0 +1,73 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{chronos2024,timesfm2024,moirai2024}
+\citation{kaplan2020}
+\citation{takens1981,kennel1992}
+\citation{koopman1931,mezic2005,williams2015,lusch2018}
+\citation{wolf1985,lorenz1963}
+\citation{li2021fno,chen2018node,gu2023mamba}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
+\citation{takens1981,kennel1992}
+\citation{schmid2010}
+\citation{williams2015}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {2}The Time-Series Operator}{2}{section.2}\protected@file@percent }
+\newlabel{sec:method}{{2}{2}{The Time-Series Operator}{section.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Results}{2}{section.3}\protected@file@percent }
+\newlabel{sec:results}{{3}{2}{Results}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Zero-shot transfer, and the plateau it hits}{2}{subsection.3.1}\protected@file@percent }
+\newlabel{sec:transfer}{{3.1}{2}{Zero-shot transfer, and the plateau it hits}{subsection.3.1}{}}
+\def\@LN@column{1}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Frozen-latent transfer across eleven training budgets on one shared 23-series corpus. Capacity, iterations and joint-probe regularization do not move the plateau; the regime-balanced battery with forced Koopman linearity does and replicates across seeds, while $25\times $ corpus breadth at fixed budget regresses.}}{3}{figure.1}\protected@file@percent }
+\newlabel{fig:scaling}{{1}{3}{Frozen-latent transfer across eleven training budgets on one shared 23-series corpus. Capacity, iterations and joint-probe regularization do not move the plateau; the regime-balanced battery with forced Koopman linearity does and replicates across seeds, while $25\times $ corpus breadth at fixed budget regresses}{figure.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Matched-compute test on the shared 40-series protocol. ``Frozen'' is the untouched pretrained model re-measured on the identical protocol.}}{3}{table.1}\protected@file@percent }
+\newlabel{tab:matched}{{1}{3}{Matched-compute test on the shared 40-series protocol. ``Frozen'' is the untouched pretrained model re-measured on the identical protocol}{table.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}The matched-compute test: a negative result}{3}{subsection.3.2}\protected@file@percent }
+\newlabel{sec:matched}{{3.2}{3}{The matched-compute test: a negative result}{subsection.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}What a frozen operator knows that a tokenizer does not}{3}{subsection.3.3}\protected@file@percent }
+\newlabel{sec:geometry}{{3.3}{3}{What a frozen operator knows that a tokenizer does not}{subsection.3.3}{}}
+\citation{lorenz1963}
+\def\@LN@column{1}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Left: zero-shot skill per series on the 40-series protocol, frozen TSO against frozen Chronos and the GRU token baseline. Right: the matched-compute test --- fine-tuning the incumbent on the operator's own corpus, at equal parameter-steps and at 22$\times $ that budget, does not close the gap.}}{4}{figure.2}\protected@file@percent }
+\newlabel{fig:external}{{2}{4}{Left: zero-shot skill per series on the 40-series protocol, frozen TSO against frozen Chronos and the GRU token baseline. Right: the matched-compute test --- fine-tuning the incumbent on the operator's own corpus, at equal parameter-steps and at 22$\times $ that budget, does not close the gap}{figure.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Discussion}{4}{section.4}\protected@file@percent }
+\newlabel{sec:disc}{{4}{4}{Discussion}{section.4}{}}
+\bibcite{chronos2024}{{1}{}{{}}{{}}}
+\bibcite{timesfm2024}{{2}{}{{}}{{}}}
+\bibcite{moirai2024}{{3}{}{{}}{{}}}
+\bibcite{takens1981}{{4}{}{{}}{{}}}
+\bibcite{kennel1992}{{5}{}{{}}{{}}}
+\bibcite{koopman1931}{{6}{}{{}}{{}}}
+\bibcite{mezic2005}{{7}{}{{}}{{}}}
+\bibcite{schmid2010}{{8}{}{{}}{{}}}
+\bibcite{williams2015}{{9}{}{{}}{{}}}
+\bibcite{lusch2018}{{10}{}{{}}{{}}}
+\bibcite{wolf1985}{{11}{}{{}}{{}}}
+\bibcite{lorenz1963}{{12}{}{{}}{{}}}
+\bibcite{li2021fno}{{13}{}{{}}{{}}}
+\bibcite{chen2018node}{{14}{}{{}}{{}}}
+\bibcite{gu2023mamba}{{15}{}{{}}{{}}}
+\bibcite{kaplan2020}{{16}{}{{}}{{}}}
+\def\@LN@column{1}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Core pipeline and in-kernel comparison}{6}{appendix.A}\protected@file@percent }
+\newlabel{app:tables}{{A}{6}{Core pipeline and in-kernel comparison}{appendix.A}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Left: the scale-covariant period readout on the held-out sunspot record converging to the 11-year Schwabe cycle. Right: the reconstructed Lorenz attractor as the operator sees it --- a phase-space object, not a token stream.}}{6}{figure.3}\protected@file@percent }
+\newlabel{fig:solar}{{3}{6}{Left: the scale-covariant period readout on the held-out sunspot record converging to the 11-year Schwabe cycle. Right: the reconstructed Lorenz attractor as the operator sees it --- a phase-space object, not a token stream}{figure.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Core operator on one synthetic chaotic system and one real physiological record. Skill is \% RMSE reduction over persistence on the held-out horizon; $|\lambda |$ is the top Koopman eigenvalue magnitude under $1\times $ and $8\times $ block decimation.}}{6}{table.2}\protected@file@percent }
+\newlabel{tab:core}{{2}{6}{Core operator on one synthetic chaotic system and one real physiological record. Skill is \% RMSE reduction over persistence on the held-out horizon; $|\lambda |$ is the top Koopman eigenvalue magnitude under $1\times $ and $8\times $ block decimation}{table.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces In-kernel 40-series comparison against the per-series GRU token baseline (identical hardware, split and metric). Median advantage is over persistence. Dashes: value not recorded for that run.}}{6}{table.3}\protected@file@percent }
+\newlabel{tab:kernel}{{3}{6}{In-kernel 40-series comparison against the per-series GRU token baseline (identical hardware, split and metric). Median advantage is over persistence. Dashes: value not recorded for that run}{table.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Protocol, provenance and per-series detail}{6}{appendix.B}\protected@file@percent }
+\newlabel{app:protocol}{{B}{6}{Protocol, provenance and per-series detail}{appendix.B}{}}
+\providecommand\NAT@force@numbers{}\NAT@force@numbers
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Use of AI assistants}{7}{appendix.C}\protected@file@percent }
+\newlabel{app:ai}{{C}{7}{Use of AI assistants}{appendix.C}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D}Reproduction commands}{7}{appendix.D}\protected@file@percent }
+\newlabel{app:repro}{{D}{7}{Reproduction commands}{appendix.D}{}}
+\gdef \@abspage@last{7}
