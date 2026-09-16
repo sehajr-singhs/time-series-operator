@@ -10,6 +10,7 @@ experiment pipeline (with the source file named in the loader below) or taken
 from a run log whose provenance is noted inline. Nothing is estimated.
 """
 
+import argparse
 import json
 import os
 import subprocess
@@ -169,11 +170,7 @@ TEX = r"""\documentclass{article}
 learns the geometry of dynamical systems}
 
 \author{%
-  Anonymous Author(s)\\
-  Affiliation\\
-  Address\\
-  \texttt{email}\\
-}
+VAR{AUTHOR}}
 
 \begin{document}
 \maketitle
@@ -617,8 +614,25 @@ baseline on identical hardware and writes metrics, figures and checkpoints.
 """
 
 
+BS = chr(92) * 2  # a LaTeX line break
+
+
 def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--preprint", action="store_true",
+                    help="build the self-identifying arXiv variant (preprint "
+                         "option, real author block) instead of the anonymous "
+                         "workshop submission")
+    args = ap.parse_args()
     tex = TEX
+    if args.preprint:
+        tex = tex.replace("\\usepackage[dblblindworkshop]{neurips_2026}",
+                          "\\usepackage[preprint]{neurips_2026}")
+        D["AUTHOR"] = ("  Sehaj Singh" + BS + "\n  {\\small Time-Series "
+                       "Operator project --- preprint}" + BS)
+    else:
+        D["AUTHOR"] = ("  Anonymous Author(s)" + BS + "\n  Affiliation" + BS +
+                       "\n  Address" + BS + "\n  \\texttt{email}" + BS)
     D["KERNEL_ROWS"] = kernel_rows()
     for key, val in D.items():
         tex = tex.replace("VAR{" + key + "}", str(val))
@@ -628,23 +642,31 @@ def main():
         for ln in left:
             print("   ", ln.strip()[:100])
         sys.exit(1)
-    path = os.path.join(OUT, "main.tex")
+    out_dir = OUT + ("_preprint" if args.preprint else "")
+    os.makedirs(out_dir, exist_ok=True)
+    # pdflatex must find the official style file next to the source
+    import shutil
+    sty_src = os.path.join(OUT, "neurips_2026.sty")
+    sty_dst = os.path.join(out_dir, "neurips_2026.sty")
+    if os.path.abspath(sty_src) != os.path.abspath(sty_dst):
+        shutil.copyfile(sty_src, sty_dst)
+    path = os.path.join(out_dir, "main.tex")
     with open(path, "w", encoding="utf-8") as fh:
         fh.write(tex)
     print("wrote", path)
     for _ in range(3):
         r = subprocess.run(
             ["pdflatex", "-interaction=nonstopmode", "-halt-on-error",
-             "-output-directory", OUT, path],
-            capture_output=True, text=True, cwd=OUT)
-    pdf = os.path.join(OUT, "main.pdf")
+             "-output-directory", out_dir, path],
+            capture_output=True, text=True, cwd=out_dir)
+    pdf = os.path.join(out_dir, "main.pdf")
     if not os.path.exists(pdf):
         print("PDF FAILED. log tail:")
         print("\n".join(r.stdout.splitlines()[-30:]))
         return
     import re
     pages = "?"
-    logp = os.path.join(OUT, "main.log")
+    logp = os.path.join(out_dir, "main.log")
     if os.path.exists(logp):
         flat = open(logp, encoding="utf8", errors="ignore").read().replace("\n", "")
         m = re.search(r"Output written on [^(]*\((\d+) pages?", flat)
